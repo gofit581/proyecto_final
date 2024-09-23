@@ -1,47 +1,7 @@
-import 'package:alumno/core/entities/User.dart';
 import 'package:alumno/core/entities/UserManager.dart';
-import 'package:flutter/material.dart';
 
 class Calendar {
   UserManager us_manager = UserManager();
-
-  bool isRoutineFinished() {
-    Usuario? loggedUser = us_manager.getLoggedUser();
-    return us_manager.getLoggedUser()!.timesDone.length ==
-        us_manager.getLoggedUser()!.getRoutine()!.duration;
-  }
-
-  String getDialogTitle(DateTime selectedDay) {
-    String texto = '';
-    if (isDayDone(selectedDay)) {
-      texto =
-          'Este día (${getDayName(selectedDay.weekday)} ${selectedDay.day}) entrenaste! Deseas eliminar el registro?';
-    } else {
-      texto = '¿Entrenaste el ${getDayName(selectedDay.weekday)} ${selectedDay.day}?';
-    }
-    return texto;
-  }
-
-  void addOrRemoveDayDone(bool dayDone, DateTime selectedDay) {
-    if (!dayDone) {
-      us_manager.getLoggedUser()!.addDayDone(selectedDay);
-    } else {
-      us_manager.getLoggedUser()!.removeDayDone(selectedDay);
-    }
-  }
-
-  bool isDayDone(DateTime selectedDay){
-    return us_manager.getLoggedUser()!.timesDone.contains(selectedDay);
-  }
-  String getDialogContent() {
-    String text = "";
-    if (isRoutineFinished()) {
-      text = 'Rutina Completada';
-    } else {
-      text = 'Confirmar entrenamiento';
-    }
-    return text;
-  }
 
   String getMonthName(int month) {
     String es_month = "";

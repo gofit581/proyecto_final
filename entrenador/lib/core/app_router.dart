@@ -1,6 +1,7 @@
 import 'package:entrenador/presentation/calendar_screen.dart';
 import 'package:entrenador/presentation/initial_screen.dart';
 import 'package:entrenador/presentation/login_screen.dart';
+import 'package:entrenador/presentation/register_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(routes: [
@@ -27,10 +28,10 @@ final appRouter = GoRouter(routes: [
   //   },
   //   name: ProfileScreen.name,
   // ),
-  // GoRoute(
-  //     path: '/register',
-  //     builder: (context, state) => RegisterScreen(),
-  //     name: RegisterScreen.name),
+  GoRoute(
+      path: '/register',
+      builder: (context, state) => const RegisterScreen(),
+      name: RegisterScreen.name),
   GoRoute(
       path: '/calendar',
       builder: ((context, state) => CalendarioScreen()),

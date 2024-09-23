@@ -3,7 +3,6 @@
 import 'package:alumno/core/entities/User.dart';
 import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/presentation/calendar_screen.dart';
-import 'package:alumno/presentation/home_screen.dart';
 import 'package:alumno/presentation/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

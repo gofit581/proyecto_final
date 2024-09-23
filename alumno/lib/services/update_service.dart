@@ -14,13 +14,33 @@ class UpdateService {
         'password': usuario.password,
         'mail': usuario.mail,
         'age': usuario.age,
-        'training': usuario.training?.name,
-        'idCurrentRoutine': usuario.training?.index,
-        'timesDone': usuario.timesDone.map((e) => e.toIso8601String()).toList(),
+        //'training': usuario.training?.name,
+        //'idCurrentRoutine': usuario.training?.index,
+        //'timesDone': usuario.timesDone.map((e) => e.toIso8601String()).toList(),
       }),
     );
 
     if (response.statusCode != 200) {
+      throw Exception('Failed to update user');
+    }
+  }
+
+  Future<void> updateRegisterUser(Usuario usuario) async {
+        final response = await http.put(
+      Uri.parse('$baseUrl/users/${usuario.id}'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'userName': usuario.userName,
+        'objetiveDescription' : usuario.objectiveDescription,
+        'experience' : usuario.experience,
+        'discipline' : usuario.discipline,
+        'trainingDays' : usuario.trainingDays,
+        'trainingDuration' : usuario.trainingDuration,
+        'injuries' : usuario.injuries,
+        'extraActivities' : usuario.extraActivities,
+      }),
+      );
+      if (response.statusCode != 200) {
       throw Exception('Failed to update user');
     }
   }

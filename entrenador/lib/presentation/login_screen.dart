@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:entrenador/core/entities/User.dart';
-import 'package:entrenador/core/entities/UserManager.dart';
+import 'package:entrenador/core/entities/Trainer.dart';
+import 'package:entrenador/core/entities/TrainerManager.dart';
 import 'package:entrenador/presentation/calendar_screen.dart';
 import 'package:entrenador/presentation/register_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class LoginScreen extends StatelessWidget {
       TextEditingController();
   final TextEditingController _passwordTextFieldController =
       TextEditingController();
-  final UserManager userManager = UserManager();
+  final TrainerManager userManager = TrainerManager();
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                     } else {
                       userManager.login(_userTextFieldController.text,
                           _passwordTextFieldController.text);
-                      Usuario? usuario = userManager.getLoggedUser();
+                      Trainer? usuario = userManager.getLoggedUser();
                       if (usuario != null) {
                         context.goNamed(CalendarioScreen.name);
                         userManager.setLoggedUser(usuario);

@@ -1,9 +1,8 @@
-import 'package:alumno/core/entities/Routine.dart';
-import 'package:alumno/core/entities/TypeOfTraining.dart';
 import 'package:alumno/core/entities/User.dart';
-import '../../../services/auth_service.dart';
-import '../../../services/update_service.dart';
-import '../../../services/register_service.dart';
+import '../../services/auth_service.dart';
+import '../../services/update_service.dart';
+import '../../services/register_service.dart';
+
 
 class UserManager {
   static RegisterService registerService = RegisterService();
@@ -18,11 +17,9 @@ class UserManager {
     _usuarios.add(usuario);
   }
 
-  Future<void> registerUser(Usuario usuario, int trainingId) async {
-    final Routine routine = await registerService.fetchRoutine(trainingId);
-    usuario.currentRoutine = routine;
+  Future<void> registerUser(Usuario usuario) async {
     agregarUsuario(usuario);
-    await registerService.registerUser(usuario, trainingId);
+    await registerService.registerUser(usuario);
   }
 
   Usuario? existeUsuario(String mail, String password) {
@@ -58,36 +55,11 @@ class UserManager {
     }
   }
 
-  Routine? getRoutine(){
-    return _loggedUser!.getRoutine();
-  }
 
-  List<int> getRutineDays(){
-    return List<int>.generate(_loggedUser!.currentRoutine!.duration, (i) => i + 1);
-  }
-
-  Set<DateTime> getExerciseDays(){
-    return _loggedUser!.timesDone.toSet();
-  }
-
-  void ordenarLista(){
-    _loggedUser!.timesDone.sort((a, b) => a.compareTo(b));
-  }
-
-    void resetExercises() {
-     _loggedUser!.getRoutine()!.resetExercises();
-    
-  }
-
-void clearUserListTimesDone(){
-  _loggedUser!.clearTimesDone();
-}
-  void updateUserInfo(String name, String email, int Age, String password, TypeOfTraining training){
+  void updateUserInfo(String name, String email, String age, String password){
       _loggedUser!.setUserName(name);
       _loggedUser!.setEmail(email);
-      _loggedUser!.setAge(Age);
-      _loggedUser!.setTraining(training);
-      _loggedUser!.clearTimesDone();
+      _loggedUser!.setAge(age);
       updateLoggedUser();
   }
 
