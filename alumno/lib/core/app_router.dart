@@ -1,12 +1,15 @@
+import 'package:alumno/core/entities/User.dart';
 import 'package:alumno/presentation/calendar_screen.dart';
 import 'package:alumno/presentation/initial_screen.dart';
 import 'package:alumno/presentation/login_screen.dart';
+import 'package:alumno/presentation/register_alumno_data_screen.dart';
+import 'package:alumno/presentation/register_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(routes: [
   GoRoute(
     path: '/',
-    builder: (context, state) => InitialScreen(),
+    builder: (context, state) => const InitialScreen(),
     name: InitialScreen.name,
   ),
   GoRoute(
@@ -27,10 +30,17 @@ final appRouter = GoRouter(routes: [
   //   },
   //   name: ProfileScreen.name,
   // ),
-  // GoRoute(
-  //     path: '/register',
-  //     builder: (context, state) => RegisterScreen(),
-  //     name: RegisterScreen.name),
+  GoRoute(
+    path: '/registerAlumnoData',
+    builder: (context, state) => RegisterAlumnoDataScreen(
+      usuario: state.extra as Usuario,
+    ),
+    name: RegisterAlumnoDataScreen.name,
+  ),
+  GoRoute(
+      path: '/register',
+      builder: (context, state) => const RegisterScreen(),
+      name: RegisterScreen.name),
   GoRoute(
       path: '/calendar',
       builder: ((context, state) => CalendarioScreen()),

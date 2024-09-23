@@ -6,20 +6,21 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class RegisterService {
-  final String baseUrl = 'https://665887705c3617052648e130.mockapi.io/api';
+  final String baseUrl = 'https://66d746e0006bfbe2e650640f.mockapi.io/api';
 
-  Future<void> registerUser(Usuario usuario, int typeOfTrainingId) async {
+  Future<void> registerUser(Usuario usuario/*, int typeOfTrainingId*/) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/users'),
+      Uri.parse('$baseUrl/user'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'userName': usuario.userName,
         'password': usuario.password,
         'mail': usuario.mail,
         'age': usuario.age,
-        'training': usuario.training?.name,
-        'idCurrentRoutine': typeOfTrainingId,
-        'timesDone': usuario.timesDone,
+        'idTrainer': usuario.idTrainer
+        //'training': usuario.training?.name,
+        //'idCurrentRoutine': typeOfTrainingId,
+        //'timesDone': usuario.timesDone,
       }),
     );
 
@@ -55,7 +56,7 @@ class RegisterService {
   }
 
   Future<Routine> fetchRoutine(int typeOfRoutine) async {
-  final baseUrl = 'https://665887705c3617052648e130.mockapi.io/api';
+  const baseUrl = 'https://665887705c3617052648e130.mockapi.io/api';
   final response = await http.get(Uri.parse('$baseUrl/routines?typeOfTraining=$typeOfRoutine'));
 
   if (response.statusCode != 200) {

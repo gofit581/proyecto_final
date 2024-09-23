@@ -5,6 +5,8 @@ import 'package:alumno/widget/custom_botton_navigation_bar.dart';
 
 class CalendarioScreen extends StatefulWidget {
   static const String name = 'CalendarioScreen';
+
+  const CalendarioScreen({super.key});
   @override
   _CalendarioScreenState createState() => _CalendarioScreenState();
 }
@@ -17,11 +19,17 @@ class _CalendarioScreenState extends State<CalendarioScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: 'Calendario',
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 1),
-      body: _buildTableCalendar(),
+      bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _buildTableCalendar(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -39,12 +47,6 @@ class _CalendarioScreenState extends State<CalendarioScreen> {
           _selectedDay = selectedDay;
           _focusedDay = focusedDay;
         });
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => FechaScreen(fecha: selectedDay),
-        //   ),
-        // );
       },
       onFormatChanged: (format) {
         if (_calendarFormat != format) {
