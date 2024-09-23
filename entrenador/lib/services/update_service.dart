@@ -1,22 +1,19 @@
-import 'package:entrenador/core/entities/User.dart';
+import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class UpdateService {
-  final String baseUrl = 'https://665887705c3617052648e130.mockapi.io/api';
+  final String baseUrl = 'https://66d746e0006bfbe2e650640f.mockapi.io/api';
 
-  Future<void> updateUser(Usuario usuario) async {
+  Future<void> updateUser(Trainer usuario) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/users/${usuario.id}'),
+      Uri.parse('$baseUrl/Trainer/${usuario.id}'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'userName': usuario.userName,
         'password': usuario.password,
         'mail': usuario.mail,
-        'age': usuario.age,
-        'training': usuario.training?.name,
-        'idCurrentRoutine': usuario.training?.index,
-        'timesDone': usuario.timesDone.map((e) => e.toIso8601String()).toList(),
+        'age': usuario.age
       }),
     );
 
