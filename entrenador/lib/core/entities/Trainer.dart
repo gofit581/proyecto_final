@@ -4,6 +4,7 @@ class Trainer {
   String age;
   String mail;
   String password;
+  String trainerCode;
   //List<User> clients;
 
 Trainer(
@@ -13,6 +14,7 @@ Trainer(
       required this.password,
       required this.mail,
       required this.age,
+      required this.trainerCode,
 });
 
 @override

@@ -194,12 +194,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           content: Text('Por favor, verifique su contraseña'),
                         ),
                       );
-                    } else if (validateEmail(_registerMailTFController.text)) {
+                    } else if (validateEmail(_registerMailTFController.text) || await userManager.validateMail(_registerMailTFController.text)) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Por favor, ingrese un email valido'),
                         ),
                       );
+                    } else if(!await userManager.validateId(_registerIdTrainerTFController.text)){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Codigo de entrenador inexistente, por favor intentelo de nuevo'),
+                          ),
+                        );
+                    
                     } else {
                       if (_selectedDate!.isAfter(DateTime.now()) ||
                           (_selectedDate!.year == DateTime.now().year &&

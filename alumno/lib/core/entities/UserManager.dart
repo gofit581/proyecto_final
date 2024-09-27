@@ -44,8 +44,10 @@ class UserManager {
     _loggedUser = null;
   }
 
-  var login = (String mail, String password) async =>
-      {authService.loginAndSetUser(mail, password)};
+  var login = (String mail, String password) async {
+    bool success = await authService.loginAndSetUser(mail, password);
+    return success;
+  };
 
   Future<void> updateLoggedUser() async {
     if (_loggedUser != null) {
@@ -62,5 +64,15 @@ class UserManager {
       _loggedUser!.setAge(age);
       updateLoggedUser();
   }
+
+  var validateId = (String idTrainter) async {
+    bool result = await authService.searchIdTrainer(idTrainter);
+    return result;
+  };
+
+  var validateMail = (String mail) async {
+    bool result = await authService.validateMail(mail);
+    return result;
+  };
 
 }

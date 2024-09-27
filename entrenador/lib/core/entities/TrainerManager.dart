@@ -2,6 +2,7 @@ import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/services/auth_service.dart';
 import 'package:entrenador/services/register_service.dart';
 import 'package:entrenador/services/update_service.dart';
+import 'package:flutter/src/widgets/editable_text.dart';
 
 class TrainerManager {
   static RegisterService registerService = RegisterService();
@@ -45,8 +46,10 @@ class TrainerManager {
     _loggedUser = null;
   }
 
-  var login = (String mail, String password) async =>
-      {authService.loginAndSetUser(mail, password)};
+  var login = (String mail, String password) async {
+    bool success = await authService.loginAndSetUser(mail, password);
+    return success;
+  };
 
   Future<void> updateLoggedUser() async {
     if (_loggedUser != null) {
@@ -88,5 +91,15 @@ void clearUserListTimesDone(){
       //_loggedUser!.clearTimesDone();
       updateLoggedUser();
   }
+
+  var validateId = (String idTrainer) async {
+    bool success = await authService.searchIdTrainer(idTrainer);
+    return success;
+  };
+
+    var validateMail = (String mail) async {
+    bool result = await authService.validateMail(mail);
+    return result;
+  };
 
 }

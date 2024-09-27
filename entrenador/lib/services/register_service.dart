@@ -14,6 +14,7 @@ class RegisterService {
         'password': usuario.password,
         'mail': usuario.mail,
         'age': usuario.age,
+        'trainerCode':usuario.trainerCode,
       }),
     );
 

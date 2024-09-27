@@ -21,6 +21,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _registerConfirmedPasswordTFController = TextEditingController();
   final TextEditingController _registerMailTFController = TextEditingController();
   final TextEditingController _registerAgeTFController = TextEditingController();
+  final TextEditingController _registerIdTrainerTFController = TextEditingController();
 
   final TrainerManager trainerManager = TrainerManager();
   DateTime? _selectedDate;
@@ -138,14 +139,53 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 20),
+
+                SizedBox(
+                  width: 300,
+                  child: TextField(
+                    controller: _registerIdTrainerTFController,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: const InputDecoration(
+                      hintText: 'Crea tu Codigo de Entrenador',
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                /* const Text("Codigo de entrenador"),
+                
+                const SizedBox(height: 20),
+
+                SizedBox(
+                  width:200,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blueGrey),
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.blue,
+                    ),
+                    child: TextField(
+                      controller: _registerIdTrainerTFController,
+                      textAlign: TextAlign.center,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 20), */
+
                 ElevatedButton(
                   onPressed: () async {
                     if (_registerUserTFController.text.isEmpty ||
                         _registerPasswordTFController.text.isEmpty ||
                         _registerConfirmedPasswordTFController.text.isEmpty ||
                         _registerMailTFController.text.isEmpty ||
-                        _registerAgeTFController.text.isEmpty) {
+                        _registerAgeTFController.text.isEmpty || _registerIdTrainerTFController.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Por favor, ingrese todos los campos'),
@@ -157,12 +197,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           content: Text('Por favor, verifique su contraseña'),
                         ),
                       );
-                    } else if (validateEmail(_registerMailTFController.text)) {
+                    } else if (validateEmail(_registerMailTFController.text) || await trainerManager.validateMail(_registerMailTFController.text)) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Por favor, ingrese un email valido'),
                         ),
                       );
+                    } else if(await trainerManager.validateId(_registerIdTrainerTFController.text)){
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Codigo no disponible, por favor intentelo de nuevo'),
+                          ),
+                        );
                     } else {
                       if (_selectedDate!.isAfter(DateTime.now()) ||
                           (_selectedDate!.year == DateTime.now().year &&
@@ -181,6 +227,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         password: _registerPasswordTFController.text,
                         mail: _registerMailTFController.text,
                         age: _registerAgeTFController.text,
+                        trainerCode: _registerIdTrainerTFController.text,
                       );
 
                       try {

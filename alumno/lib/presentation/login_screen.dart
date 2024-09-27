@@ -68,7 +68,7 @@ class LoginScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_userTextFieldController.text.isEmpty ||
                         _passwordTextFieldController.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -78,10 +78,10 @@ class LoginScreen extends StatelessWidget {
                         ),
                       );
                     } else {
-                      userManager.login(_userTextFieldController.text,
+                      bool loginSuccess = await userManager.login(_userTextFieldController.text,
                           _passwordTextFieldController.text);
                       Usuario? usuario = userManager.getLoggedUser();
-                      if (usuario != null) {
+                      if (loginSuccess && usuario != null) {
                         context.goNamed(CalendarioScreen.name);
                         userManager.setLoggedUser(usuario);
                       } else {
