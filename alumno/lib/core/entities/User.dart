@@ -1,3 +1,5 @@
+import 'package:alumno/core/entities/Entrenador.dart';
+
 class Usuario {
   final String? id;
   String userName;
@@ -12,6 +14,7 @@ class Usuario {
   String? trainingDuration;
   String? injuries;
   String? extraActivities;
+  Entrenador? profesor;
 
   
   Usuario.parcial(
