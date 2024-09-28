@@ -4,6 +4,7 @@ import 'package:alumno/presentation/initial_screen.dart';
 import 'package:alumno/presentation/login_screen.dart';
 import 'package:alumno/presentation/register_alumno_data_screen.dart';
 import 'package:alumno/presentation/register_screen.dart';
+import 'package:alumno/presentation/clases_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(routes: [
@@ -36,6 +37,13 @@ final appRouter = GoRouter(routes: [
       usuario: state.extra as Usuario,
     ),
     name: RegisterAlumnoDataScreen.name,
+  ),
+  GoRoute(
+    path: '/clases',
+    builder: (context, state) => ClasesScreen(
+      date: state.extra as DateTime,
+    ),
+    name: ClasesScreen.name,
   ),
   GoRoute(
       path: '/register',

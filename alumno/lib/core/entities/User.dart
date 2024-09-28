@@ -16,57 +16,61 @@ class Usuario {
   String? extraActivities;
   Entrenador? profesor;
 
-  
-  Usuario.parcial(
-      {
-      this.id,
-      required this.userName,
-      required this.password,
-      required this.mail,
-      required this.age,
-      required this.idTrainer,
-     });
+  Usuario.parcial({
+    this.id,
+    required this.userName,
+    required this.password,
+    required this.mail,
+    required this.age,
+    required this.idTrainer,
+  });
 
-  Usuario(
-      {
-      this.id,
-      required this.userName,
-      required this.password,
-      required this.mail,
-      required this.age,
-      required this.idTrainer,
-      required this.objectiveDescription,
-      required this.experience,
-      required this.discipline,
-      required this.trainingDays,
-      required this.trainingDuration,
-      required this.injuries,
-      required this.extraActivities,
-     });
-
+  Usuario({
+    this.id,
+    required this.userName,
+    required this.password,
+    required this.mail,
+    required this.age,
+    required this.idTrainer,
+    required this.objectiveDescription,
+    required this.experience,
+    required this.discipline,
+    required this.trainingDays,
+    required this.trainingDuration,
+    required this.injuries,
+    required this.extraActivities,
+  });
 
   @override
   String toString() {
     return userName;
   }
 
-String getEmail(){
-  return mail;
-}
+  String getEmail() {
+    return mail;
+  }
 
-  String getAge(){
+  String getAge() {
     return age;
   }
 
-  void setUserName(String name){
+  Entrenador? getProfesor() {
+    return profesor;
+  }
+
+  void setUserName(String name) {
     userName = name;
   }
 
-  void setAge(String edad){
+  void setProfesor(Entrenador profesor) {
+    profesor = profesor;
+  }
+
+  void setAge(String edad) {
     age = edad;
   }
-  
-  void setEmail(String email){
+
+  void setEmail(String email) {
     mail = email;
   }
 }

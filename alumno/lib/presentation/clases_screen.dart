@@ -1,50 +1,147 @@
-//quiero que me armes una screen donde cuando se vaya a ella se recibira un DateTime por parametro. al momento de renderizar quiero que tome la agenda del profesor y la renderice. la agenda la romata del UserManager. Éste le dara su atributo profesor y este atributo de dara su atrubuto agenda. La agenda es un List<Clase>. La class Clase tiene como atributos un DateTime que indicara el dia y la hora de comienzo, duracion (int) que indicara en formato de horas cuanto dura la clase, un precio(numerico) y un alumno(Usuario). Si el alumno es null, quiero que el box donde se renderizo esa clase este pintado de verde, si no es null quiero que este de rojo al rederizar. quiero que me vaya renderizando las clases una a una hacia abajo hasta terminar con todas las que coincidan con la misma fecha que fue pasada por parametro (DateTime). dame el codigo completo
-
 import 'package:flutter/material.dart';
 import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/core/entities/Clase.dart';
+import 'package:alumno/core/entities/Entrenador.dart';
+import 'package:alumno/core/entities/User.dart';
+
+/////////////////////////////////////////////////////////////////// TESTING PACK
+// Simulamos algunos entrenadores para los usuarios
+
+// Creamos los usuarios con sus respectivos atributos
+// Usuario alumno1 = Usuario(
+//   id: '1',
+//   userName: 'JuanPerez',
+//   password: 'password123',
+//   mail: 'juan.perez@example.com',
+//   age: '25',
+//   idTrainer: '123',
+//   objectiveDescription: 'Perder peso',
+//   experience: 'Intermedio',
+//   discipline: 'CrossFit',
+//   trainingDays: 'Lunes, Miércoles, Viernes',
+//   trainingDuration: '1 hora',
+//   injuries: 'Ninguna',
+//   extraActivities: 'Ciclismo',
+// );
+
+// Usuario alumno2 = Usuario(
+//   id: '2',
+//   userName: 'AnaGarcia',
+//   password: 'password456',
+//   mail: 'ana.garcia@example.com',
+//   age: '28',
+//   idTrainer: '124',
+//   objectiveDescription: 'Ganar masa muscular',
+//   experience: 'Principiante',
+//   discipline: 'Levantamiento de pesas',
+//   trainingDays: 'Martes, Jueves, Sábado',
+//   trainingDuration: '1 hora y media',
+//   injuries: 'Lesión en la rodilla',
+//   extraActivities: 'Yoga',
+// );
+
+// // Generamos una lista de clases con fechas desde el 27/9/2024 hasta dentro de un mes
+// List<Clase> generarAgenda() {
+//   List<Clase> agenda = [];
+//   DateTime fechaInicio = DateTime(2024, 9, 27);
+
+//   for (int i = 0; i < 30; i++) {
+//     DateTime fechaClase = fechaInicio.add(Duration(days: i));
+
+//     // Generar 10 clases por día, empezando a las 10:00 am
+//     for (int j = 0; j < 10; j++) {
+//       DateTime horarioClase = DateTime(
+//         fechaClase.year,
+//         fechaClase.month,
+//         fechaClase.day,
+//         10 + j, // Clase de 10am, 11am, ..., 7pm
+//       );
+
+//       agenda.add(Clase(
+//         id: horarioClase,
+//         duracionHs: 1, // Todas las clases duran 1 hora
+//         alumno: j % 2 == 0
+//             ? null
+//             : (j % 3 == 0
+//                 ? alumno1
+//                 : alumno2), // Alternamos entre clases sin alumno, con Juan o con Ana
+//         precio: 50 + (j % 3) * 10, // Precio variado por clase
+//       ));
+//     }
+//   }
+//   return agenda;
+// }
+
+// // Creamos un objeto Entrenador con la agenda generada
+// Entrenador entrenadorHardcodeado = Entrenador(
+//   id: '123',
+//   nombre: 'Carlos',
+//   apellido: 'Rodríguez',
+//   alumnos: ['Juan', 'Ana'],
+//   agenda: generarAgenda(),
+//   rutinas: [], // No se están utilizando rutinas en este ejemplo
+//   ejercicios: [], // No se están utilizando ejercicios en este ejemplo
+// );
+
+///////////////////////////////////////////////////////////////
 
 class ClasesScreen extends StatelessWidget {
+  static const String name = 'ClasesScreen';
   final DateTime date;
-  final userManager = UserManager();
+  final userManager =
+      UserManager(); // UserManager que gestionará el usuario actual
 
   ClasesScreen({required this.date});
 
   @override
   Widget build(BuildContext context) {
-    
-    final profesor = userManager.profesor;
-    final agenda = profesor.agenda;
+    final usuario =
+        userManager.getLoggedUser(); // Obtenemos el usuario logueado
+    final Entrenador? profesor =
+        usuario?.getProfesor(); // Obtenemos el profesor desde el usuario
+    final List<Clase> clasesDelDia = [];
 
-    final clasesDelDia = agenda.where((clase) =>
-        clase.dia.year == date.year &&
-        clase.dia.month == date.month &&
-        clase.dia.day == date.day).toList();
-
+    // Solo si profesor no es null y la agenda no es null, filtramos las clases
+    if (profesor != null && profesor.agenda != null) {
+      clasesDelDia.addAll(profesor.agenda!
+          .where((clase) =>
+              clase.id.year == date.year &&
+              clase.id.month == date.month &&
+              clase.id.day == date.day)
+          .toList());
+    }
     return Scaffold(
       appBar: AppBar(
-        title: Text('Clases del ${date.toLocal()}'),
+        title: Text('Clases del ${date.day}/${date.month}/${date.year}'),
       ),
-      body: ListView.builder(
-        itemCount: clasesDelDia.length,
-        itemBuilder: (context, index) {
-          final clase = clasesDelDia[index];
-          return Container(
-            color: clase.alumno == null ? Colors.green : Colors.red,
-            padding: EdgeInsets.all(16.0),
-            margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Hora de comienzo: ${clase.dia.hour}:${clase.dia.minute}'),
-                Text('Duración: ${clase.duracion} horas'),
-                Text('Precio: \$${clase.precio}'),
-                Text('Alumno: ${clase.alumno?.nombre ?? 'Sin asignar'}'),
-              ],
+      body: clasesDelDia.isNotEmpty
+          ? ListView.builder(
+              itemCount: clasesDelDia.length,
+              itemBuilder: (context, index) {
+                final clase = clasesDelDia[index];
+                return Container(
+                  color: clase.alumno == null ? Colors.green : Colors.red,
+                  padding: const EdgeInsets.all(16.0),
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 4.0, horizontal: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                          'Hora de comienzo: ${clase.id.hour}:${clase.id.minute}',
+                          style: TextStyle(fontSize: 16)),
+                      Text('Duración: ${clase.duracionHs} horas',
+                          style: TextStyle(fontSize: 16)),
+                      Text('Precio: \$${clase.precio}',
+                          style: TextStyle(fontSize: 16)),
+                    ],
+                  ),
+                );
+              },
+            )
+          : Center(
+              child: Text('No hay clases programadas para esta fecha.'),
             ),
-          );
-        },
-      ),
     );
   }
 }

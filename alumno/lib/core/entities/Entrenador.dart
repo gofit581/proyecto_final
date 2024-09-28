@@ -6,10 +6,10 @@ class Entrenador {
   final String? id;
   String nombre;
   String apellido;
-  List<String> alumnos;
-  List<Clase> agenda;
-  List<Routine> rutinas;
-  List<Exercise> ejercicios;
+  List<String>? alumnos;
+  List<Clase>? agenda;
+  List<Routine>? rutinas;
+  List<Exercise>? ejercicios;
 
   Entrenador({
     this.id,
@@ -42,7 +42,7 @@ class Entrenador {
     this.apellido = apellido;
   }
 
-  List<String> getAlumnos() {
+  List<String>? getAlumnos() {
     return alumnos;
   }
 
@@ -50,7 +50,7 @@ class Entrenador {
     this.alumnos = alumnos;
   }
 
-  List<Clase> getAgenda() {
+  List<Clase>? getAgenda() {
     return agenda;
   }
 
