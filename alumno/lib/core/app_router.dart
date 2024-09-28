@@ -5,6 +5,7 @@ import 'package:alumno/presentation/login_screen.dart';
 import 'package:alumno/presentation/register_alumno_data_screen.dart';
 import 'package:alumno/presentation/register_screen.dart';
 import 'package:go_router/go_router.dart';
+import '../presentation/profile_screen.dart';
 
 final appRouter = GoRouter(routes: [
   GoRoute(
@@ -23,13 +24,13 @@ final appRouter = GoRouter(routes: [
   //   },
   //   name: HomeScreen.name,
   // ),
-  // GoRoute(
-  //   path: '/profile',
-  //   builder: (context, state) {
-  //     return ProfileScreen();
-  //   },
-  //   name: ProfileScreen.name,
-  // ),
+   GoRoute(
+     path: '/profile',
+      builder: (context, state) {
+       return const MyProfileScreen();
+     },
+     name: MyProfileScreen.name,
+    ),
   GoRoute(
     path: '/registerAlumnoData',
     builder: (context, state) => RegisterAlumnoDataScreen(
@@ -43,7 +44,7 @@ final appRouter = GoRouter(routes: [
       name: RegisterScreen.name),
   GoRoute(
       path: '/calendar',
-      builder: ((context, state) => CalendarioScreen()),
+      builder: ((context, state) => const CalendarioScreen()),
       name: CalendarioScreen.name),
   // GoRoute(
   //     path: '/routine',
