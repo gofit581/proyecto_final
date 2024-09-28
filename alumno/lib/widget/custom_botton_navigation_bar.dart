@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../presentation/profile_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -22,13 +23,6 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
           ),
           label: 'Routine'
         ),
-        // BottomNavigationBarItem(
-        //   icon: Image.asset(
-        //     'assets/image/MOBILE_FRIENDLY.jpg',
-        //     width: 40, height: 40,
-        //   ),
-        //   label: 'Students',
-        // ),
         BottomNavigationBarItem(
           icon: Image.asset(
             'assets/image/HOME.jpg',
@@ -53,7 +47,7 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
             context.goNamed('CalendarioScreen');
             break;
           case 2:
-            context.goNamed('PerfilScreen');
+            context.goNamed('ProfileScreen');
             break;
           default:
             break;
@@ -73,13 +67,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-
-  // Lista de pantallas que quieres mostrar al cambiar de tab
   final List<Widget> _children = [
     const Center(child: Text('Pantalla Rutina')),
     const Center(child: Text('Pantalla Estudiantes')),
     const Center(child: Text('Pantalla Principal')),
-    const Center(child: Text('Pantalla Perfil')),
+    const MyProfileScreen(),
 
   ];
 
@@ -95,10 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Custom Bottom Navigation'),
       ),
-      body: _children[_currentIndex], // Mostrar la pantalla correspondiente
+      body: _children[_currentIndex],
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _currentIndex
-      ), // Usar el widget de navegación personalizado
+      ),
     );
   }
 }
