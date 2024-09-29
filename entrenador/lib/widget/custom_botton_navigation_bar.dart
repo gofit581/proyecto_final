@@ -49,10 +49,13 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
           case 0:
             context.goNamed('RutinaScreen');
             break;
-          case 1:
-            context.goNamed('CalendarioScreen');
+            case 1:
+            context.goNamed('UsersListScreen');
             break;
           case 2:
+            context.goNamed('CalendarioScreen');
+            break;
+          case 3:
             context.goNamed('PerfilScreen');
             break;
           default:

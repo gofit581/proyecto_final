@@ -1,75 +1,68 @@
-import 'package:entrenador/core/entities/Routine.dart';
-import 'package:entrenador/core/entities/TypeOfTraining.dart';
-
 class Usuario {
   final String? id;
   String userName;
   String password;
   String mail;
-  int age;
-  TypeOfTraining? training;
-  Routine? currentRoutine;
-  final List<DateTime> timesDone; 
-  Usuario(
-      {required this.mail,
+  String age;
+  String idTrainer;
+  String? objectiveDescription;
+  String? experience;
+  String? discipline;
+  String? trainingDays;
+  String? trainingDuration;
+  String? injuries;
+  String? extraActivities;
+
+  
+  Usuario.parcial(
+      {
+      this.id,
       required this.userName,
       required this.password,
+      required this.mail,
       required this.age,
-      required this.training,
-      required this.currentRoutine,
+      required this.idTrainer,
+     });
+
+  Usuario(
+      {
       this.id,
-      List<DateTime>? timesDone,
-     }) : this.timesDone = timesDone ?? [];
+      required this.userName,
+      required this.password,
+      required this.mail,
+      required this.age,
+      required this.idTrainer,
+      required this.objectiveDescription,
+      required this.experience,
+      required this.discipline,
+      required this.trainingDays,
+      required this.trainingDuration,
+      required this.injuries,
+      required this.extraActivities,
+     });
 
 
   @override
   String toString() {
-    return '$userName';
-  }
-
-  void clearTimesDone(){
-    this.timesDone.clear();
-  }
-
-  Routine? getRoutine() {
-    return currentRoutine;
+    return userName;
   }
 
 String getEmail(){
-  return this.mail;
+  return mail;
 }
-  void setRoutine(Routine rutina){
-    currentRoutine = rutina;
-     timesDone.clear();
-  }
 
-  
-  void addDayDone(DateTime day) {
-    timesDone.add(day);
-    timesDone.sort((a, b) => a.compareTo(b));
-  }
-
-
-  void removeDayDone(DateTime day) {
-    timesDone.remove(day);
-  }
-
-  int getAge(){
-    return this.age;
+  String getAge(){
+    return age;
   }
 
   void setUserName(String name){
-    this.userName = name;
+    userName = name;
   }
 
-  void setAge(int edad){
+  void setAge(String edad){
     age = edad;
   }
-
-  void setTraining(TypeOfTraining training){
-    this.training = training;
-  }
-
+  
   void setEmail(String email){
     mail = email;
   }

@@ -1,3 +1,5 @@
+import 'package:entrenador/core/entities/User.dart';
+
 class Trainer {
   final String? id;
   String userName;
@@ -5,42 +7,47 @@ class Trainer {
   String mail;
   String password;
   String trainerCode;
-  //List<User> clients;
+  List<Usuario> clients = [];
 
-Trainer(
-     {
-     this.id,
-      required this.userName,
-      required this.password,
-      required this.mail,
-      required this.age,
-      required this.trainerCode,
-});
+  Trainer({
+    this.id,
+    required this.userName,
+    required this.password,
+    required this.mail,
+    required this.age,
+    required this.trainerCode,
+  });
 
-@override
-String toString() {
-  return userName;
-}
+  @override
+  String toString() {
+    return userName;
+  }
 
+  String getEmail() {
+    return mail;
+  }
 
-String getEmail(){
-  return mail;
-}
+  String getAge() {
+    return age;
+  }
 
-String getAge(){
-  return age;
-}
+  void setUserName(String name) {
+    userName = name;
+  }
 
-void setUserName(String name){
-  userName = name;
-}
+  void setAge(String edad) {
+    age = edad;
+  }
 
-void setAge(String edad){
-  age = edad;
-}
+  void setEmail(String email) {
+    mail = email;
+  }
 
-void setEmail(String email){
-  mail = email;
-}
+  List<Usuario> getClients() {
+    return clients;
+  }
 
+  void setClients(List<Usuario> clientes) {
+    clients = clientes;
+  }
 }

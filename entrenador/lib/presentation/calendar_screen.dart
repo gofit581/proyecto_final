@@ -22,7 +22,7 @@ class _CalendarioScreenState extends State<CalendarioScreen> {
       appBar: const CustomAppBar(
         title: 'Calendario',
       ),
-      bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
+      bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 2),
       body: SingleChildScrollView(
         child: Column(
           children: [
