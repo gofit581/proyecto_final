@@ -1,3 +1,5 @@
+import 'package:entrenador/core/entities/Clase.dart';
+
 class Trainer {
   final String? id;
   String userName;
@@ -5,16 +7,39 @@ class Trainer {
   String mail;
   String password;
   String trainerCode;
+  List<Clase>? agenda;
+  List<int>? diasLaborales;
+  int? duracionClasesMinutos;
+  int? trabajaDesdeDia;
+  int? trabajaHastaDia;
+  int? trabajaDesdeHora;
+  int? trabajaHastaHora;
+  double? precioPorClase;
+  //List<Routine> rutinas;
   //List<User> clients;
 
-Trainer(
-     {
+Trainer.parcial({
      this.id,
       required this.userName,
       required this.password,
       required this.mail,
       required this.age,
       required this.trainerCode,
+});
+
+Trainer({
+    this.id,
+    required this.userName,
+    required this.password,
+    required this.mail,
+    required this.age,
+    required this.trainerCode,
+    required this.agenda,
+    required this.diasLaborales,
+    required this.duracionClasesMinutos,
+    required this.trabajaDesdeHora,
+    required this.trabajaHastaHora,
+    required this.precioPorClase,
 });
 
 @override

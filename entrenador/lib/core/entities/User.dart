@@ -10,6 +10,7 @@ class Usuario {
   TypeOfTraining? training;
   Routine? currentRoutine;
   final List<DateTime> timesDone; 
+  
   Usuario(
       {required this.mail,
       required this.userName,

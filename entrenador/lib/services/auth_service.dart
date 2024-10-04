@@ -22,7 +22,7 @@ class AuthService {
         final List<dynamic> users = jsonDecode(response.body);
         for (var userData in users) {
           if (userData['mail'] == email && userData['password'] == password) {
-            final userOK = Trainer(
+            final userOK = Trainer.parcial(
               id: userData['id'],
               mail: userData['mail'],
               userName: userData['userName'],

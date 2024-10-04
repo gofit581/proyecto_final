@@ -1,6 +1,9 @@
+import 'package:entrenador/core/entities/Trainer.dart';
+import 'package:entrenador/presentation/agenda_screen.dart';
 import 'package:entrenador/presentation/calendar_screen.dart';
 import 'package:entrenador/presentation/initial_screen.dart';
 import 'package:entrenador/presentation/login_screen.dart';
+import 'package:entrenador/presentation/register_entrenador_data_screen.dart';
 import 'package:entrenador/presentation/register_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -32,6 +35,16 @@ final appRouter = GoRouter(routes: [
       path: '/register',
       builder: (context, state) => const RegisterScreen(),
       name: RegisterScreen.name),
+  GoRoute(
+      path: '/registerEntrenadorDataScreen',
+      builder: (context, state) => RegisterEntrenadorDataScreen(
+        trainer: state.extra as Trainer,
+      ),
+      name: RegisterEntrenadorDataScreen.name),
+  GoRoute(
+      path: '/agenda',
+      builder: ((context, state) => AgendaScreen()),
+      name: AgendaScreen.name),
   GoRoute(
       path: '/calendar',
       builder: ((context, state) => CalendarioScreen()),
