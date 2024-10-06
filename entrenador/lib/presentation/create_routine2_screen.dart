@@ -18,6 +18,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
+    final TextEditingController _routineObservationDayController = TextEditingController();
     Usuario user = datos.values.first;
     Routine routine = datos.keys.first;
     List<Exercise> exercises = [
@@ -45,6 +46,17 @@ class CreateRoutine2Screen extends ConsumerWidget {
               Text('Tiempo de descanso entre ejercicios: ${routine.rest}'),
               const SizedBox(height: 20,),
               _AddExerciseView(exercises: exercises,), /* routine.exercises[indexDay]), */
+              const SizedBox(height: 20),
+              TextFormField(
+                controller: _routineObservationDayController,
+                textCapitalization: TextCapitalization.words,
+                decoration: InputDecoration(
+                  labelText: 'Observacion del dia',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
               const SizedBox(height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +64,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
                 if(day > 1)
 
                 ElevatedButton(
-                onPressed: () {                   
+                onPressed: () {                  
                     context.push('/createRoutine2', extra: datos); // no me aparecen los datos guardados, deberia estar en un estado y que permanezcan ahi
                     ref.read(counterDayProvider.notifier).state--;
                     indexDay--;            

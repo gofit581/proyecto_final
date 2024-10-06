@@ -11,6 +11,8 @@ class Routine {
    TypeOfTraining? typeOfTraining;
    int? id;
    String? rest;
+  late List<String> observacionesPorDia;
+  late int trainingDays;
 
   //esto es de user
   Routine.parcial({
@@ -18,8 +20,10 @@ class Routine {
     required this.duration,
     required this.image,
     required this.rest,
+    required this.trainingDays,
   }) {
     this.exercises = [[Exercise.vacio()],[Exercise.vacio()],[Exercise.vacio()],];
+    this.observacionesPorDia = List<String>.filled(trainingDays,'');
   }
 
   Routine({

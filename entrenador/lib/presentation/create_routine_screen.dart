@@ -26,7 +26,7 @@ class _CreateRoutineScreenState extends State<CreateRoutineScreen> {
   List<TypeOfTraining> typeOfTraining = TypeOfTraining.values;
   TypeOfTraining selectedTraining = TypeOfTraining.LoseWeight;
   late TypeOfTraining aim;
-  Usuario actualUser = Usuario.parcial(userName: 'Pepe', password: '1', mail: '1', age: '3', idTrainer: '1');
+  Usuario actualUser = Usuario.parcial(userName: 'Pepe', password: '1', mail: '1', age: '3', idTrainer: '1', trainingDays: '3');
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +109,8 @@ class _CreateRoutineScreenState extends State<CreateRoutineScreen> {
                       title: _routineTitleController.text,
                       duration: int.parse(_routineDurationController.text),
                       image: _routineTypeOfTrainingController.text,
-                      rest: _routineRestController.text,
+                      rest: _routineDurationController.text,
+                      trainingDays : int.parse(actualUser.trainingDays),
                     );
 
                     

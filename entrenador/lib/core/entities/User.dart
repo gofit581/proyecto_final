@@ -10,7 +10,7 @@ class Usuario {
   String? objectiveDescription;
   String? experience;
   String? discipline;
-  String? trainingDays;
+  String trainingDays;
   String? trainingDuration;
   String? injuries;
   String? extraActivities;
@@ -23,6 +23,7 @@ class Usuario {
     required this.mail,
     required this.age,
     required this.idTrainer,
+    required this.trainingDays,
   });
 
   Usuario({
