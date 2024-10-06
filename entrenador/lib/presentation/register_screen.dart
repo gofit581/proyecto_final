@@ -1,5 +1,6 @@
 import 'package:date_format/date_format.dart';
 import 'package:entrenador/presentation/calendar_screen.dart';
+import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:entrenador/core/entities/Trainer.dart';

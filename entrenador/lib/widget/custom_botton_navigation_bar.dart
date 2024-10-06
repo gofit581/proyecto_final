@@ -1,3 +1,4 @@
+import 'package:entrenador/presentation/create_routine_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -47,7 +48,7 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
       onTap: (index) {
         switch (index) {
           case 0:
-            context.goNamed('RutinaScreen');
+            context.goNamed(CreateRoutineScreen.name);
             break;
           case 1:
             context.goNamed('CalendarioScreen');
