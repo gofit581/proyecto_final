@@ -1,10 +1,10 @@
 class Exercise {
-  late String title;
+  String? title;
   String? imageLink;
   String? description;
-  late int series;
-  late int repetitions;
-  late bool done;
+  int? series;
+  int? repetitions;
+  bool? done;
   //int idDia;
 
   Exercise.vacio();
@@ -23,7 +23,7 @@ class Exercise {
   });
   
   void toggleDone() {
-    done = !done;
+    done = !done!;
   }
 
   void setTitle(String title){
@@ -31,20 +31,29 @@ class Exercise {
   }
 
 void aumentarSerie(){
-  this.series++;
+  series = (series ?? 0) + 1;
 }
 
 void restarSerie(){
-  this.series--;
+  series = (series ?? 0) - 1;
 }
 
 void aumentarRepeticiones(){
-  this.repetitions++;
+  repetitions = (repetitions ?? 0) + 1;
 }
 
 void restarRepeticiones(){
-  this.repetitions--;
+  repetitions = (repetitions ?? 0) - 1;
 }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'imageLink': imageLink,
+      'description': description,
+      'series': series,
+      'repetitions': repetitions,
+    };
+  }
 
 }

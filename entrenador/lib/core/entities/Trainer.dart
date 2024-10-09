@@ -1,3 +1,5 @@
+import 'package:entrenador/core/entities/Routine.dart';
+
 class Trainer {
   final String? id;
   String userName;
@@ -5,6 +7,7 @@ class Trainer {
   String mail;
   String password;
   String trainerCode;
+  late List<Routine> routines;
   //List<User> clients;
 
 Trainer(
@@ -41,6 +44,10 @@ void setAge(String edad){
 
 void setEmail(String email){
   mail = email;
+}
+
+void addRoutine(Routine routine){
+  this.routines.add(routine);
 }
 
 }

@@ -1,119 +1,185 @@
-import 'package:entrenador/core/app_router.dart';
 import 'package:entrenador/core/entities/Exercise.dart';
 import 'package:entrenador/core/entities/Routine.dart';
+import 'package:entrenador/core/entities/RoutineManager.dart';
+import 'package:entrenador/core/entities/Trainer.dart';
+import 'package:entrenador/core/entities/TrainerManager.dart';
 import 'package:entrenador/core/entities/User.dart';
+import 'package:entrenador/presentation/calendar_screen.dart';
 import 'package:entrenador/presentation/provider/counter_day_routine.dart';
+import 'package:entrenador/presentation/provider/exercises_provider.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-
 class CreateRoutine2Screen extends ConsumerWidget {
-  static const String name = 'CreateRoutine2Screen';
   final Map<Routine, Usuario> datos;
+  static const name = "CreateRoutine2";
 
   const CreateRoutine2Screen({super.key, required this.datos});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-    final TextEditingController _routineObservationDayController = TextEditingController();
+    // Definición de variables y controladores
     Usuario user = datos.values.first;
     Routine routine = datos.keys.first;
-    List<Exercise> exercises = [
-      Exercise(title: 'Flexiones', imageLink: 'hola', description: 'hola'),
-      Exercise(title: 'Sentadillas', imageLink: 'hola', description: 'hola')
-    ]; // estos vienen de la lista de Ejercicios del Trainer
+    RoutineManager routineManager = RoutineManager();
+    TrainerManager trainerManager = TrainerManager();
+    Trainer actualTrainer = trainerManager.getLoggedUser()!;
 
+    
+    // Ejercicios para test, la Screen deberia instanciar los ejercicios del Trainer Actual
+    List<Exercise> exercisesOptions = [
+      Exercise(title: 'Flexiones', imageLink: 'hola', description: 'hola'),
+      Exercise(title: 'Sentadillas', imageLink: 'hola', description: 'hola'),
+    ];
+    final TextEditingController _routineObservationDayController = TextEditingController();
     final day = ref.watch(counterDayProvider);
-    final maxDays = int.parse(user.age);
+    final maxDays = int.parse(user.age); //Estoy usando el Age porque es un valor INT, aca deberia ser: user.trainingDays
     int indexDay = day - 1;
 
+    void generateRoutine(){
+      for(int i =0; i < maxDays-1; i++){
+        routine.exercises[i] = ref.watch(exercisesNotifierProvider).exercises[i];
+        routine.observationsPerDay[i] = ref.watch(exercisesNotifierProvider).observations[i];
+      } 
+    }
+
     return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Rutina: ${routine.title}',
-      ),
+      appBar: CustomAppBar(title: 'Rutina: ${routine.title}'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Text('Dia de rutina $day/$maxDays'),
+              Text('Día de rutina $day/$maxDays'),
               Text(routine.title),
-              Text('Objetivo ${routine.image}'),
-              Text('Duracion en semanas: ${routine.duration}'),
+              Text('Objetivo: ${routine.image}'),
+              Text('Duración en semanas: ${routine.duration}'),
               Text('Tiempo de descanso entre ejercicios: ${routine.rest}'),
-              const SizedBox(height: 20,),
-              _AddExerciseView(exercises: exercises,), /* routine.exercises[indexDay]), */
+              const SizedBox(height: 20),
+              _AddExerciseView(exercisesOptions: exercisesOptions, indexDay: indexDay),
               const SizedBox(height: 20),
               TextFormField(
                 controller: _routineObservationDayController,
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
-                  labelText: 'Observacion del dia',
+                  labelText: 'Observación del día',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                if(day > 1)
-
-                ElevatedButton(
-                onPressed: () {                  
-                    context.push('/createRoutine2', extra: datos); // no me aparecen los datos guardados, deberia estar en un estado y que permanezcan ahi
-                    ref.read(counterDayProvider.notifier).state--;
-                    indexDay--;            
-                },
-                child: const Icon(Icons.arrow_left),
-              ),
-              ElevatedButton(
-                onPressed: () {                   
-                  if(day < maxDays){
-                    context.push('/createRoutine2', extra: datos);
-                    ref.read(counterDayProvider.notifier).state++;
-                    indexDay++;
-                  }                  
-                },
-                child: const Icon(Icons.arrow_right),
-              ),
-              const SizedBox(width: 10,),
-              ElevatedButton(
-                onPressed: () {                   
-                  if(day < maxDays){
-                    //context.push('/createExercise');
-                  }                  
-                },
-                child: const Text('Nuevo ejercicio'),
-              ),
-                  ],
-                ),
+              ),               
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (day == maxDays)...[
+                  if (day > 1)
+                    ElevatedButton(
+                      onPressed: () {
+                        ref.read(counterDayProvider.notifier).state--;
+                        context.push('/createRoutine2', extra: datos);
+                      },
+                      child: const Icon(Icons.arrow_left),
+                    ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (day < maxDays) {
+                        ref.read(counterDayProvider.notifier).state++;
+                        ref.read(exercisesNotifierProvider.notifier).addObservation(_routineObservationDayController.text);
+                        context.push('/createRoutine2', extra: datos);
+                      }
+                    },
+                    child: const Icon(Icons.arrow_right),
+                  ),
+                  const SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (day < maxDays) {
+                        // Lógica para agregar un nuevo ejercicio
+                      }
+                    },
+                    child: const Text('Nuevo ejercicio'),
+                  ),
+                ],
+              ),
+              if (day == maxDays) ...[
                 ElevatedButton(
-                onPressed: () {
-                  // Pegue a la base de datos y guarde la rutina
-                  // Pop up que te pregunte si estas seguro que no queres cambiar nada
-                },
-                child: const Icon(Icons.check),
+                  onPressed: () {
+                    Routine newRoutine = Routine(
+                      title: routine.title,
+                      description: routine.description,
+                      duration: routine.duration,
+                      exercises: routine.exercises,
+                      aim: routine.aim,
+                      image: routine.image,
+                      typeOfTraining: routine.typeOfTraining,
+                      idTrainer: actualTrainer.id!,
+                      observationsPerDay: routine.observationsPerDay,
+                      trainingDays: routine.trainingDays,
+                      rest: routine.rest,
+                    );                    
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Nueva Rutina: ${routine.title}'),
+                          content: const Text('¿Estás seguro que deseas crear esta nueva rutina?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                generateRoutine();
+                                routineManager.addRoutine(newRoutine, actualTrainer);
+                                ref.read(counterDayProvider.notifier).state = 1;
+                                Navigator.of(context).pop(); 
+                                context.goNamed(CalendarioScreen.name); 
+                              },
+                              child: const Text('Aceptar'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); 
+                              },
+                              child: const Text('Cancelar'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: const Icon(Icons.check),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Pegue a la base de datos y guarde la rutina
-                    // Pop up que te pregunte si estas seguro que no queres cambiar nada
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Nueva Rutina: ${routine.title}'),
+                          content: const Text('¿Estás seguro que deseas descartar esta nueva rutina?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                context.goNamed(CalendarioScreen.name); 
+                              },
+                              child: const Text('Aceptar'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); 
+                              },
+                              child: const Text('Cancelar'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
                   child: const Icon(Icons.close),
                 ),
-                ],
-                ]
-              ),
-            ]
+              ],
+            ],
           ),
         ),
       ),
@@ -121,65 +187,49 @@ class CreateRoutine2Screen extends ConsumerWidget {
   }
 }
 
-
-class _AddExerciseView extends StatefulWidget {
-  final List<Exercise> exercises;
+class _AddExerciseView extends ConsumerStatefulWidget {
+  final List<Exercise> exercisesOptions;
+  final int indexDay;
 
   const _AddExerciseView({
-    super.key,
-    required this.exercises,
+    required this.exercisesOptions,
+    required this.indexDay,
   });
 
   @override
-  State<_AddExerciseView> createState() => _AddExerciseViewState();
+  ConsumerState<_AddExerciseView> createState() => _AddExerciseViewState();
 }
 
-
-class _AddExerciseViewState extends State<_AddExerciseView> {
+class _AddExerciseViewState extends ConsumerState<_AddExerciseView> {
   List<Exercise> selectedExercises = [];
 
-    @override
+
+  @override
   void initState() {
     super.initState();
-    selectedExercises.add(Exercise.create(" ", 0, 0));
-  }
- 
-
-  void _addExercise() {
-    setState(() {
-      selectedExercises.add(Exercise.create(" ", 0, 0));
-
-    });
   }
 
-  void _removeExercise(int index) {
-    setState(() {
-      selectedExercises.removeAt(index);
-    });
-  }
-
-  
 
   @override
   Widget build(BuildContext context) {
-    return Column(      
+    final exerciseSelected = ref.watch(exercisesNotifierProvider).exercises;
+    return Column(
       children: [
-        // Lista de ejercicios seleccionados
         ListView.builder(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: selectedExercises.length,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: exerciseSelected[widget.indexDay].length,
           itemBuilder: (BuildContext context, int index) {
             return _ExerciseEntry(
-              exercise: selectedExercises[index],
-              exercises: widget.exercises,
-              onRemove: () => _removeExercise(index),
+              exercise: exerciseSelected[widget.indexDay][index],
+              exercises: widget.exercisesOptions,
+              onRemove: () { ref.read(exercisesNotifierProvider.notifier).removeExercise(widget.indexDay,index);}, // no funciona
             );
           },
-        ),
-        SizedBox(height: 20),
+        ),     
+        const SizedBox(height: 20),
         ElevatedButton(
-          onPressed: _addExercise,
+          onPressed: (){ ref.read(exercisesNotifierProvider.notifier).addExercise(widget.indexDay,Exercise.create("", 0, 0));},
           child: const Text('+'),
         ),
       ],
@@ -193,50 +243,51 @@ class _ExerciseEntry extends StatefulWidget {
   final VoidCallback onRemove;
 
   const _ExerciseEntry({
-    Key? key,
     required this.exercise,
     required this.exercises,
     required this.onRemove,
-  }) : super(key: key);
+  });
 
   @override
   State<_ExerciseEntry> createState() => _ExerciseEntryState();
 }
-late String? exerciseSelected;
-late Exercise newExercise = Exercise.create("", 0, 0);
 
 class _ExerciseEntryState extends State<_ExerciseEntry> {
+  late String? exerciseSelected;
+
   @override
   Widget build(BuildContext context) {
+    final initialValue = widget.exercises.map((e) => e.title).contains(widget.exercise.title) ? widget.exercise.title : null;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(
           width: 200,
-          child: Expanded(
-            child: DropdownButtonFormField<String>(
-              value: widget.exercises[0].title,
-              decoration: const InputDecoration(
-                labelText: 'Ejercicio',
-                border: OutlineInputBorder(),
-              ),
-              items: widget.exercises.map((exercise) {
-                return DropdownMenuItem<String>(
-                  value: exercise.title,
-                  child: Text(exercise.title),
-                );
-              }).toList(),
-              onChanged: (value) {
-                exerciseSelected = value!;
-                setState(() {
-                  widget.exercise.setTitle(exerciseSelected!);
-                });
-              },
+          child: DropdownButtonFormField<String>(
+            value: initialValue,
+            decoration: const InputDecoration(
+              labelText: 'Ejercicio',
+              border: OutlineInputBorder(),
             ),
+            items: widget.exercises.map((exercise) {
+              return DropdownMenuItem<String>(
+                value: exercise.title,
+                child: Text(exercise.title!),
+              );
+            }).toList(),
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  exerciseSelected = value;
+                  widget.exercise.setTitle(value);
+                });
+              }
+            },
           ),
         ),
         IconButton(
-          icon: Icon(Icons.remove_circle),
+          icon: const Icon(Icons.remove_circle),
           onPressed: widget.onRemove,
         ),
         Column(
@@ -245,22 +296,21 @@ class _ExerciseEntryState extends State<_ExerciseEntry> {
             Column(
               children: [
                 IconButton(
-                  icon: Icon(Icons.arrow_upward, size: 15,),
+                  icon: const Icon(Icons.arrow_upward, size: 15),
                   onPressed: () {
                     setState(() {
                       widget.exercise.aumentarSerie();
                     });
-                    
                   },
                 ),
                 Text('${widget.exercise.series}'),
                 IconButton(
-                  icon: Icon(Icons.arrow_downward, size: 15,),
+                  icon: const Icon(Icons.arrow_downward, size: 15),
                   onPressed: () {
                     setState(() {
-                      if (widget.exercise.series > 0) {
-                      widget.exercise.restarSerie();
-                    }
+                      if (widget.exercise.series! > 0) {
+                        widget.exercise.restarSerie();
+                      }
                     });
                   },
                 ),
@@ -274,24 +324,22 @@ class _ExerciseEntryState extends State<_ExerciseEntry> {
             Column(
               children: [
                 IconButton(
-                  icon: Icon(Icons.arrow_upward, size: 15,),
+                  icon: const Icon(Icons.arrow_upward, size: 15),
                   onPressed: () {
                     setState(() {
-                      widget.exercise.aumentarRepeticiones();    
+                      widget.exercise.aumentarRepeticiones();
                     });
-                    
                   },
                 ),
                 Text('${widget.exercise.repetitions}'),
                 IconButton(
-                  icon: Icon(Icons.arrow_downward, size: 15,),
+                  icon: const Icon(Icons.arrow_downward, size: 15),
                   onPressed: () {
                     setState(() {
-                      if (widget.exercise.repetitions > 0) {
-                      widget.exercise.restarRepeticiones();
-                    } 
+                      if (widget.exercise.repetitions! > 0) {
+                        widget.exercise.restarRepeticiones();
+                      }
                     });
-
                   },
                 ),
               ],

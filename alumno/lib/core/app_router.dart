@@ -4,6 +4,7 @@ import 'package:alumno/presentation/initial_screen.dart';
 import 'package:alumno/presentation/login_screen.dart';
 import 'package:alumno/presentation/register_alumno_data_screen.dart';
 import 'package:alumno/presentation/register_screen.dart';
+import 'package:alumno/presentation/trainingDay_screen.dart';
 //import '../presentation/';
 import 'package:go_router/go_router.dart';
 import '../presentation/profile_screen.dart';
@@ -67,4 +68,8 @@ final appRouter = GoRouter(routes: [
   //     path: '/profile-info',
   //     builder: (context, state) => ProfileInfoScreen(),
   //     name: ProfileInfoScreen.name)
+  GoRoute(
+      path: '/trainingDay',
+      builder: ((context, state) =>  TrainingdayScreen()),
+      name: TrainingdayScreen.name),
 ]);

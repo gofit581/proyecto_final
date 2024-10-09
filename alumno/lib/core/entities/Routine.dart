@@ -3,15 +3,19 @@ import 'package:alumno/core/entities/TypeOfTraining.dart';
 
 class Routine {
   final String title;
-  final String description;
-  final int duration;
+  late String description;
+  late int duration;
   final List<Exercise> exercises;
-  final int aim;
-  final String? image;
-  final TypeOfTraining typeOfTraining;
-  final int? id;
+  late int aim;
+  late String? image;
+  late TypeOfTraining typeOfTraining;
+  late int? id;
 
   //esto es de user
+  Routine.parcial({
+    required this.title,
+    required this.exercises,
+  });
 
   Routine({
     required this.title,

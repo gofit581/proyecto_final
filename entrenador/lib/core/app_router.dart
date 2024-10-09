@@ -11,7 +11,7 @@ import 'package:go_router/go_router.dart';
 final appRouter = GoRouter(routes: [
   
   GoRoute(
-    path: '/initial',
+    path: '/',
     builder: (context, state) => InitialScreen(),
     name: InitialScreen.name,
   ),
@@ -54,7 +54,7 @@ final appRouter = GoRouter(routes: [
   //     builder: (context, state) => ProfileInfoScreen(),
   //     name: ProfileInfoScreen.name)
   GoRoute(
-    path: '/',
+    path: '/createRoutine',
     builder: (context, state) => CreateRoutineScreen(
       /*actualUser: state.extra as Usuario*/),
     name: CreateRoutineScreen.name,

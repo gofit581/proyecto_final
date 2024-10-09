@@ -2,11 +2,14 @@ import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/TypeOfTraining.dart';
 import 'package:entrenador/core/entities/User.dart';
 import 'package:entrenador/presentation/create_routine2_screen.dart';
+import 'package:entrenador/presentation/provider/exercises_provider.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
+import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class CreateRoutineScreen extends StatefulWidget {
+class CreateRoutineScreen extends ConsumerStatefulWidget {
 
   static const String name = 'CreateRoutineScreen';
   /*final Usuario actualUser;*/
@@ -14,10 +17,10 @@ class CreateRoutineScreen extends StatefulWidget {
   CreateRoutineScreen({super.key/*, required this.actualUser*/});
 
   @override
-  State<CreateRoutineScreen> createState() => _CreateRoutineScreenState();
+  ConsumerState<CreateRoutineScreen> createState() => _CreateRoutineScreenState();
 }
 
-class _CreateRoutineScreenState extends State<CreateRoutineScreen> {
+class _CreateRoutineScreenState extends ConsumerState<CreateRoutineScreen> {
 
   final TextEditingController _routineTypeOfTrainingController = TextEditingController();
   final TextEditingController _routineTitleController = TextEditingController();
@@ -34,6 +37,7 @@ class _CreateRoutineScreenState extends State<CreateRoutineScreen> {
       appBar: const CustomAppBar(
         title: 'Crear rutina',
       ),
+      bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 0),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -109,24 +113,16 @@ class _CreateRoutineScreenState extends State<CreateRoutineScreen> {
                       title: _routineTitleController.text,
                       duration: int.parse(_routineDurationController.text),
                       image: _routineTypeOfTrainingController.text,
-                      rest: _routineDurationController.text,
+                      rest: int.parse(_routineRestController.text),
                       trainingDays : int.parse(actualUser.trainingDays),
                     );
 
-                    
-                    try {
+                    ref.read(exercisesNotifierProvider.notifier).initializeRoutine(int.parse(actualUser.trainingDays));
                         Map<Routine, Usuario> datos = {
                           routine: actualUser,
                         };
                         context.push('/createRoutine2',                          
                           extra: datos);
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Error al crear rutina'),
-                          ),
-                        );
-                      }
 
                   }
                 },

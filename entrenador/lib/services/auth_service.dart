@@ -1,3 +1,4 @@
+import 'package:entrenador/core/entities/RoutineManager.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +6,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AuthService {
-  final TrainerManager _userManager;
+  final TrainerManager _trainerManager;
 
-  AuthService(this._userManager);
+  AuthService(this._trainerManager);
 
   final String baseUrl = 'https://66d746e0006bfbe2e650640f.mockapi.io/api';
 
@@ -31,12 +32,12 @@ class AuthService {
               trainerCode: userData['trainerCode']
             );
 
-            _userManager.setLoggedUser(userOK);
-            _userManager.agregarUsuario(userOK);
+            _trainerManager.setLoggedUser(userOK);
+            _trainerManager.agregarUsuario(userOK);
             return true;
           }
         }
-        throw Exception('User not found. Users: ${_userManager.getLoggedUser()}');
+        throw Exception('User not found. Users: ${_trainerManager.getLoggedUser()}');
       } else {
         throw Exception('Failed to load users');
       }

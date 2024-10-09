@@ -10,8 +10,9 @@ class Routine {
    String? image;
    TypeOfTraining? typeOfTraining;
    int? id;
-   String? rest;
-  late List<String> observacionesPorDia;
+   int rest;
+  late String idTrainer;
+  late List<String> observationsPerDay;
   late int trainingDays;
 
   //esto es de user
@@ -23,7 +24,7 @@ class Routine {
     required this.trainingDays,
   }) {
     this.exercises = [[Exercise.vacio()],[Exercise.vacio()],[Exercise.vacio()],];
-    this.observacionesPorDia = List<String>.filled(trainingDays,'');
+    this.observationsPerDay = List<String>.filled(trainingDays,'');
   }
 
   Routine({
@@ -34,6 +35,9 @@ class Routine {
     required this.aim,
     required this.typeOfTraining,
     required this.rest,
+    required this.idTrainer,
+    required this.observationsPerDay,
+    required this.trainingDays,
     this.image,
     this.id,
   });
