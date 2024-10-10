@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import '../widget/custom_app_bar.dart';
 import '../widget/custom_botton_navigation_bar.dart';
 import '../presentation/initial_screen.dart';
-import '../core/entities/UserManager.dart';
-import '../core/entities/User.dart';
+import '../core/entities/TrainerManager.dart';
+import '../core/entities/Trainer.dart';
 
 class MyProfileScreen extends StatefulWidget {
   static const String name = 'ProfileScreen';
-  UserManager userManager = UserManager();
+  TrainerManager trainerManager = TrainerManager();
 
   MyProfileScreen({super.key});
 
@@ -16,7 +16,7 @@ class MyProfileScreen extends StatefulWidget {
 }
 
 class _MyProfileScreenState extends State<MyProfileScreen> {
-  Usuario? actualUsuario;
+  Trainer? actualEntrenador;
   bool isLoading = false;
 
   @override
@@ -27,7 +27,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
 
    Future<void> _loadUserData() async {
       setState(() {
-        actualUsuario = UserManager().getLoggedUser();
+        actualEntrenador = TrainerManager().getLoggedUser();
       });
     }
 
@@ -114,7 +114,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            actualUsuario?.userName ?? '',
+                            actualEntrenador?.userName ?? '',
                             style: const TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),
@@ -146,7 +146,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            actualUsuario?.mail ?? '',
+                            actualEntrenador?.mail ?? '',
                             style: const TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),

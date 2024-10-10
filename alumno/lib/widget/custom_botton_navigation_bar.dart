@@ -69,9 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     const Center(child: Text('Pantalla Rutina')),
-    const Center(child: Text('Pantalla Estudiantes')),
     const Center(child: Text('Pantalla Principal')),
-    const MyProfileScreen(),
+    MyProfileScreen(),
 
   ];
 
@@ -84,9 +83,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Custom Bottom Navigation'),
-      ),
       body: _children[_currentIndex],
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _currentIndex

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../presentation/profile_screen.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
@@ -27,7 +28,7 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
             'assets/image/MOBILE_FRIENDLY.jpg',
             width: 40, height: 40,
           ),
-          label: 'Students',
+          label: 'Home',
         ),
         BottomNavigationBarItem(
           icon: Image.asset(
@@ -50,10 +51,13 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
             context.goNamed('RutinaScreen');
             break;
           case 1:
-            context.goNamed('CalendarioScreen');
+            context.goNamed('ListaAlumnosScreen');
             break;
           case 2:
-            context.goNamed('PerfilScreen');
+            context.goNamed('CalendarioScreen');
+            break;
+          case 3:
+            context.goNamed('ProfileScreen');
             break;
           default:
             break;
@@ -73,13 +77,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-
-  // Lista de pantallas que quieres mostrar al cambiar de tab
   final List<Widget> _children = [
     const Center(child: Text('Pantalla Rutina')),
-    const Center(child: Text('Pantalla Estudiantes')),
+    const Center(child: Text('Pantalla Lista Alumnos')),
     const Center(child: Text('Pantalla Principal')),
-    const Center(child: Text('Pantalla Perfil')),
+    MyProfileScreen(),
 
   ];
 
@@ -92,13 +94,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Custom Bottom Navigation'),
-      ),
-      body: _children[_currentIndex], // Mostrar la pantalla correspondiente
+      body: _children[_currentIndex],
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _currentIndex
-      ), // Usar el widget de navegación personalizado
+      ),
     );
   }
 }
