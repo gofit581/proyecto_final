@@ -4,6 +4,7 @@ import 'package:alumno/core/entities/Routine.dart';
 import 'package:alumno/core/entities/Exercise.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterService {
   final String baseUrl = 'https://66d746e0006bfbe2e650640f.mockapi.io/api';
@@ -62,6 +63,16 @@ class RegisterService {
     );
   }
 
+  Future<void> saveUserId(String userId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('userId', userId);
+  }
+
+  Future<String?> getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userId');
+  }
+
   Future<Routine> fetchRoutine(int typeOfRoutine) async {
   const baseUrl = 'https://665887705c3617052648e130.mockapi.io/api';
   final response = await http.get(Uri.parse('$baseUrl/routines?typeOfTraining=$typeOfRoutine'));
@@ -92,7 +103,9 @@ class RegisterService {
     aim: routine['aim'],
     typeOfTraining: TypeOfTraining.values[typeOfRoutine],
   );
+  
 }
+
 
 
   // Future<Routine> fetchRoutineByTrainingId(int typeOfTrainingId) async {

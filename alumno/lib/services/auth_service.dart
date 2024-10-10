@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../core/entities/User.dart';
 import '../core/entities/UserManager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class AuthService {
   final UserManager _userManager;
 
@@ -50,6 +51,18 @@ class AuthService {
       print('Error: $e');
       return false; // Opcional: vuelve a lanzar la excepción si necesitas manejarla en otro lugar
     }
+  }
+
+  // Función para guardar el userId en SharedPreferences
+  Future<void> saveUserId(String userId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('userId', userId);
+  }
+
+  // Función para obtener el userId desde SharedPreferences
+  Future<String?> getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userId');
   }
 
   Future<bool> searchIdTrainer(String idTrainter) async {

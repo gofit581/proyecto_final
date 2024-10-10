@@ -2,6 +2,7 @@ import 'package:alumno/core/entities/User.dart';
 import '../../services/auth_service.dart';
 import '../../services/update_service.dart';
 import '../../services/register_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class UserManager {
@@ -20,6 +21,17 @@ class UserManager {
   Future<void> registerUser(Usuario usuario) async {
     agregarUsuario(usuario);
     await registerService.registerUser(usuario);
+  }
+  // Función para guardar el userId en SharedPreferences
+  Future<void> saveUserId(String userId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('userId', userId);
+  }
+
+  // Función para obtener el userId desde SharedPreferences
+  Future<String?> getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userId');
   }
 
   Usuario? existeUsuario(String mail, String password) {

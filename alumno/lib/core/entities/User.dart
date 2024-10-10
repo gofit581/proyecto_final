@@ -41,6 +41,24 @@ class Usuario {
     required this.extraActivities,
   });
 
+   factory Usuario.fromJson(Map<String, dynamic> json) {
+    return Usuario(
+      id: json['id'],
+      userName: json['userName'],
+      password: json['password'],
+      mail: json['mail'],
+      age: json['age'],
+      idTrainer: json['idTrainer'],
+      objectiveDescription: json['objectiveDescription'],
+      experience: json['experience'],
+      discipline: json['discipline'],
+      trainingDays: json['trainingDays'],
+      trainingDuration: json['trainingDuration'],
+      injuries: json['injuries'],
+      extraActivities: json['extraActivities'],
+    );
+  }
+
   @override
   String toString() {
     return userName;
@@ -57,6 +75,21 @@ class Usuario {
   Entrenador? getProfesor() {
     return profesor;
   }
+
+  Usuario.isEmpty() : 
+      id='',
+      userName='',
+      password='',
+      mail='',
+      age='',
+      idTrainer='',
+      objectiveDescription='',
+      experience='',
+      discipline='',
+      trainingDays='',
+      trainingDuration='',
+      injuries='',
+      extraActivities='';
 
   void setUserName(String name) {
     userName = name;
