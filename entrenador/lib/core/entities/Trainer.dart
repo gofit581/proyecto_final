@@ -1,4 +1,5 @@
 import 'package:entrenador/core/entities/Clase.dart';
+import 'package:entrenador/core/entities/Routine.dart';
 
 class Trainer {
   final String? id;
@@ -15,7 +16,7 @@ class Trainer {
   int? trabajaDesdeHora;
   int? trabajaHastaHora;
   double? precioPorClase;
-  //List<Routine> rutinas;
+  List<Routine>? rutinas;
   //List<User> clients;
 
 Trainer.parcial({
@@ -40,6 +41,7 @@ Trainer({
     required this.trabajaDesdeHora,
     required this.trabajaHastaHora,
     required this.precioPorClase,
+    required this.rutinas,
 });
 
 @override

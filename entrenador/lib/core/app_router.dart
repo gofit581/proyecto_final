@@ -1,7 +1,10 @@
 import 'package:entrenador/core/entities/Trainer.dart';
+import 'package:entrenador/core/entities/User.dart';
+import 'package:entrenador/presentation/add_routine_screen.dart';
 import 'package:entrenador/presentation/agenda_screen.dart';
 import 'package:entrenador/presentation/calendar_screen.dart';
 import 'package:entrenador/presentation/initial_screen.dart';
+import 'package:entrenador/presentation/list_routine.dart';
 import 'package:entrenador/presentation/login_screen.dart';
 import 'package:entrenador/presentation/register_entrenador_data_screen.dart';
 import 'package:entrenador/presentation/register_screen.dart';
@@ -10,7 +13,7 @@ import 'package:go_router/go_router.dart';
 final appRouter = GoRouter(routes: [
   GoRoute(
     path: '/',
-    builder: (context, state) => InitialScreen(),
+    builder: (context, state) => const InitialScreen(),
     name: InitialScreen.name,
   ),
   GoRoute(
@@ -47,8 +50,18 @@ final appRouter = GoRouter(routes: [
       name: AgendaScreen.name),
   GoRoute(
       path: '/calendar',
-      builder: ((context, state) => CalendarioScreen()),
+      builder: ((context, state) => const CalendarioScreen()),
       name: CalendarioScreen.name),
+  GoRoute(
+    path: '/ListRoutine',
+    builder: ((context, state) => const ListRoutine()),
+    name: ListRoutine.name),
+  GoRoute(
+    path: '/AddRoutine',
+    builder: ((context, state) => AddRoutineScreen(
+      alumno: state.extra as Usuario)
+    ),
+    name: AddRoutineScreen.name),
   // GoRoute(
   //     path: '/routine',
   //     builder: (context, state) => RoutineScreen(),

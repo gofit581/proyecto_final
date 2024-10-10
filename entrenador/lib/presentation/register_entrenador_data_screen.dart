@@ -1,14 +1,11 @@
 import 'package:entrenador/core/app_router.dart';
-import 'package:entrenador/core/entities/Clase.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/presentation/agenda_screen.dart';
-import 'package:entrenador/presentation/calendar_screen.dart';
 import 'package:entrenador/services/update_service.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 class RegisterEntrenadorDataScreen extends StatelessWidget {
   static const String name = 'RegisterEntrenadorDataScreen';
@@ -193,7 +190,8 @@ class _FormularioState extends State<_Formulario> {
                       duracionClasesMinutos: int.tryParse(_registerDuracionController.text),
                       trabajaDesdeHora: int.tryParse(_registerTrabajaDesdeController.text),
                       trabajaHastaHora: int.tryParse(_registerTrabajaHastaController.text),
-                      precioPorClase: double.tryParse(_registerPrecioController.text)
+                      precioPorClase: double.tryParse(_registerPrecioController.text),
+                      rutinas: [],
                     );
           
                     try {

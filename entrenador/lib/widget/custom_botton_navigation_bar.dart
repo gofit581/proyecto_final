@@ -47,13 +47,16 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
       onTap: (index) {
         switch (index) {
           case 0:
-            context.goNamed('RutinaScreen');
+            context.goNamed('ListRoutine');
             break;
           case 1:
-            context.goNamed('CalendarioScreen');
+            context.goNamed('');
             break;
           case 2:
-            context.goNamed('PerfilScreen');
+            context.goNamed('CalendarioScreen');
+            break;
+          case 3:
+            context.goNamed('');
             break;
           default:
             break;
