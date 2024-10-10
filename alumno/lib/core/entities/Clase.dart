@@ -1,16 +1,15 @@
-import '../entities/User.dart';
+import 'package:alumno/core/entities/User.dart';
 
 class Clase {
   DateTime id;
-  double? duracionHs;
-  double? precio;
+  int duracionHs;
   Usuario? alumno;
+  double precio;
 
   Clase({
     required this.id,
     required this.duracionHs,
-    required this.precio,
     this.alumno,
+    required this.precio,
   });
-
 }
