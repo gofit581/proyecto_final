@@ -15,7 +15,7 @@ class Usuario {
   String? objectiveDescription;
   String? experience;
   String? discipline;
-  String? trainingDays;
+  String trainingDays = '0';
   String? trainingDuration;
   String? injuries;
   String? extraActivities;
@@ -33,7 +33,7 @@ class Usuario {
     this.objectiveDescription,
     this.experience,
     this.discipline,
-    this.trainingDays,
+    required this.trainingDays,
     this.trainingDuration,
     this.injuries,
     this.extraActivities,
@@ -122,4 +122,6 @@ class Usuario {
 
     toJson() {}
   }
+
+  toJson() {}
 }

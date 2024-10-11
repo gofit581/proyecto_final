@@ -1,4 +1,3 @@
-import 'package:entrenador/core/app_router.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/presentation/agenda_screen.dart';
 import 'package:entrenador/services/update_service.dart';
@@ -186,12 +185,12 @@ class _FormularioState extends State<_Formulario> {
                       age: widget.trainer.age, 
                       trainerCode: widget.trainer.trainerCode, 
                       agenda: [],
+                      routines: [],
                       diasLaborales: widget.trainer.diasLaborales,
                       duracionClasesMinutos: int.tryParse(_registerDuracionController.text),
                       trabajaDesdeHora: int.tryParse(_registerTrabajaDesdeController.text),
                       trabajaHastaHora: int.tryParse(_registerTrabajaHastaController.text),
                       precioPorClase: double.tryParse(_registerPrecioController.text),
-                      rutinas: [],
                     );
           
                     try {

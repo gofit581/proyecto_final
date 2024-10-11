@@ -4,9 +4,9 @@ import 'dart:convert';
 
 class RoutineService {
   final String baseUrl = 'https://66ff0a2d2b9aac9c997e1fdd.mockapi.io/api';
-  
+
   Future<List<Routine>> getRoutinesByTrainerId(String trainerId) async {
-    try {       
+    try {
       final response = await http.get(
         Uri.parse('$baseUrl/Routine'),
         headers: {'Content-Type': 'application/json'},
@@ -20,8 +20,9 @@ class RoutineService {
             })
             .map((routineData) => Routine.fromJson(routineData))
             .toList();
-            
-      return routines;
+        print('raw query' + routinesData.toString());
+
+        return routines;
       } else {
         throw Exception('Failed to load routines');
       }
@@ -33,14 +34,17 @@ class RoutineService {
 
   Future<void> deleteRoutineById(String routineId) async {
     final response = await http.delete(
-          Uri.parse('$baseUrl/Routine/$routineId'),
-          headers: {'Content-Type': 'application/json'},
+      Uri.parse('$baseUrl/Routine/$routineId'),
+      headers: {'Content-Type': 'application/json'},
     );
 
     if (response.statusCode == 200) {
       print('Rutina eliminada exitosamente');
     } else {
       throw Exception('Failed to delete routine');
+    }
+  }
+
   Future<void> createRoutine(Routine routine) async {
     final response = await http.post(
       Uri.parse('$baseUrl/Routine'),
@@ -50,11 +54,11 @@ class RoutineService {
         'description': routine.description,
         'duration': routine.duration,
         'aim': routine.aim,
-        'image':routine.image,
-        'rest':routine.rest,
-        'observationsPerDay':routine.observationsPerDay,
-        'traininDays':routine.trainingDays,
-        'exercise':routine.exercises
+        'image': routine.image,
+        'rest': routine.rest,
+        'observationsPerDay': routine.observationsPerDay,
+        'traininDays': routine.trainingDays,
+        'exercise': routine.exercises
       }),
     );
 

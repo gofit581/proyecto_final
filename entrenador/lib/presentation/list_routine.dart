@@ -2,6 +2,7 @@ import 'package:entrenador/core/app_router.dart';
 import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
+import 'package:entrenador/presentation/create_routine_screen.dart';
 import 'package:entrenador/services/routine_service.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
@@ -101,7 +102,7 @@ class _ListRoutineState extends State<ListRoutine> {
                           IconButton(
                             icon: const Icon(Icons.edit, color: Color.fromARGB(450, 33, 150, 243)),
                             onPressed: () {
-                              //context.push(EditRoutine.name, extra: routines[index])
+                              // context.push(EditRoutine.name, extra: routines[index]);
                             },
                           ),
                           IconButton(
@@ -123,7 +124,7 @@ class _ListRoutineState extends State<ListRoutine> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //context.push(CreateRoutine.name);
+          context.push('/createRoutine');
         },
         backgroundColor: const Color.fromARGB(450, 33, 150, 243),
         child: const Icon(Icons.add),

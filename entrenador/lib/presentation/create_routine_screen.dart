@@ -1,7 +1,6 @@
 import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/TypeOfTraining.dart';
 import 'package:entrenador/core/entities/User.dart';
-import 'package:entrenador/presentation/create_routine2_screen.dart';
 import 'package:entrenador/presentation/provider/exercises_provider.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
@@ -29,7 +28,7 @@ class _CreateRoutineScreenState extends ConsumerState<CreateRoutineScreen> {
   List<TypeOfTraining> typeOfTraining = TypeOfTraining.values;
   TypeOfTraining selectedTraining = TypeOfTraining.LoseWeight;
   late TypeOfTraining aim;
-  Usuario actualUser = Usuario.parcial(userName: 'Pepe', password: '1', mail: '1', age: '3', idTrainer: '1', trainingDays: '3');
+  Usuario actualUser = Usuario.parcial(userName: 'Pepe', password: '1', mail: '1', age: '3', idTrainer: '1', trainingDays: '3', timesDone: []);
 
   @override
   Widget build(BuildContext context) {

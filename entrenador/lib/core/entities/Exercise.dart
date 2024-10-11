@@ -18,10 +18,10 @@ class Exercise {
    Exercise({
     required this.title,
     required this.imageLink,
-    required this.series,
+    this.series,
     required this.description,
     this.done = false, 
-    required repetitions,
+    repetitions,
   });
   
   void toggleDone() {
