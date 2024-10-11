@@ -1,5 +1,6 @@
 import 'package:date_format/date_format.dart';
 import 'package:entrenador/presentation/calendar_screen.dart';
+import 'package:entrenador/presentation/register_entrenador_data_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
@@ -222,7 +223,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return;
                       }
 
-                      Trainer trainer = Trainer(
+                      Trainer trainer = Trainer.parcial(
                         userName: _registerUserTFController.text,
                         password: _registerPasswordTFController.text,
                         mail: _registerMailTFController.text,
@@ -231,9 +232,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       );
 
                       try {
-                        await trainerManager.registerUser(trainer);
-                        trainerManager.setLoggedUser(trainer);
-                        context.goNamed(CalendarioScreen.name);
+                        context.goNamed(RegisterEntrenadorDataScreen.name, extra: trainer);
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -243,7 +242,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }
                     }
                   },
-                  child: const Text('Registrarse'),
+                  child: const Text('Continuar'),
                 ),
               ],
             ),

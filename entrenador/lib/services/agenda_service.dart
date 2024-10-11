@@ -26,15 +26,15 @@ class AgendaService {
         while (startTime.isBefore(endTime)) {
           Clase clase = Clase(
             id: startTime,
-            duracionHs: (_loggedUser!.duracionClasesMinutos! / 60).toInt(),
-            precio: 0.0, // Asignar el precio según sea necesario
+            duracionHs: _loggedUser!.duracionClasesMinutos! ~/ 60,
+            precio: _loggedUser!.precioPorClase!,
             alumno: null,
           );
           agenda.add(clase);
           startTime = startTime.add(Duration(minutes: _loggedUser!.duracionClasesMinutos!));
         }
       }
-      current = current.add(Duration(days: 1));
+      current = current.add(const Duration(days: 1));
     }
 
     return agenda;
@@ -80,6 +80,4 @@ Future<void> actualizarAgenda() async {
     throw Exception('Error al actualizar la agenda: ${response.reasonPhrase}');
   }
 }
-
-
 }

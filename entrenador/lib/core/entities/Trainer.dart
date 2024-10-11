@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:entrenador/core/entities/Clase.dart';
 import 'package:entrenador/core/entities/Exercise.dart';
 import 'package:entrenador/core/entities/Routine.dart';
@@ -11,17 +10,18 @@ class Trainer {
   String mail;
   String password;
   String trainerCode;
-  int duracionClasesMinutos = 0;
-  int trabajaDesdeHora = 0;
-  int trabajaHastaHora = 0;
-  List<Int> diasLaborales = [];
-  List<Clase>? agenda = [];
-  List<Routine>? rutinas = [];
-  List<Exercise?> ejercicios = [];
+  List<Clase>? agenda;
+  List<int>? diasLaborales;
+  int? duracionClasesMinutos;
+  int? trabajaDesdeDia;
+  int? trabajaHastaDia;
+  int? trabajaDesdeHora;
+  int? trabajaHastaHora;
+  double? precioPorClase;
+  List<Routine>? rutinas;
   //List<User> clients;
 
-Trainer(
-     {
+Trainer.parcial({
      this.id,
       required this.userName,
       required this.password,
@@ -29,6 +29,22 @@ Trainer(
       required this.age,
       required this.trainerCode,
       
+});
+
+Trainer({
+    this.id,
+    required this.userName,
+    required this.password,
+    required this.mail,
+    required this.age,
+    required this.trainerCode,
+    required this.agenda,
+    required this.diasLaborales,
+    required this.duracionClasesMinutos,
+    required this.trabajaDesdeHora,
+    required this.trabajaHastaHora,
+    required this.precioPorClase,
+    required this.rutinas,
 });
 
 @override

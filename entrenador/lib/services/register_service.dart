@@ -15,6 +15,12 @@ class RegisterService {
         'mail': usuario.mail,
         'age': usuario.age,
         'trainerCode':usuario.trainerCode,
+        'agenda': usuario.agenda,
+        'diasLaborales': usuario.diasLaborales,
+        'duracionClasesMinutos': usuario.duracionClasesMinutos,
+        'trabajaDesdeHora': usuario.trabajaDesdeHora,
+        'trabajaHastaHora': usuario.trabajaHastaHora,
+        'precioPorClase': usuario.precioPorClase,
       }),
     );
 

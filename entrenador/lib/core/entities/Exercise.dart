@@ -1,19 +1,71 @@
 class Exercise {
-  final String title;
-  final String imageLink;
-  final String description;
-  bool done;
-  
+  String? title;
+  String? imageLink;
+  String? description;
+  int? series;
+  int? repetitions;
+  bool? done;
+  //int idDia;
+
+  Exercise.vacio();
+
+  Exercise.create(
+    this.title,
+    this.series,
+    this.repetitions,
+  );
+
    Exercise({
     required this.title,
     required this.imageLink,
+    required this.series,
     required this.description,
-    this.done = false
+    this.done = false, 
+    required repetitions,
   });
+  
   void toggleDone() {
-    done = !done;
+    done = !done!;
   }
 
+  void setTitle(String title){
+    this.title = title;
+  }
 
+void aumentarSerie(){
+  series = (series ?? 0) + 1;
+}
+
+void restarSerie(){
+  series = (series ?? 0) - 1;
+}
+
+void aumentarRepeticiones(){
+  repetitions = (repetitions ?? 0) + 1;
+}
+
+void restarRepeticiones(){
+  repetitions = (repetitions ?? 0) - 1;
+}
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'imageLink': imageLink,
+      'description': description,
+      'series': series,
+      'repetitions': repetitions,
+    };
+  }
+
+  factory Exercise.fromJson(Map<String, dynamic> json) {
+    return Exercise(
+      title: json['title'],
+      imageLink: json['imageLink'],
+      description: json['description'],
+      series: json['series'],
+      repetitions: json['repetitions'],
+    );
+  }
 
 }
