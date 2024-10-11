@@ -73,4 +73,6 @@ String getEmail(){
   void setEmail(String email){
     mail = email;
   }
+
+  toJson(){}
 }
