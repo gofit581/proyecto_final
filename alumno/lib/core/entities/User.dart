@@ -1,4 +1,5 @@
 import 'package:alumno/core/entities/Entrenador.dart';
+import 'package:alumno/core/entities/Routine.dart';
 
 class Usuario {
   final String? id;
@@ -15,6 +16,7 @@ class Usuario {
   String? injuries;
   String? extraActivities;
   Entrenador? profesor;
+  late Routine actualRoutine;
 
   Usuario.parcial({
     this.id,

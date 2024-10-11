@@ -2,15 +2,16 @@ import 'package:entrenador/core/entities/Exercise.dart';
 import 'package:entrenador/core/entities/TypeOfTraining.dart';
 
 class Routine {
-   String title;
-   String? description;
-   int duration;
-   late List<List<Exercise>> exercises;
-   int? aim;
-   String? image;
-   TypeOfTraining? typeOfTraining;
-   String? id;
-   int rest;
+  String title;
+  String? description;
+  int duration;
+  late List<List<Exercise>> exercises;
+  int? aim;
+  String? image;
+  TypeOfTraining? typeOfTraining;
+  String? id;
+  //  int? id;
+  int rest;
   late String idTrainer;
   late List<String> observationsPerDay;
   late int trainingDays;
@@ -23,8 +24,12 @@ class Routine {
     required this.rest,
     required this.trainingDays,
   }) {
-    this.exercises = [[Exercise.vacio()],[Exercise.vacio()],[Exercise.vacio()],];
-    this.observationsPerDay = List<String>.filled(trainingDays,'');
+    this.exercises = [
+      [Exercise.vacio()],
+      [Exercise.vacio()],
+      [Exercise.vacio()],
+    ];
+    this.observationsPerDay = List<String>.filled(trainingDays, '');
   }
 
   Routine({
@@ -43,7 +48,7 @@ class Routine {
   });
 
   int getDuration() {
-    return this.duration;
+    return duration;
   }
 
   String getTitle() {
@@ -56,16 +61,16 @@ class Routine {
       }
   } */
 
- factory Routine.fromJson(Map<String, dynamic> json) {
+  factory Routine.fromJson(Map<String, dynamic> json) {
     return Routine(
       title: json['title'],
       description: json['description'],
       duration: json['duration'],
-      exercises: (json['exercises'] as List<dynamic>).map((group) =>
-        (group as List<dynamic>)
-            .map((exercise) => Exercise.fromJson(exercise))
-            .toList()
-      ).toList(),
+      exercises: (json['exercises'] as List<dynamic>)
+          .map((group) => (group as List<dynamic>)
+              .map((exercise) => Exercise.fromJson(exercise))
+              .toList())
+          .toList(),
       aim: json['aim'],
       typeOfTraining: json['typeOfTraining'] != null
           ? TypeOfTraining.values.firstWhere(
@@ -79,5 +84,4 @@ class Routine {
       id: json['id'],
     );
   }
-
 }

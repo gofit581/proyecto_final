@@ -2,7 +2,10 @@ import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/User.dart';
 import 'package:entrenador/presentation/add_routine_screen.dart';
 import 'package:entrenador/presentation/agenda_screen.dart';
+import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/presentation/calendar_screen.dart';
+import 'package:entrenador/presentation/create_routine2_screen.dart';
+import 'package:entrenador/presentation/create_routine_screen.dart';
 import 'package:entrenador/presentation/initial_screen.dart';
 import 'package:entrenador/presentation/list_routine.dart';
 import 'package:entrenador/presentation/login_screen.dart';
@@ -13,6 +16,7 @@ import 'package:entrenador/presentation/users_list_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(routes: [
+  
   GoRoute(
     path: '/',
     builder: (context, state) => const InitialScreen(),
@@ -82,4 +86,18 @@ final appRouter = GoRouter(routes: [
   //     path: '/profile-info',
   //     builder: (context, state) => ProfileInfoScreen(),
   //     name: ProfileInfoScreen.name)
+  GoRoute(
+    path: '/createRoutine',
+    builder: (context, state) => CreateRoutineScreen(
+      /*actualUser: state.extra as Usuario*/),
+    name: CreateRoutineScreen.name,
+    ),
+  GoRoute(
+    path: '/createRoutine2',
+    builder: (context, state) => CreateRoutine2Screen(
+      datos: state.extra as Map<Routine, Usuario>,),
+      //routine: state.extra['routine'] as Routine,
+      //actualUser: state.extra as Usuario),
+    name: CreateRoutine2Screen.name,
+    ),
 ]);

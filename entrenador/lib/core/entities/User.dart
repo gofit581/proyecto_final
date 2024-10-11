@@ -40,56 +40,86 @@ class Usuario {
     List<DateTime>? timesDone,
   }) : this.timesDone = timesDone ?? [];
 
+  Usuario.parcial(
+      {this.id,
+      required this.userName,
+      required this.password,
+      required this.mail,
+      required this.age,
+      required this.idTrainer,
+      required this.trainingDays,
+      required this.timesDone});
+
+  // Usuario({
+  //   this.id,
+  //   required this.userName,
+  //   required this.password,
+  //   required this.mail,
+  //   required this.age,
+  //   required this.idTrainer,
+  //   required this.objectiveDescription,
+  //   required this.experience,
+  //   required this.discipline,
+  //   required this.trainingDays,
+  //   required this.trainingDuration,
+  //   required this.injuries,
+  //   required this.extraActivities,
+  // });
+
   @override
   String toString() {
-    return '$userName';
+    return userName;
   }
 
   void clearTimesDone() {
     this.timesDone.clear();
-  }
 
-  Routine? getRoutine() {
-    return currentRoutine;
-  }
+    String getEmail() {
+      return mail;
+    }
 
-  String getEmail() {
-    return this.mail;
-  }
+    String getAge() {
+      return age;
+    }
 
-  void setRoutine(Routine rutina) {
-    currentRoutine = rutina;
-    timesDone.clear();
-  }
+    void setRoutine(Routine rutina) {
+      currentRoutine = rutina;
+      timesDone.clear();
+    }
 
-  void addDayDone(DateTime day) {
-    timesDone.add(day);
-    timesDone.sort((a, b) => a.compareTo(b));
-  }
+    void addDayDone(DateTime day) {
+      timesDone.add(day);
+      timesDone.sort((a, b) => a.compareTo(b));
+    }
 
-  void removeDayDone(DateTime day) {
-    timesDone.remove(day);
-  }
+    void removeDayDone(DateTime day) {
+      timesDone.remove(day);
+    }
 
-  String getAge() {
-    return this.age;
-  }
+    void setUserName(String name) {
+      this.userName = name;
+    }
 
-  void setUserName(String name) {
-    this.userName = name;
-  }
+    Trainer? getProfesor() {
+      return profesor;
+    }
 
-  void setAge(String edad) {
-    age = edad;
-  }
+    void setProfesor(Trainer profesor) {
+      profesor = profesor;
+    }
 
-  void setTraining(TypeOfTraining training) {
-    this.training = training;
-  }
+    void setAge(String edad) {
+      age = edad;
+    }
 
-  void setEmail(String email) {
-    mail = email;
-  }
+    void setTraining(TypeOfTraining training) {
+      this.training = training;
+    }
 
-  toJson() {}
+    void setEmail(String email) {
+      mail = email;
+    }
+
+    toJson() {}
+  }
 }

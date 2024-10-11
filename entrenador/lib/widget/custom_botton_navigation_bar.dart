@@ -1,3 +1,4 @@
+import 'package:entrenador/presentation/create_routine_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../presentation/profile_screen.dart';
@@ -49,6 +50,7 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
         switch (index) {
           case 0:
             context.goNamed('ListRoutine');
+            // context.goNamed(CreateRoutineScreen.name);
             break;
           case 1:
             context.goNamed('UsersListScreen');

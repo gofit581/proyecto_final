@@ -1,6 +1,4 @@
-import 'dart:ffi';
 import 'package:entrenador/core/entities/Clase.dart';
-import 'package:entrenador/core/entities/Exercise.dart';
 import 'package:entrenador/core/entities/Routine.dart';
 
 class Trainer {
@@ -18,7 +16,7 @@ class Trainer {
   int? trabajaDesdeHora;
   int? trabajaHastaHora;
   double? precioPorClase;
-  List<Routine>? rutinas;
+  late List<Routine> routines;
   //List<User> clients;
 
 Trainer.parcial({
@@ -44,7 +42,7 @@ Trainer({
     required this.trabajaDesdeHora,
     required this.trabajaHastaHora,
     required this.precioPorClase,
-    required this.rutinas,
+    required this.routines,
 });
 
 @override
@@ -71,6 +69,10 @@ void setAge(String edad){
 
 void setEmail(String email){
   mail = email;
+}
+
+void addRoutine(Routine routine){
+  this.routines.add(routine);
 }
 
 }

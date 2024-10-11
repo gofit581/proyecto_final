@@ -1,8 +1,16 @@
 class Exercise {
   final String title;
-  final String imageLink;
-  final String description;
-  bool done;
+  late String imageLink;
+  late String description;
+  late int series;
+  late int repetitions;
+  late bool done;
+  
+  Exercise.prueba({
+    required this.title,
+    required this.series,
+    required this.repetitions,
+  });
   
    Exercise({
     required this.title,
@@ -13,6 +21,7 @@ class Exercise {
   void toggleDone() {
     done = !done;
   }
+
 
 
 
