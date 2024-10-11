@@ -28,7 +28,7 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
             'assets/image/MOBILE_FRIENDLY.jpg',
             width: 40, height: 40,
           ),
-          label: 'Home',
+          label: 'Alumnos',
         ),
         BottomNavigationBarItem(
           icon: Image.asset(
@@ -52,6 +52,8 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
             break;
           case 1:
             context.goNamed('ListaAlumnosScreen');
+            // case 1:
+            // context.goNamed('UsersListScreen');
             break;
           case 2:
             context.goNamed('CalendarioScreen');
