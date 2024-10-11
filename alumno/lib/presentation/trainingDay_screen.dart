@@ -4,6 +4,7 @@ import 'package:alumno/core/entities/Routine.dart';
 import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/presentation/calendar_screen.dart';
 import 'package:alumno/widget/custom_app_bar.dart';
+import 'package:alumno/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -23,6 +24,7 @@ class TrainingdayScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: CustomAppBar(title: actualRoutine.title),
+      bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
