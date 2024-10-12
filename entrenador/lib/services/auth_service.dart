@@ -28,7 +28,7 @@ class AuthService {
               userName: userData['userName'],
               password: userData['password'],
               age: userData['age'],
-              trainerCode: userData['id']
+              trainerCode: userData['trainerCode']
             );
 
             _trainerManager.setLoggedUser(userOK);
