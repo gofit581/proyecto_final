@@ -24,7 +24,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
     super.initState();
     _loggedTrainer = TrainerManager().getLoggedUser();
     if (_loggedTrainer != null) {
-      _clientsFuture = _usersGetterService.getUsersByTrainerId(_loggedTrainer!.id!);
+      _clientsFuture = _usersGetterService.getUsersByTrainerId(_loggedTrainer!.trainerCode!);
     } else {
       // Manejar el caso en que el entrenador logueado es null
       _clientsFuture = Future.error('No trainer logged in');
