@@ -75,4 +75,8 @@ void addRoutine(Routine routine){
   this.routines.add(routine);
 }
 
+void setAgenda(List<Clase> newAgenda) {
+  agenda = newAgenda;
+}
+
 }

@@ -14,9 +14,9 @@ import 'package:entrenador/presentation/register_screen.dart';
 import '../presentation/profile_screen.dart';
 import 'package:entrenador/presentation/users_list_screen.dart';
 import 'package:go_router/go_router.dart';
+import 'package:entrenador/presentation/clases_dia_screen.dart';
 
 final appRouter = GoRouter(routes: [
-  
   GoRoute(
     path: '/',
     builder: (context, state) => const InitialScreen(),
@@ -25,13 +25,11 @@ final appRouter = GoRouter(routes: [
   GoRoute(
       path: '/login',
       builder: (context, state) => LoginScreen(),
-      name: LoginScreen.name
-  ),
+      name: LoginScreen.name),
   GoRoute(
       path: '/alumnos',
       builder: (context, state) => UsersListScreen(),
-      name: UsersListScreen.name
-  ),
+      name: UsersListScreen.name),
   // GoRoute(
   //   path: '/home',
   //   builder: (context, state) {
@@ -39,13 +37,13 @@ final appRouter = GoRouter(routes: [
   //   },
   //   name: HomeScreen.name,
   // ),
-   GoRoute(
-     path: '/profile',
-      builder: (context, state) {
-       return MyProfileScreen();
-     },
-     name: MyProfileScreen.name,
-    ),
+  GoRoute(
+    path: '/profile',
+    builder: (context, state) {
+      return MyProfileScreen();
+    },
+    name: MyProfileScreen.name,
+  ),
   GoRoute(
       path: '/register',
       builder: (context, state) => const RegisterScreen(),
@@ -53,27 +51,27 @@ final appRouter = GoRouter(routes: [
   GoRoute(
       path: '/registerEntrenadorDataScreen',
       builder: (context, state) => RegisterEntrenadorDataScreen(
-        trainer: state.extra as Trainer,
-      ),
+            trainer: state.extra as Trainer,
+          ),
       name: RegisterEntrenadorDataScreen.name),
   GoRoute(
       path: '/agenda',
       builder: ((context, state) => AgendaScreen()),
       name: AgendaScreen.name),
   GoRoute(
-      path: '/calendar',
-      builder: ((context, state) => const CalendarioScreen()),
-      name: CalendarioScreen.name),
+    path: '/calendar',
+    builder: (context, state) => CalendarioScreen(),
+    name: CalendarioScreen.name,
+  ),
   GoRoute(
-    path: '/ListRoutine',
-    builder: ((context, state) => const ListRoutine()),
-    name: ListRoutine.name),
+      path: '/ListRoutine',
+      builder: ((context, state) => const ListRoutine()),
+      name: ListRoutine.name),
   GoRoute(
-    path: '/AddRoutine',
-    builder: ((context, state) => AddRoutineScreen(
-      alumno: state.extra as Usuario)
-    ),
-    name: AddRoutineScreen.name),
+      path: '/AddRoutine',
+      builder: ((context, state) =>
+          AddRoutineScreen(alumno: state.extra as Usuario)),
+      name: AddRoutineScreen.name),
   // GoRoute(
   //     path: '/routine',
   //     builder: (context, state) => RoutineScreen(),
@@ -88,16 +86,24 @@ final appRouter = GoRouter(routes: [
   //     name: ProfileInfoScreen.name)
   GoRoute(
     path: '/createRoutine',
-    builder: (context, state) => CreateRoutineScreen(
-      /*actualUser: state.extra as Usuario*/),
+    builder: (context, state) =>
+        CreateRoutineScreen(/*actualUser: state.extra as Usuario*/),
     name: CreateRoutineScreen.name,
-    ),
+  ),
   GoRoute(
     path: '/createRoutine2',
     builder: (context, state) => CreateRoutine2Screen(
-      datos: state.extra as Map<Routine, Usuario>,),
-      //routine: state.extra['routine'] as Routine,
-      //actualUser: state.extra as Usuario),
-    name: CreateRoutine2Screen.name,
+      datos: state.extra as Map<Routine, Usuario>,
     ),
+    //routine: state.extra['routine'] as Routine,
+    //actualUser: state.extra as Usuario),
+    name: CreateRoutine2Screen.name,
+  ),
+  GoRoute(
+    path: '/clasesDia',
+    builder: (context, state) => ClasesDiaScreen(
+      date: state.extra as DateTime,
+    ),
+    name: ClasesDiaScreen.name,
+  ),
 ]);

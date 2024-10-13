@@ -12,4 +12,9 @@ class Clase {
     this.alumno,
     required this.precio,
   });
+
+  @override
+  String toString() {
+    return 'Clase(id: $id, duracionHs: $duracionHs, alumno: ${alumno?.toString() ?? 'None'}, precio: $precio)';
+  }
 }

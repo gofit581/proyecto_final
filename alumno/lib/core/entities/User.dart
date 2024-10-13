@@ -40,8 +40,10 @@ class Usuario {
     required this.trainingDays,
     required this.trainingDuration,
     required this.injuries,
-    required this.extraActivities,
+    required this.extraActivities, 
   });
+
+  set entrenador(Future<Entrenador> entrenador) {}
 
   @override
   String toString() {

@@ -1,14 +1,62 @@
+import 'package:alumno/core/entities/Clase.dart';
+import 'package:alumno/core/entities/Entrenador.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../core/entities/User.dart';
 import '../core/entities/UserManager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class AuthService {
   final UserManager _userManager;
 
   AuthService(this._userManager);
 
   final String baseUrl = 'https://66d746e0006bfbe2e650640f.mockapi.io/api';
+  final String baseTrainerUrl =
+      'https://66d746e0006bfbe2e650640f.mockapi.io/api';
+
+  // Future<bool> loginAndSetUser(String email, String password) async {
+  //   try {
+  //     final response = await http.get(
+  //       Uri.parse('$baseUrl/user'),
+  //       headers: {'Content-Type': 'application/json'},
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       final List<dynamic> users = jsonDecode(response.body);
+  //       for (var userData in users) {
+  //         if (userData['mail'] == email && userData['password'] == password) {
+  //           final userOK = Usuario(
+  //             id: userData['id'],
+  //             mail: userData['mail'],
+  //             userName: userData['userName'],
+  //             password: userData['password'],
+  //             age: userData['age'],
+  //             idTrainer: userData['idTrainer'],
+  //             objectiveDescription: userData['objetiveDescription'],
+  //             experience: userData['experience'],
+  //             discipline: userData['discipline'],
+  //             trainingDays: userData['trainingDays'],
+  //             trainingDuration: userData['trainingDuration'],
+  //             injuries: userData['injuries'],
+  //             extraActivities: userData['extraActivities'],
+  //           );
+
+  //           _userManager.setLoggedUser(userOK);
+  //           _userManager.agregarUsuario(userOK);
+  //           return true;
+  //         }
+  //       }
+  //       throw Exception('User not found. Users: ${_userManager.getLoggedUser()}');
+  //     } else {
+  //       throw Exception('Failed to load users');
+  //     }
+  //   } catch (e) {
+  //     // Manejo de excepciones
+  //     print('Error: $e');
+  //     return false; // Opcional: vuelve a lanzar la excepción si necesitas manejarla en otro lugar
+  //   }
+  // }
 
   Future<bool> loginAndSetUser(String email, String password) async {
     try {
@@ -37,19 +85,86 @@ class AuthService {
               extraActivities: userData['extraActivities'],
             );
 
+            userOK.profesor = await crearEntrenador(userData['idTrainer']);
+
             _userManager.setLoggedUser(userOK);
             _userManager.agregarUsuario(userOK);
             return true;
           }
         }
-        throw Exception('User not found. Users: ${_userManager.getLoggedUser()}');
+        throw Exception(
+            'User not found. Users: ${_userManager.getLoggedUser()}');
       } else {
         throw Exception('Failed to load users');
       }
     } catch (e) {
-      // Manejo de excepciones
       print('Error: $e');
-      return false; // Opcional: vuelve a lanzar la excepción si necesitas manejarla en otro lugar
+      return false;
+    }
+  }
+
+  Future<Entrenador> crearEntrenador(String idTrainer) async {
+    // Obtener el objeto Entrenador del API usando el idTrainer del Usuario
+    final entrenadorResponse = await http.get(
+      Uri.parse('$baseTrainerUrl/Trainer/$idTrainer'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (entrenadorResponse.statusCode == 200) {
+      final entrenadorData = jsonDecode(entrenadorResponse.body);
+
+      // Crear la agenda de clases filtrando solo las que coincidan con el idTrainer
+      // final List<Clase> agenda = await obtenerAgendaClases(idTrainer);
+
+      // Crear el objeto Entrenador
+      final entrenador = Entrenador(
+        id: entrenadorData['id'],
+        nombre: entrenadorData[
+            'userName'], // o el campo correspondiente si es diferente
+        apellido:
+            '', // Si no hay un campo apellido en la API, dejar vacío o asignar otro valor
+        alumnos: [], // Asignar una lista vacía o mapear los alumnos si están disponibles
+        agenda: await obtenerAgendaClases(
+            idTrainer), // Asignar la agenda según el formato de tu clase Clase si existe
+        rutinas: [], // Asignar las rutinas si están disponibles en los datos de la API
+        ejercicios: [], // Asignar los ejercicios si existen en los datos de la API
+      );
+
+      return entrenador;
+    } else {
+      throw Exception('Failed to load trainer data');
+    }
+  }
+
+  // Método para obtener la agenda de clases desde la API
+  Future<List<Clase>> obtenerAgendaClases(String idTrainer) async {
+    final String claseEndpoint =
+        'https://66ff0a2d2b9aac9c997e1fdd.mockapi.io/api/clase';
+    final claseResponse = await http.get(
+      Uri.parse(claseEndpoint),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (claseResponse.statusCode == 200) {
+      final List<dynamic> clasesData = jsonDecode(claseResponse.body);
+
+      // Filtrar las clases que correspondan al idTrainer
+      final List<Clase> agenda = clasesData
+          .where(
+              (claseData) => claseData['idTrainer'] == idTrainer)
+          .map((claseData) => Clase(
+                id: DateTime.fromMillisecondsSinceEpoch(
+                    claseData['horaInicio'] * 1000),
+                duracionHs: claseData['duracionHs'],
+                alumno:
+                    null, // Aquí puedes mapear el objeto alumno si está disponible
+                precio: claseData['precio'].toDouble(),
+              ))
+          .toList();
+
+      return agenda;
+    } else {
+      throw Exception('Failed to load class data');
     }
   }
 
@@ -87,10 +202,10 @@ class AuthService {
     } catch (e) {
       print('Error: $e');
       return true;
-    }  
+    }
   }
 
-  Future<bool> validateMail(String mail) async{
+  Future<bool> validateMail(String mail) async {
     try {
       final response = await http.get(
         Uri.parse('$baseUrl/user'),
@@ -101,7 +216,7 @@ class AuthService {
         final List<dynamic> users = jsonDecode(response.body);
         bool result = false;
         for (var userData in users) {
-          if (userData['mail'] == mail){
+          if (userData['mail'] == mail) {
             result = true;
           }
         }
@@ -112,6 +227,6 @@ class AuthService {
     } catch (e) {
       print('Error: $e');
       return true;
-    }  
+    }
   }
 }

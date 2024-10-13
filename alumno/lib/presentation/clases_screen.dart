@@ -140,8 +140,10 @@ class ClasesScreen extends StatelessWidget {
               },
             )
           : Center(
-              child: Text('No hay clases programadas para esta fecha.'),
+              child: Text('No hay clases programadas para esta fecha.${usuario != null ? (usuario.getProfesor()?.agenda != null ? usuario.getProfesor()!.agenda![0].toString() : 'No hay agenda') : 'El profesor es null'}'),
             ),
     );
   }
 }
+
+
