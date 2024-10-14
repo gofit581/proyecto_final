@@ -31,6 +31,11 @@ class _CreateRoutineScreenState extends ConsumerState<CreateRoutineScreen> {
   Usuario actualUser = Usuario.parcial(userName: 'Pepe', password: '1', mail: '1', age: '3', idTrainer: '1', trainingDays: '3', timesDone: []);
 
   @override
+  void initState() {
+    super.initState();
+    _routineTypeOfTrainingController.text = selectedTraining.name;
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(

@@ -17,6 +17,8 @@ class CreateRoutine2Screen extends ConsumerWidget {
   static const name = "CreateRoutine2";
 
   const CreateRoutine2Screen({super.key, required this.datos});
+  
+  
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,7 +41,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
     int indexDay = day - 1;
 
     void generateRoutine(){
-      for(int i =0; i < maxDays-1; i++){
+      for(int i =0; i < maxDays; i++){
         routine.exercises[i] = ref.watch(exercisesNotifierProvider).exercises[i];
         routine.observationsPerDay[i] = ref.watch(exercisesNotifierProvider).observations[i];
       } 
@@ -71,6 +73,8 @@ class CreateRoutine2Screen extends ConsumerWidget {
                 ),
               ),               
               const SizedBox(height: 20),
+              Text('${ref.watch(exercisesNotifierProvider).observations}'),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -95,9 +99,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
                   const SizedBox(width: 10),
                   ElevatedButton(
                     onPressed: () {
-                      if (day < maxDays) {
-                        // Lógica para agregar un nuevo ejercicio
-                      }
+                        context.push('/createExercise', extra: datos);
                     },
                     child: const Text('Nuevo ejercicio'),
                   ),
@@ -106,6 +108,8 @@ class CreateRoutine2Screen extends ConsumerWidget {
               if (day == maxDays) ...[
                 ElevatedButton(
                   onPressed: () {
+                    ref.read(exercisesNotifierProvider.notifier).addObservation(_routineObservationDayController.text);
+                    generateRoutine();
                     Routine newRoutine = Routine(
                       title: routine.title,
                       description: routine.description,
@@ -128,7 +132,6 @@ class CreateRoutine2Screen extends ConsumerWidget {
                           actions: [
                             TextButton(
                               onPressed: () {
-                                generateRoutine();
                                 routineManager.addRoutine(newRoutine, actualTrainer);
                                 ref.read(counterDayProvider.notifier).state = 1;
                                 Navigator.of(context).pop(); 

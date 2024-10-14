@@ -49,6 +49,7 @@ class RegisterService {
         'exercises':routine.exercises.map((dayExercises) =>
           dayExercises.map((exercise) => exercise.toJson()).toList()).toList(),
         'idTrainer':routine.idTrainer,
+        //'typeOfTraining':routine.typeOfTraining!.name,
       }),
     );
 
