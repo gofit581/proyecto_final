@@ -95,9 +95,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
                   const SizedBox(width: 10),
                   ElevatedButton(
                     onPressed: () {
-                      if (day < maxDays) {
-                        // Lógica para agregar un nuevo ejercicio
-                      }
+                        context.push('/createExercise', extra: datos);
                     },
                     child: const Text('Nuevo ejercicio'),
                   ),

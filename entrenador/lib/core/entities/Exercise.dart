@@ -21,7 +21,7 @@ class Exercise {
     this.series,
     required this.description,
     this.done = false, 
-    repetitions,
+    this.repetitions,
   });
   
   void toggleDone() {
