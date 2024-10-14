@@ -71,7 +71,7 @@ class _AgendaScreenState extends State<AgendaScreen> {
             ElevatedButton(
               onPressed: () async {
               _enableAgenda();
-              context.goNamed(CalendarioScreen.name);
+              context.push(CalendarioScreen.name);
               },
               child: const Text('Enable Agenda'),
             ),
