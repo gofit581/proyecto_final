@@ -1,3 +1,4 @@
+import 'package:alumno/core/entities/TypeOfTraining.dart';
 import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/internaData/user_data_options.dart';
 import 'package:alumno/presentation/calendar_screen.dart';
@@ -21,7 +22,8 @@ class RegisterAlumnoDataScreen extends StatefulWidget {
 class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
   final UserManager userManager = UserManager();
   final UpdateService updateService = UpdateService();
-  late String selectedObjective;
+  List<TypeOfTraining> typeOfTraining = TypeOfTraining.values;
+  TypeOfTraining selectedObjective = TypeOfTraining.LoseWeight;
   final TextEditingController _registerObjectiveTFController = TextEditingController();
   final TextEditingController _registerExperienceTFController = TextEditingController();
   final TextEditingController _registerDisciplineTFController = TextEditingController();
@@ -35,14 +37,13 @@ class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
   @override
   void initState() {
     super.initState();
-    selectedObjective = objectiveDescriptions.first;
     selectedDays = days.first;
+    _registerObjectiveTFController.text = selectedObjective.name;
+    _registerDaysTFController.text = selectedDays;
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> datos = objectiveDescriptions;
-
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Tus datos',
@@ -52,7 +53,7 @@ class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              DropdownButtonFormField<String>(
+              DropdownButtonFormField<TypeOfTraining>(
                 value: selectedObjective,
                 decoration: InputDecoration(
                   labelText: 'Objetivos',
@@ -60,16 +61,16 @@ class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                items: datos.map((dato) {
-                  return DropdownMenuItem<String>(
+                items: typeOfTraining.map((dato) {
+                  return DropdownMenuItem<TypeOfTraining>(
                     value: dato,
-                    child: Text(dato),
+                    child: Text(dato.name),
                   );
                 }).toList(),
                 onChanged: (value) {
                   setState(() {
                     selectedObjective = value!;
-                    _registerObjectiveTFController.text = value;
+                    _registerObjectiveTFController.text = value.name;
                   });
                 },
               ),
@@ -156,7 +157,7 @@ class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
                   if (_registerObjectiveTFController.text.isEmpty ||
                       _registerDisciplineTFController.text.isEmpty ||
                       _registerExperienceTFController.text.isEmpty ||
-                      _registerDaysTFController.text.isEmpty ||
+                      _registerDaysTFController.text.isEmpty || 
                       _registerTimeTFController.text.isEmpty ||
                       _registerInjuriesTFController.text.isEmpty ||
                       _registerExtraActivitiesTFController.text.isEmpty) {

@@ -21,7 +21,7 @@ class ExercisesNotifier extends Notifier<RoutineNoti> {
   void initializeRoutine(int days) {
     state = RoutineNoti(
       exercises: List.generate(days, (index) => [Exercise.create(" ", 0, 0)]), // Inicializa con días vacíos
-      observations: [""],
+      observations: [],
     );
   }
 
