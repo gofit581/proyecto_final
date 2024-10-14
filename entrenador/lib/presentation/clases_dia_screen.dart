@@ -95,8 +95,10 @@ class ClasesDiaScreen extends StatelessWidget {
       body: clasesDelDia.isEmpty
           ? Center(
               child: Text(
-                'No hay clases programadas para este día. ' + (trainer?.agenda?.toString() ?? "agenda de " + trainer!.userName+ " es null. ----"
-                + clasesDelDia.toString()),
+                'No hay clases programadas para este día. ' 
+                // + (trainer?.agenda?.toString() ?? "agenda de " + trainer!.userName+ " es null. ----"
+                // + clasesDelDia.toString())
+                ,
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
             )
