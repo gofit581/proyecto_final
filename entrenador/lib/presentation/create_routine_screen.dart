@@ -116,7 +116,7 @@ class _CreateRoutineScreenState extends ConsumerState<CreateRoutineScreen> {
                     Routine routine = Routine.parcial(
                       title: _routineTitleController.text,
                       duration: int.parse(_routineDurationController.text),
-                      image: _routineTypeOfTrainingController.text,
+                      typeOfTraining: selectedTraining,
                       rest: int.parse(_routineRestController.text),
                       trainingDays : int.parse(actualUser.trainingDays),
                     );

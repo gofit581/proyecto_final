@@ -1,5 +1,7 @@
 import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
+import 'package:entrenador/core/entities/TypeOfTraining.dart';
+import 'package:entrenador/core/entities/User.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -33,7 +35,6 @@ class RegisterService {
   final String baseUrl2 = 'https://66ff0a2d2b9aac9c997e1fdd.mockapi.io/api';
 
   Future<void> createRoutine(Routine routine) async {
-    print('TAMBIEN LLEGUE ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
     final response = await http.post(
       Uri.parse('$baseUrl2/Routine'),
       headers: {'Content-Type': 'application/json'},
@@ -49,7 +50,7 @@ class RegisterService {
         'exercises':routine.exercises.map((dayExercises) =>
           dayExercises.map((exercise) => exercise.toJson()).toList()).toList(),
         'idTrainer':routine.idTrainer,
-        //'typeOfTraining':routine.typeOfTraining!.name,
+        'typeOfTraining':routine.typeOfTraining?.toJson(),
       }),
     );
 

@@ -20,4 +20,8 @@ extension TypeOfTrainingExtension on TypeOfTraining {
         return '';
     }
   }
+
+  String toJson() {
+    return toString().split('.').last;
+  }
 }

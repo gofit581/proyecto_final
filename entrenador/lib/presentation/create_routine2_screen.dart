@@ -56,7 +56,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
             children: [
               Text('Día de rutina $day/$maxDays'),
               Text(routine.title),
-              Text('Objetivo: ${routine.image}'),
+              Text('Objetivo: ${routine.typeOfTraining?.name}'),
               Text('Duración en semanas: ${routine.duration}'),
               Text('Tiempo de descanso entre ejercicios: ${routine.rest}'),
               const SizedBox(height: 20),
@@ -118,7 +118,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
                       aim: routine.aim,
                       image: routine.image,
                       typeOfTraining: routine.typeOfTraining,
-                      idTrainer: actualTrainer.id!,
+                      idTrainer: actualTrainer.trainerCode,
                       observationsPerDay: routine.observationsPerDay,
                       trainingDays: routine.trainingDays,
                       rest: routine.rest,

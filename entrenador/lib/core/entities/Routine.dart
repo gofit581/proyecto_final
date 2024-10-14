@@ -20,7 +20,7 @@ class Routine {
   Routine.parcial({
     required this.title,
     required this.duration,
-    required this.image,
+    required this.typeOfTraining,
     required this.rest,
     required this.trainingDays,
   }) {
