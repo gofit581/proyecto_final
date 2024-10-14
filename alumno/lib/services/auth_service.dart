@@ -103,29 +103,29 @@ class AuthService {
     }
   }
 
-  Future<Entrenador> crearEntrenador(String idTrainer) async {
-    // Obtener el objeto Entrenador del API usando el idTrainer del Usuario
-    final entrenadorResponse = await http.get(
-      Uri.parse('$baseTrainerUrl/Trainer/$idTrainer'),
+  Future<Entrenador> crearEntrenador(String trainerCode) async {
+    // Obtener el objeto Entrenador del API usando el trainerCode
+    final response = await http.get(
+      Uri.parse('$baseTrainerUrl/Trainer'),
       headers: {'Content-Type': 'application/json'},
     );
 
-    if (entrenadorResponse.statusCode == 200) {
-      final entrenadorData = jsonDecode(entrenadorResponse.body);
+    if (response.statusCode == 200) {
+      final List<dynamic> trainers = jsonDecode(response.body);
 
-      // Crear la agenda de clases filtrando solo las que coincidan con el idTrainer
-      // final List<Clase> agenda = await obtenerAgendaClases(idTrainer);
+      // Filtrar el entrenador que coincida con el trainerCode
+      final entrenadorData = trainers.firstWhere(
+        (trainer) => trainer['trainerCode'] == trainerCode,
+        orElse: () => throw Exception('Trainer not found'),
+      );
 
       // Crear el objeto Entrenador
       final entrenador = Entrenador(
         id: entrenadorData['id'],
-        nombre: entrenadorData[
-            'userName'], // o el campo correspondiente si es diferente
-        apellido:
-            '', // Si no hay un campo apellido en la API, dejar vacío o asignar otro valor
+        nombre: entrenadorData['userName'],
+        apellido: '', // Si no hay un campo apellido en la API, dejar vacío o asignar otro valor
         alumnos: [], // Asignar una lista vacía o mapear los alumnos si están disponibles
-        agenda: await obtenerAgendaClases(
-            idTrainer), // Asignar la agenda según el formato de tu clase Clase si existe
+        agenda: await obtenerAgendaClases(entrenadorData['id']),
         rutinas: [], // Asignar las rutinas si están disponibles en los datos de la API
         ejercicios: [], // Asignar los ejercicios si existen en los datos de la API
       );

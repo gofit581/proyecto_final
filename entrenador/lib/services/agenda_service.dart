@@ -19,7 +19,6 @@ class AgendaService {
     DateTime current = desde;
 
     while (current.isBefore(hasta) || current.isAtSameMomentAs(hasta)) {
-      if (_loggedUser!.diasLaborales!.contains(current.weekday)) {
         DateTime startTime = DateTime(current.year, current.month, current.day, _loggedUser!.trabajaDesdeHora!);
         DateTime endTime = DateTime(current.year, current.month, current.day, _loggedUser!.trabajaHastaHora!);
 
@@ -33,10 +32,10 @@ class AgendaService {
           agenda.add(clase);
           startTime = startTime.add(Duration(minutes: _loggedUser!.duracionClasesMinutos!));
         }
-      }
+      
       current = current.add(const Duration(days: 1));
     }
-
+    actualizarAgenda();
     return agenda;
   }
 
