@@ -73,6 +73,7 @@ class Usuario {
 
   void clearTimesDone() {
     this.timesDone.clear();
+  }
 
     String getEmail() {
       return mail;
@@ -124,4 +125,4 @@ class Usuario {
   }
 
   toJson() {}
-}
+

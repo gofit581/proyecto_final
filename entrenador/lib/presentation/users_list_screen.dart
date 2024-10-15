@@ -1,3 +1,4 @@
+import 'package:entrenador/presentation/student_profile_screen.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,12 @@ class _UsersListScreenState extends State<UsersListScreen> {
                     ],
                   ),
                   onTap: () {
-                    // TODO Navegar a la pantalla de detalle del usuario
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StudentProfileScreen(usuarioSeleccionado: client),
+                        ),
+                    );
                   },
                 );
               },
