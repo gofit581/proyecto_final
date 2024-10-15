@@ -59,6 +59,10 @@ String getAge(){
   return age;
 }
 
+String getTrainerCode(){
+  return trainerCode;
+}
+
 void setUserName(String name){
   userName = name;
 }

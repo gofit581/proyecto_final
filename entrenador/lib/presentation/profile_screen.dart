@@ -41,7 +41,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                // Navegar a la pantalla initial_screen
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const InitialScreen()),
@@ -51,7 +50,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Cerrar el diálogo
+                Navigator.of(context).pop(); 
               },
               child: const Text('No'),
             ),
@@ -114,24 +113,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            actualEntrenador?.userName ?? '',
+                            actualEntrenador.toString(),
                             style: const TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                        ),
-                        const SizedBox(height: 40),
-                        const Text(
-                          'Apellido',
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          decoration: const BoxDecoration(
-                            border: Border(bottom: BorderSide(color: Colors.grey)),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: const Text(
-                            '????',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),
                         const SizedBox(height: 40),
@@ -146,7 +129,23 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            actualEntrenador?.mail ?? '',
+                            actualEntrenador!.getEmail(),
+                            style: const TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                        ),
+                        const SizedBox(height: 40),
+                        const Text(
+                          'Codigo Personal',
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          decoration: const BoxDecoration(
+                            border: Border(bottom: BorderSide(color: Colors.grey)),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child:  Text(
+                            actualEntrenador!.getTrainerCode(),
                             style: const TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),
