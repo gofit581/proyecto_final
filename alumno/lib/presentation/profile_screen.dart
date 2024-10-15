@@ -1,9 +1,12 @@
+import 'package:alumno/core/entities/Entrenador.dart';
 import 'package:flutter/material.dart';
 import '../widget/custom_app_bar.dart';
 import '../widget/custom_botton_navigation_bar.dart';
 import '../presentation/initial_screen.dart';
 import '../core/entities/UserManager.dart';
 import '../core/entities/User.dart';
+import '../core/entities/Entrenador.dart';
+
 
 class MyProfileScreen extends StatefulWidget {
   static const String name = 'ProfileScreen';
@@ -17,6 +20,7 @@ class MyProfileScreen extends StatefulWidget {
 
 class _MyProfileScreenState extends State<MyProfileScreen> {
   Usuario? actualUsuario;
+  Entrenador? entrenadorAsignado;
   bool isLoading = false;
 
   @override
@@ -28,6 +32,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
    Future<void> _loadUserData() async {
       setState(() {
         actualUsuario = UserManager().getLoggedUser();
+        entrenadorAsignado = actualUsuario!.getProfesor();
       });
     }
 
@@ -114,24 +119,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            actualUsuario?.userName ?? '',
+                            actualUsuario.toString(),
                             style: const TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                        ),
-                        const SizedBox(height: 40),
-                        const Text(
-                          'Apellido',
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          decoration: const BoxDecoration(
-                            border: Border(bottom: BorderSide(color: Colors.grey)),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: const Text(
-                            '????',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),
                         const SizedBox(height: 40),
@@ -146,7 +135,23 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            actualUsuario?.mail ?? '',
+                            actualUsuario!.getEmail(),
+                            style: const TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                        ),
+                        const SizedBox(height: 40),
+                        const Text(
+                          'Profesor Asignado',
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          decoration: const BoxDecoration(
+                            border: Border(bottom: BorderSide(color: Colors.grey)),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child:  Text(
+                            entrenadorAsignado!.getNombre(),
                             style: const TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),
