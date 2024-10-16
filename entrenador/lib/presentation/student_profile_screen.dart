@@ -70,7 +70,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Nombre Completo',
+                          'Nombre y Apellido',
                           style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                         Container(
@@ -102,7 +102,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                         ),
                         const SizedBox(height: 40),
                         const Text(
-                          'Edad',
+                          'Fecha de Nacimiento',
                           style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                         Container(
