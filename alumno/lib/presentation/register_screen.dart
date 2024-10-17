@@ -1,4 +1,5 @@
 import 'package:alumno/presentation/calendar_screen.dart';
+import 'package:alumno/presentation/login_screen.dart';
 import 'package:alumno/presentation/register_alumno_data_screen.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
@@ -242,6 +243,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                   child: const Text('Continuar'),
                 ),
+                const SizedBox(height: 10),
+              Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        '¿Ya tenes una cuenta?',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context.goNamed(LoginScreen.name);
+                        },
+                        child: const Text('Inicia Sesión', style: TextStyle(decoration: TextDecoration.underline ,fontSize: 16, color: Color.fromARGB(255, 22, 22, 180), fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                  ),
+              ),
               ],
             ),
           ),
