@@ -6,6 +6,7 @@ import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:entrenador/core/entities/User.dart';
+import 'package:entrenador/services/update_service.dart';
 
 class AddRoutineScreen extends StatefulWidget {
   const AddRoutineScreen({super.key, required this.alumno});
@@ -21,6 +22,7 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
   int? selectedRoutineIndex;
   late Future<List<Routine>> _routinesFuture;
   final RoutineService _routineService = RoutineService();
+  final UpdateService _updateService = UpdateService();
   Trainer? _loggedTrainer;
 
   @override
@@ -93,13 +95,25 @@ Widget build(BuildContext context) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (selectedRoutineIndex != null) {
                           Routine selectedRoutine = routines[selectedRoutineIndex!];
                           widget.alumno.currentRoutine = selectedRoutine;
-                          print('Rutina seleccionada: ${selectedRoutine.title}');
+
+                          bool isSaved = await _updateService.saveRoutineForUser(widget.alumno);
+
+                          if (isSaved) {   
+                            print('Rutina seleccionada: ${selectedRoutine.title}');                                                
+                          } else {
+                            print('Error al guardar la rutina.');
+                          }            
                         } else {
-                          print('No se ha seleccionado ninguna rutina.');
+                          //print('No se ha seleccionado ninguna rutina.');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('No se ha seleccionado ninguna rutina!'),
+                            ),
+                          );
                         }
                       },
                       style: ElevatedButton.styleFrom(
