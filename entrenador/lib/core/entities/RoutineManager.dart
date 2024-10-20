@@ -1,12 +1,12 @@
 import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
-import 'package:entrenador/services/register_service.dart';
+import 'package:entrenador/services/routine_service.dart';
 import 'package:entrenador/services/update_service.dart';
 
 class RoutineManager {
-  static RegisterService registerService = RegisterService();
   static UpdateService updateService = UpdateService();
   static List<Routine> _routines = [];
+  static RoutineService routineService = RoutineService();
 
 
   void agregarRoutine(Routine routine) {
@@ -17,7 +17,7 @@ class RoutineManager {
 
     Future<void> addRoutine(Routine routine, Trainer trainer) async {
      //Routine newRoutine =_routines.where((routine)=>routine.id == routine.id) as Routine;
-    await registerService.createRoutine(routine);
+    await routineService.createRoutine(routine);
   }
 
 /*     Future<void> addTrainerRoutine(Routine routine, Trainer trainer) async {

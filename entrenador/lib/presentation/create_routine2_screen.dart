@@ -8,6 +8,7 @@ import 'package:entrenador/presentation/calendar_screen.dart';
 import 'package:entrenador/presentation/provider/counter_day_routine.dart';
 import 'package:entrenador/presentation/provider/exercises_provider.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
+import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -22,12 +23,12 @@ class CreateRoutine2Screen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Definición de variables y controladores
     Usuario user = datos.values.first;
     Routine routine = datos.keys.first;
     RoutineManager routineManager = RoutineManager();
     TrainerManager trainerManager = TrainerManager();
     Trainer actualTrainer = trainerManager.getLoggedUser()!;
+
 
     
     // Ejercicios para test, la Screen deberia instanciar los ejercicios del Trainer Actual
@@ -37,33 +38,48 @@ class CreateRoutine2Screen extends ConsumerWidget {
     ];
     final TextEditingController _routineObservationDayController = TextEditingController();
     final day = ref.watch(counterDayProvider);
+    final week = ref.watch(counterWeekProvider);
     final maxDays = int.parse(user.age); //Estoy usando el Age porque es un valor INT, aca deberia ser: user.trainingDays
     int indexDay = day - 1;
+    int indexWeek = week -1;
 
     void generateRoutine(){
-      for(int i =0; i < maxDays; i++){
-        routine.exercises[i] = ref.watch(exercisesNotifierProvider).exercises[i];
-        routine.observationsPerDay[i] = ref.watch(exercisesNotifierProvider).observations[i];
-      } 
+      for(int w = 0; w < routine.duration; w++){
+        for(int d =0; d < maxDays; d++){
+          routine.exercises[w][d].exercises = ref.watch(exercisesNotifierProvider).weeks[w].days[d].exercises;
+          routine.exercises[w][d].observation = ref.watch(exercisesNotifierProvider).weeks[w].days[d].observation;
+        } 
+      }
+
     }
+
+  if (ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation.isNotEmpty) {
+  _routineObservationDayController.text = ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation ?? '';
+  } else {
+    _routineObservationDayController.text = '';
+  } 
 
     return Scaffold(
       appBar: CustomAppBar(title: 'Rutina: ${routine.title}'),
+      bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 0),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+              Text('$indexWeek'),
+              Text('$indexDay'),
+              Text('Semana $week de ${routine.duration}'),
               Text('Día de rutina $day/$maxDays'),
               Text(routine.title),
               Text('Objetivo: ${routine.typeOfTraining?.name}'),
               Text('Duración en semanas: ${routine.duration}'),
               Text('Tiempo de descanso entre ejercicios: ${routine.rest}'),
               const SizedBox(height: 20),
-              _AddExerciseView(exercisesOptions: exercisesOptions, indexDay: indexDay),
+              _AddExerciseView(exercisesOptions: exercisesOptions, indexDay: indexDay, indexWeek: indexWeek),
               const SizedBox(height: 20),
               TextFormField(
-                controller: _routineObservationDayController,
+                controller:  _routineObservationDayController,
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                   labelText: 'Observación del día',
@@ -72,8 +88,6 @@ class CreateRoutine2Screen extends ConsumerWidget {
                   ),
                 ),
               ),               
-              const SizedBox(height: 20),
-              Text('${ref.watch(exercisesNotifierProvider).observations}'),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -86,13 +100,12 @@ class CreateRoutine2Screen extends ConsumerWidget {
                       },
                       child: const Icon(Icons.arrow_left),
                     ),
+                  if (day < maxDays)
                   ElevatedButton(
-                    onPressed: () {
-                      if (day < maxDays) {
+                    onPressed: () {                       
                         ref.read(counterDayProvider.notifier).state++;
-                        ref.read(exercisesNotifierProvider.notifier).addObservation(_routineObservationDayController.text);
-                        context.push('/createRoutine2', extra: datos);
-                      }
+                        ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
+                        context.push('/createRoutine2', extra: datos);                      
                     },
                     child: const Icon(Icons.arrow_right),
                   ),
@@ -105,23 +118,41 @@ class CreateRoutine2Screen extends ConsumerWidget {
                   ),
                 ],
               ),
-              if (day == maxDays) ...[
+              if(day == maxDays && week < routine.duration)
+              ElevatedButton(
+                onPressed: (){
+                  ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
+                  context.push('/createRoutine2', extra: datos);
+                  resetCounter(ref);
+                  ref.read(counterWeekProvider.notifier).state++;
+                },
+                child: const Text('Proxima semana'),
+                ),
+              if(week > 1)
+              ElevatedButton(
+                onPressed: (){
+                  ref.read(counterWeekProvider.notifier).state--;
+                  refillCounter(ref);
+                  context.push('/createRoutine2', extra: datos);
+                },
+                child: const Text('Semana anterior')
+                ),
+              if (day == maxDays && week == routine.duration) ...[
                 ElevatedButton(
                   onPressed: () {
-                    ref.read(exercisesNotifierProvider.notifier).addObservation(_routineObservationDayController.text);
+                    ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
                     generateRoutine();
                     Routine newRoutine = Routine(
                       title: routine.title,
                       description: routine.description,
                       duration: routine.duration,
-                      exercises: routine.exercises,
                       aim: routine.aim,
                       image: routine.image,
                       typeOfTraining: routine.typeOfTraining,
                       idTrainer: actualTrainer.trainerCode,
-                      observationsPerDay: routine.observationsPerDay,
                       trainingDays: routine.trainingDays,
                       rest: routine.rest,
+                      exercises: routine.exercises,
                     );                    
                     showDialog(
                       context: context,
@@ -193,10 +224,12 @@ class CreateRoutine2Screen extends ConsumerWidget {
 class _AddExerciseView extends ConsumerStatefulWidget {
   final List<Exercise> exercisesOptions;
   final int indexDay;
+  final int indexWeek;
 
   const _AddExerciseView({
     required this.exercisesOptions,
     required this.indexDay,
+    required this.indexWeek,
   });
 
   @override
@@ -215,24 +248,24 @@ class _AddExerciseViewState extends ConsumerState<_AddExerciseView> {
 
   @override
   Widget build(BuildContext context) {
-    final exerciseSelected = ref.watch(exercisesNotifierProvider).exercises;
+    final exerciseSelected = ref.watch(exercisesNotifierProvider).weeks[widget.indexWeek].days[widget.indexDay].exercises;
     return Column(
       children: [
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: exerciseSelected[widget.indexDay].length,
+          itemCount: exerciseSelected.length,
           itemBuilder: (BuildContext context, int index) {
             return _ExerciseEntry(
-              exercise: exerciseSelected[widget.indexDay][index],
+              exercise: exerciseSelected[index],
               exercises: widget.exercisesOptions,
-              onRemove: () { ref.read(exercisesNotifierProvider.notifier).removeExercise(widget.indexDay,index);}, // no funciona
+              onRemove: () { ref.read(exercisesNotifierProvider.notifier).removeExercise(widget.indexWeek,widget.indexDay,index);},
             );
           },
         ),     
         const SizedBox(height: 20),
         ElevatedButton(
-          onPressed: (){ ref.read(exercisesNotifierProvider.notifier).addExercise(widget.indexDay,Exercise.create("", 0, 0));},
+          onPressed: (){ ref.read(exercisesNotifierProvider.notifier).addExercise(widget.indexWeek, widget.indexDay,Exercise.create("", 0, 0));},
           child: const Text('+'),
         ),
       ],

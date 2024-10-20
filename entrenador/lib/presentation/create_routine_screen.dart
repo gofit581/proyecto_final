@@ -102,7 +102,7 @@ class _CreateRoutineScreenState extends ConsumerState<CreateRoutineScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-
+              
               ElevatedButton(
                 onPressed: () async {
                   if (_routineTitleController.text.isEmpty || _routineDurationController.text.isEmpty || _routineRestController.text.isEmpty) {
@@ -121,7 +121,7 @@ class _CreateRoutineScreenState extends ConsumerState<CreateRoutineScreen> {
                       trainingDays : int.parse(actualUser.trainingDays),
                     );
 
-                    ref.read(exercisesNotifierProvider.notifier).initializeRoutine(int.parse(actualUser.trainingDays));
+                    ref.read(exercisesNotifierProvider.notifier).initializeRoutine(int.parse(_routineDurationController.text), int.parse(actualUser.trainingDays));
                         Map<Routine, Usuario> datos = {
                           routine: actualUser,
                         };
