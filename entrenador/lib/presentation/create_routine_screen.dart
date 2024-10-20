@@ -95,7 +95,7 @@ class _CreateRoutineScreenState extends ConsumerState<CreateRoutineScreen> {
                 controller: _routineRestController,
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
-                  labelText: 'Tiempo de descanso entre ejercicios',
+                  labelText: 'Tiempo de descanso entre ejercicios(segundos)',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

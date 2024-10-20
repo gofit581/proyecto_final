@@ -74,7 +74,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
               Text(routine.title),
               Text('Objetivo: ${routine.typeOfTraining?.name}'),
               Text('Duración en semanas: ${routine.duration}'),
-              Text('Tiempo de descanso entre ejercicios: ${routine.rest}'),
+              Text('Tiempo de descanso entre ejercicios: ${routine.rest} segundos'),
               const SizedBox(height: 20),
               _AddExerciseView(exercisesOptions: exercisesOptions, indexDay: indexDay, indexWeek: indexWeek),
               const SizedBox(height: 20),
