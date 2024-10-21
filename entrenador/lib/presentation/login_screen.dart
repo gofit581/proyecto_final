@@ -102,14 +102,14 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      '¿No tenes una cuenta? ',
+                      '¿No tenes una cuenta?',
                       style: TextStyle(fontSize: 16),
                     ),
                     TextButton(

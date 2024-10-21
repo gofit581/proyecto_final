@@ -2,6 +2,7 @@ import 'package:alumno/core/entities/TypeOfTraining.dart';
 import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/internaData/user_data_options.dart';
 import 'package:alumno/presentation/calendar_screen.dart';
+import 'package:alumno/presentation/login_screen.dart';
 import 'package:alumno/services/update_service.dart';
 import 'package:alumno/widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,7 @@ class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
       appBar: const CustomAppBar(
         title: 'Tus datos',
       ),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -196,6 +198,25 @@ class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
                   }
                 },
                 child: const Text('Registrarse'),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        '¿Ya tenes una cuenta?',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context.goNamed(LoginScreen.name);
+                        },
+                        child: const Text('Inicia Sesión', style: TextStyle(decoration: TextDecoration.underline ,fontSize: 16, color: Color.fromARGB(255, 22, 22, 180), fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                  ),
               ),
             ],
           ),

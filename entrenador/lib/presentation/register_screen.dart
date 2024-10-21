@@ -1,4 +1,5 @@
 import 'package:date_format/date_format.dart';
+import 'package:entrenador/presentation/login_screen.dart';
 import 'package:entrenador/presentation/register_entrenador_data_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -155,30 +156,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                 const SizedBox(height: 20),
 
-                /* const Text("Codigo de entrenador"),
-                
-                const SizedBox(height: 20),
-
-                SizedBox(
-                  width:200,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blueGrey),
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.blue,
-                    ),
-                    child: TextField(
-                      controller: _registerIdTrainerTFController,
-                      textAlign: TextAlign.center,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 20), */
-
                 ElevatedButton(
                   onPressed: () async {
                     if (_registerUserTFController.text.isEmpty ||
@@ -242,6 +219,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
                   },
                   child: const Text('Continuar'),
+                ),
+
+                const SizedBox(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        '¿Ya tenes una cuenta?',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context.goNamed(LoginScreen.name);
+                        },
+                        child: const Text('Inicia Sesión', style: TextStyle(decoration: TextDecoration.underline ,fontSize: 16, color: Color.fromARGB(255, 22, 22, 180), fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
