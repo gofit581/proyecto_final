@@ -23,7 +23,7 @@ class RegisterService {
         'experience': usuario.experience,
         'discipline': usuario.discipline,
         'trainingDays': usuario.trainingDays,
-        'trainingDuration': usuario.trainingDuration,
+        'trainingDuration': usuario.trainingDuration ,
         'injuries': usuario.injuries,
         'extraActivities': usuario.extraActivities,
         //'training': usuario.training?.name,

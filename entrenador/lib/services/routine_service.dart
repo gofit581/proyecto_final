@@ -1,4 +1,5 @@
 import 'package:entrenador/core/entities/Routine.dart';
+import 'package:entrenador/core/entities/TypeOfTraining.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -12,9 +13,11 @@ class RoutineService {
         headers: {'Content-Type': 'application/json'},
       );
 
+      print('Response body: ${response.body}');
+
       if (response.statusCode == 200) {
         final List<dynamic> routinesData = jsonDecode(response.body);
-        final List<Routine> routines = routinesData
+        final List<Routine> routines = routinesData       
             .where((routineData) {
               return routineData['idTrainer'] == trainerId;
             })
@@ -54,16 +57,43 @@ class RoutineService {
         'description': routine.description,
         'duration': routine.duration,
         'aim': routine.aim,
-        'image': routine.image,
-        'rest': routine.rest,
-        'observationsPerDay': routine.observationsPerDay,
-        'traininDays': routine.trainingDays,
-        'exercise': routine.exercises
+        'image':routine.image,
+        'rest':routine.rest,
+        'trainingDays':routine.trainingDays,
+        'exercises': routine.exercises.map((week) => week.map((day) => day.toJson()).toList()).toList(),// A CHECKEAR
+        'idTrainer':routine.idTrainer,
+        'typeOfTraining':routine.typeOfTraining?.toJson(),
       }),
     );
 
     if (response.statusCode != 201) {
-      throw Exception('Failed to register user');
+      print('Error: ${response.body}');
+      throw Exception('Failed to create routine');
     }
   }
+
+  /*   Future<void> addTrainerRoutine(Routine routine, Trainer trainer) async{
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/Trainer'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final List<Trainer> trainers = jsonDecode(response.body);
+        for (var trainerData in trainers) {
+          if (trainerData.id == trainer.id) {
+            trainerData.addRoutine(routine);
+            return;
+          }
+        }
+      }
+       
+    } catch (e) {
+      // Manejo de excepciones
+      print('Error: $e'); 
+    }
+
+  } */
+
 }

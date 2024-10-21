@@ -1,67 +1,92 @@
 import 'package:entrenador/core/entities/Exercise.dart';
+import 'package:entrenador/core/entities/TrainingDay.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+class Week {
+  List<TrainingDay> days;
+
+  Week({required this.days});
+}
+
 class RoutineNoti {
-  List<List<Exercise>> exercises; // Matriz de ejercicios por día
-  List<String> observations;
+  List<Week> weeks;
 
   RoutineNoti({
-    required this.exercises,
-    required this.observations,
+    required this.weeks,
   });
 }
 
 class ExercisesNotifier extends Notifier<RoutineNoti> {
   @override
   RoutineNoti build() {
-    return RoutineNoti(exercises: [], observations: [""]); // Estado inicial
+    return RoutineNoti(weeks: []);
   }
 
-  // Inicializa la rutina con una cantidad de días
-  void initializeRoutine(int days) {
+  void initializeRoutine(int weeksCount, int daysPerWeek) {
     state = RoutineNoti(
-      exercises: List.generate(days, (index) => [Exercise.create(" ", 0, 0)]), // Inicializa con días vacíos
-      observations: [],
+      weeks: List.generate(weeksCount, (weekIndex) => Week(
+        days: List.generate(daysPerWeek, (dayIndex) => TrainingDay(
+          observation: '',
+          exercises: [Exercise.create(" ", 0, 0)],
+        )),
+      )),
     );
   }
 
-  // Agrega un ejercicio a un día específico
-  void addExercise(int dayIndex, Exercise exercise) {
-    if (dayIndex < 0 || dayIndex >= state.exercises.length) return; // Validar índice del día
+
+  void addExercise(int weekIndex, int dayIndex, Exercise exercise) {
+    if (weekIndex < 0 || weekIndex >= state.weeks.length) return; 
+    if (dayIndex < 0 || dayIndex >= state.weeks[weekIndex].days.length) return;
+
+
+    List<TrainingDay> updatedDays = List.from(state.weeks[weekIndex].days);
+    updatedDays[dayIndex] = TrainingDay(
+      observation: updatedDays[dayIndex].observation,
+      exercises: List.from(updatedDays[dayIndex].exercises)..add(exercise),
+    );
+
 
     state = RoutineNoti(
-      exercises: List.from(state.exercises)
-        ..[dayIndex].add(exercise), // Agregar ejercicio al día específico
-      observations: state.observations,
+      weeks: List.from(state.weeks)..[weekIndex] = Week(days: updatedDays),
     );
   }
 
-  // Elimina un ejercicio de un día específico
-  void removeExercise(int dayIndex, int exerciseIndex) {
-  if (dayIndex < 0 || dayIndex >= state.exercises.length) return; // Validar índice del día
-  if (exerciseIndex < 0 || exerciseIndex >= state.exercises[dayIndex].length) return; // Validar índice del ejercicio
 
-  // Crear una copia del estado actual y eliminar el ejercicio
-  List<List<Exercise>> updatedExercises = List.from(state.exercises);
-  updatedExercises[dayIndex] = List.from(updatedExercises[dayIndex])..removeAt(exerciseIndex);
+  void removeExercise(int weekIndex, int dayIndex, int exerciseIndex) {
+    if (weekIndex < 0 || weekIndex >= state.weeks.length) return; 
+    if (dayIndex < 0 || dayIndex >= state.weeks[weekIndex].days.length) return; 
+    if (exerciseIndex < 0 || exerciseIndex >= state.weeks[weekIndex].days[dayIndex].exercises.length) return;
 
-  // Actualizar el estado
-  state = RoutineNoti(
-    exercises: updatedExercises,
-    observations: state.observations,
-  );
-  }
 
-  // Agrega una observación
-  void addObservation(String observation) {
+    List<TrainingDay> updatedDays = List.from(state.weeks[weekIndex].days);
+    updatedDays[dayIndex] = TrainingDay(
+      observation: updatedDays[dayIndex].observation,
+      exercises: List.from(updatedDays[dayIndex].exercises)..removeAt(exerciseIndex),
+    );
+
     state = RoutineNoti(
-      exercises: state.exercises,
-      observations: [...state.observations, observation],
+      weeks: List.from(state.weeks)..[weekIndex] = Week(days: updatedDays),
     );
   }
 
+
+  void addObservation(int weekIndex, int dayIndex, String observation) {
+    if (weekIndex < 0 || weekIndex >= state.weeks.length) return; 
+    if (dayIndex < 0 || dayIndex >= state.weeks[weekIndex].days.length) return;
+
+
+    List<TrainingDay> updatedDays = List.from(state.weeks[weekIndex].days);
+    updatedDays[dayIndex] = TrainingDay(
+      observation: observation,
+      exercises: updatedDays[dayIndex].exercises,
+    );
+
+
+    state = RoutineNoti(
+      weeks: List.from(state.weeks)..[weekIndex] = Week(days: updatedDays),
+    );
+  }
 }
-
 
 final exercisesNotifierProvider = NotifierProvider<ExercisesNotifier, RoutineNoti>(
   () => ExercisesNotifier(),
