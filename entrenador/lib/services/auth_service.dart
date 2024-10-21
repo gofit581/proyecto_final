@@ -48,7 +48,7 @@ class AuthService {
       }
     } catch (e) {
       // Manejo de excepciones
-      print('Error: $e');
+      print('Auth Error: $e');
       return true; // Opcional: vuelve a lanzar la excepción si necesitas manejarla en otro lugar
     }
   }
@@ -106,7 +106,7 @@ class AuthService {
       }
     } catch (e) {
       // Manejo de excepciones
-      print('Error: $e');
+      print('Auth Error: $e');
       return true; // Opcional: vuelve a lanzar la excepción si necesitas manejarla en otro lugar
     }
   }
@@ -131,7 +131,7 @@ class AuthService {
         throw Exception('Mail not available');
       }
     } catch (e) {
-      print('Error: $e');
+      print('Auth Error: $e');
       return true;
     }  
   }

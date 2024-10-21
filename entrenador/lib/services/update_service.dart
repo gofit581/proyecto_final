@@ -1,6 +1,4 @@
-import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
-import 'package:entrenador/core/entities/User.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -21,51 +19,6 @@ class UpdateService {
 
     if (response.statusCode != 200) {
       throw Exception('Failed to update user');
-    }
-  }
-
-  Future<bool> saveRoutineForUser(Usuario alumno) async {
-    try {
-      final url = Uri.parse('$baseUrl/user/${alumno.id}');
-
-      Map<String, dynamic> updateJson = {
-        'userName': alumno.userName,
-        'password': alumno.password,
-        'mail': alumno.mail,
-        'age': alumno.age,
-        'idTrainer': alumno.idTrainer,
-        'objectiveDescription': alumno.objectiveDescription,
-        'experience': alumno.experience,
-        'discipline': alumno.discipline,
-        'trainingDays': alumno.trainingDays,
-        'trainingDuration': alumno.trainingDuration,
-        'injuries': alumno.injuries,
-        'extraActivities': alumno.extraActivities,
-        'currentRoutine': alumno.currentRoutine?.toJson(),
-        'id': alumno.id
-      };
-
-      print('Datos a enviar: ${jsonEncode(updateJson)}');
-
-      final response = await http.put(
-        url,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(updateJson),
-      );
-
-      if (response.statusCode == 200) {
-          // Actualización exitosa
-          return true;
-        } else {
-          // Error en la actualización
-           print('Error al guardar la rutina: ${response.statusCode}, ${response.body}');
-          return false;
-        }
-    } catch (e) {
-      print('Error en la solicitud: $e');
-      return false;
     }
   }
 

@@ -30,7 +30,7 @@ class RoutineService {
         throw Exception('Failed to load routines');
       }
     } catch (e) {
-      print('Error: $e');
+      print('Routine Error: $e');
       rethrow;
     }
   }
@@ -67,7 +67,7 @@ class RoutineService {
     );
 
     if (response.statusCode != 201) {
-      print('Error: ${response.body}');
+      print('Routine Error: ${response.body}');
       throw Exception('Failed to create routine');
     }
   }

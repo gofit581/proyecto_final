@@ -1,5 +1,4 @@
 import 'package:entrenador/core/entities/Exercise.dart';
-import 'package:entrenador/core/entities/TypeOfExercise.dart';
 
 class TrainingDay{
   String observation;
