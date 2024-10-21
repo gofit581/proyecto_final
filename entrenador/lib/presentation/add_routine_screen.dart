@@ -7,6 +7,7 @@ import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:entrenador/core/entities/User.dart';
 import 'package:entrenador/services/update_service.dart';
+import 'package:go_router/go_router.dart';
 
 class AddRoutineScreen extends StatefulWidget {
   const AddRoutineScreen({super.key, required this.alumno});
@@ -44,6 +45,7 @@ Widget build(BuildContext context) {
     appBar: const CustomAppBar(
       title: 'Agregar Rutina',
     ),
+    bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 2),
     backgroundColor: Colors.white,
     //bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 2),
     body: FutureBuilder<List<Routine>>(
@@ -103,9 +105,20 @@ Widget build(BuildContext context) {
                           bool isSaved = await _updateService.saveRoutineForUser(widget.alumno);
 
                           if (isSaved) {   
-                            print('Rutina seleccionada: ${selectedRoutine.title}');                                                
+                            print('Rutina seleccionada: ${selectedRoutine.title}');  
+                            ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('La rutina fue asignada con éxito!'),
+                            ),
+                          );                
+                          context.goNamed('UsersListScreen');                              
                           } else {
                             print('Error al guardar la rutina.');
+                            ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Hubo un error al asignar la rutina.'),
+                            ),
+                          );
                           }            
                         } else {
                           //print('No se ha seleccionado ninguna rutina.');

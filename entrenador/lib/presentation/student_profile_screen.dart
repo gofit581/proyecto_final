@@ -184,6 +184,13 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           if (widget.usuarioSeleccionado.currentRoutine == null) {
                             context.push('/AddRoutine', extra: widget.usuarioSeleccionado);
                           }
+                          else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('El usuario ya tiene una rutina asignada en progreso.'),
+                              ),
+                            );
+                          }
                         },
                         child: const Text(
                           'Asignar Rutina',
