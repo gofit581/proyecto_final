@@ -1,4 +1,5 @@
 import 'package:entrenador/core/entities/Clase.dart';
+import 'package:entrenador/core/entities/Exercise.dart';
 import 'package:entrenador/core/entities/Routine.dart';
 
 class Trainer {
@@ -17,6 +18,7 @@ class Trainer {
   int? trabajaHastaHora;
   double? precioPorClase;
   late List<Routine> routines;
+  late List<Exercise> exercises =[];
   //List<User> clients;
 
 Trainer.parcial({
@@ -43,7 +45,7 @@ Trainer({
     required this.trabajaHastaHora,
     required this.precioPorClase,
     required this.routines,
-});
+}): exercises =[];
 
 @override
 String toString() {

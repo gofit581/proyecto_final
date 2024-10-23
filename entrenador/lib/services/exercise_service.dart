@@ -16,6 +16,7 @@ class ExerciseService {
         'series': 0,
         'repetitions': 0,
         'done': false,
+        'idTrainer': exercise.idTrainer,
       }),
     );
 
@@ -23,4 +24,60 @@ class ExerciseService {
       throw Exception('Failed to register user');
     }
   }
+
+    Future<List<Exercise>> getExercisesByTrainerId(String trainerId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/Ejercicio'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final List<dynamic> exercisesData = jsonDecode(response.body);
+        final List<Exercise> exercises = exercisesData       
+            .where((exercisesData) {
+              return exercisesData['idTrainer'] == trainerId;
+            })
+            .map((exercisesData) => Exercise.fromJson(exercisesData))
+            .toList();
+        print('raw query' + exercisesData.toString());
+
+        return exercises;
+      } else {
+        throw Exception('Failed to load exercises');
+      }
+    } catch (e) {
+      print('Routine Error: $e');
+      rethrow;
+    }
+  }
+
+  Future<List<Exercise>> getExercises() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/Ejercicio'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {      
+        final List<dynamic> exercisesData = jsonDecode(response.body);
+        final List<Exercise> exercises = exercisesData
+            .map((exercisesData) => Exercise.fromJson(exercisesData))
+            .toList();
+        print('raw query' + exercisesData.toString());
+
+        return exercises;
+      } else {
+        throw Exception('Failed to load exercises');
+      }
+    } catch (e) {
+      print('Routine Error: $e');
+      rethrow;
+    }
+  }
+
  }

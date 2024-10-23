@@ -1,6 +1,8 @@
 import 'package:entrenador/core/entities/Exercise.dart';
 import 'package:entrenador/core/entities/ExerciseManager.dart';
 import 'package:entrenador/core/entities/Routine.dart';
+import 'package:entrenador/core/entities/Trainer.dart';
+import 'package:entrenador/core/entities/TrainerManager.dart';
 import 'package:entrenador/core/entities/User.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
@@ -12,7 +14,7 @@ class CreateExerciseScreen extends StatefulWidget {
   static const name = 'CreateExerciseScreen';
   final Map<Routine,Usuario> datos;
 
-  const CreateExerciseScreen({super.key, required this.datos});
+  const CreateExerciseScreen({super.key, required this.datos,});
 
   @override
   State<CreateExerciseScreen> createState() => _CreateExerciseScreenState();
@@ -28,6 +30,9 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
 
   @override
   Widget build(BuildContext context) {
+  TrainerManager trainerManager = TrainerManager();
+  Trainer actualTrainer = trainerManager.getLoggedUser()!;
+    
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Crear Ejercicio',
@@ -91,7 +96,8 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
                   Exercise newExercise = Exercise(
                     title: _exerciseTitleController.text,
                     imageLink: _exerciseImageLinkController.text,
-                    description: _exerciseDescriptionController.text
+                    description: _exerciseDescriptionController.text,
+                    idTrainer: actualTrainer.getTrainerCode()
                     );
                    showDialog(
                       context: context,

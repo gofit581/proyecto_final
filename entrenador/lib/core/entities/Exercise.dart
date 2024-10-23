@@ -6,6 +6,7 @@ class Exercise {
   int? series;
   int? repetitions;
   bool? done;
+  late String? idTrainer; //checkear
 
   Exercise.vacio();
 
@@ -22,6 +23,7 @@ class Exercise {
     required this.description,
     this.done = false, 
     this.repetitions,
+    this.idTrainer,
   });
   
   void toggleDone() {

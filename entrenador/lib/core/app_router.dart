@@ -7,6 +7,7 @@ import 'package:entrenador/presentation/calendar_screen.dart';
 import 'package:entrenador/presentation/create_exercise_screen.dart';
 import 'package:entrenador/presentation/create_routine2_screen.dart';
 import 'package:entrenador/presentation/create_routine_screen.dart';
+import 'package:entrenador/presentation/edit_routine_screen.dart';
 import 'package:entrenador/presentation/initial_screen.dart';
 import 'package:entrenador/presentation/list_routine.dart';
 import 'package:entrenador/presentation/login_screen.dart';
@@ -115,5 +116,12 @@ final appRouter = GoRouter(routes: [
       return CreateExerciseScreen(datos: datos);
     },
     name: CreateExerciseScreen.name,
+  ),
+  GoRoute(
+    path: '/editRoutine',
+    builder: (context, state) => EditRoutineScreen(
+      routine: state.extra as Routine,
+    ),
+    name: EditRoutineScreen.name,
   ),
 ]);

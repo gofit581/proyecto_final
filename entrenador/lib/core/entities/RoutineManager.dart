@@ -20,6 +20,10 @@ class RoutineManager {
     await routineService.createRoutine(routine);
   }
 
+  Future<void> editRoutine(Routine newRoutine, String routineId) async {
+    await routineService.editRoutine(newRoutine, routineId);
+  }
+
 /*     Future<void> addTrainerRoutine(Routine routine, Trainer trainer) async {
     await registerService.addTrainerRoutine(routine,trainer);
   } */
