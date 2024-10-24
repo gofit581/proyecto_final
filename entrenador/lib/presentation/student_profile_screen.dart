@@ -1,5 +1,7 @@
 import 'package:entrenador/core/app_router.dart';
 import 'package:entrenador/presentation/add_routine_screen.dart';
+import 'package:entrenador/services/update_service.dart';
+import 'package:entrenador/services/users_getter_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../widget/custom_app_bar.dart';
@@ -18,23 +20,27 @@ class StudentProfileScreen extends StatefulWidget {
 
 class _StudentProfileScreenState extends State<StudentProfileScreen> {
   bool isLoading = false;
+  final UsersGetterService _usersGetterService = UsersGetterService();
+  late Usuario usuarioActualizado; 
 
   @override
   void initState() {
     super.initState();
-    _loadUserData();
+    _loadUserData(); 
+    usuarioActualizado = widget.usuarioSeleccionado; 
   }
 
   Future<void> _loadUserData() async {
     setState(() {
-      // Simular la carga de datos
-      isLoading = true;
+      
     });
 
-    await Future.delayed(const Duration(seconds: 2)); // Simular tiempo de carga
-
+    Usuario usuarioFromDB = await _usersGetterService.getUserById(widget.usuarioSeleccionado.id!);
+    print(usuarioFromDB);
+   
     setState(() {
       isLoading = false;
+      usuarioActualizado = usuarioFromDB;
     });
   }
 
@@ -92,7 +98,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            widget.usuarioSeleccionado.userName,
+                            usuarioActualizado.userName,
                             style: const TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),
@@ -110,7 +116,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            widget.usuarioSeleccionado.getEmail(),
+                            usuarioActualizado.getEmail(),
                             style: const TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),
@@ -140,13 +146,13 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent),
                         ),
                         const SizedBox(height: 10),
-                        _buildInfoRow('Objetivo', widget.usuarioSeleccionado.objectiveDescription),
-                        _buildInfoRow('Experiencia', widget.usuarioSeleccionado.experience),
-                        _buildInfoRow('Disciplina', widget.usuarioSeleccionado.discipline),
-                        _buildInfoRow('Días de Entrenamiento', widget.usuarioSeleccionado.trainingDays),
-                        _buildInfoRow('Duración del Entrenamiento', widget.usuarioSeleccionado.trainingDuration),
-                        _buildInfoRow('Lesiones', widget.usuarioSeleccionado.injuries),
-                        _buildInfoRow('Actividades Extras', widget.usuarioSeleccionado.extraActivities),
+                        _buildInfoRow('Objetivo', usuarioActualizado.objectiveDescription),
+                        _buildInfoRow('Experiencia', usuarioActualizado.experience),
+                        _buildInfoRow('Disciplina', usuarioActualizado.discipline),
+                        _buildInfoRow('Días de Entrenamiento', usuarioActualizado.trainingDays),
+                        _buildInfoRow('Duración del Entrenamiento', usuarioActualizado.trainingDuration),
+                        _buildInfoRow('Lesiones', usuarioActualizado.injuries),
+                        _buildInfoRow('Actividades Extras', usuarioActualizado.extraActivities),
                         const SizedBox(height: 40),
                       ],
                     ),
@@ -163,8 +169,19 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
+                        
                         onPressed: () {
-                          // Método de "Ver Rutina"
+                          print(usuarioActualizado.currentRoutine);
+                          if (usuarioActualizado.currentRoutine != null) {
+                            //context.push('/CompleteRoutine', extra: usuarioActualizado.currentRoutine);
+                          }
+                          else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('El usuario no tiene una rutina asignada'),
+                              ),
+                            );
+                          }
                         },
                         child: const Text(
                           'Ver Rutina',
@@ -181,8 +198,8 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                         ),
                         onPressed: () {
-                          if (widget.usuarioSeleccionado.currentRoutine == null) {
-                            context.push('/AddRoutine', extra: widget.usuarioSeleccionado);
+                          if (usuarioActualizado.currentRoutine == null) {
+                            context.push('/AddRoutine', extra: usuarioActualizado);
                           }
                           else {
                             ScaffoldMessenger.of(context).showSnackBar(

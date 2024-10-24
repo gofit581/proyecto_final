@@ -121,6 +121,27 @@ class Usuario {
       mail = email;
     }
 
+    factory Usuario.fromJson(Map<String, dynamic> json) {
+    return Usuario(
+      id: json['id'],
+      userName: json['userName'],
+      password: json['password'],
+      mail: json['mail'],
+      age: json['age'],
+      idTrainer: json['idTrainer'],
+      objectiveDescription: json['objectiveDescription'],
+      experience: json['experience'],
+      discipline: json['discipline'],
+      trainingDays: json['trainingDays'],
+      trainingDuration: json['trainingDuration'],
+      injuries: json['injuries'],
+      extraActivities: json['extraActivities'],
+      currentRoutine: json['currentRoutine'] != null
+          ? Routine.fromJson(json['currentRoutine'])
+          : null,
+    );
+  }
+
     toJson() {}
   }
 

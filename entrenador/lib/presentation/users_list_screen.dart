@@ -38,6 +38,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
       appBar: const CustomAppBar(
         title: 'Mis Alumnos'
       ),
+      backgroundColor: Colors.white,
       bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
       body: FutureBuilder<List<Usuario>>(
         future: _clientsFuture,
