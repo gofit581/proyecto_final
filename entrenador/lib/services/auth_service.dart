@@ -1,6 +1,7 @@
 import 'package:entrenador/core/entities/Clase.dart';
 import 'package:entrenador/core/entities/RoutineManager.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
+import 'package:entrenador/core/entities/User.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -24,25 +25,23 @@ class AuthService {
         for (var userData in users) {
           if (userData['mail'] == email && userData['password'] == password) {
             var userOK = Trainer.parcial(
-              id: userData['id'],
-              mail: userData['mail'],
-              userName: userData['userName'],
-              password: userData['password'],
-              age: userData['age'],
-              trainerCode: userData['trainerCode']
-            );
+                id: userData['id'],
+                mail: userData['mail'],
+                userName: userData['userName'],
+                password: userData['password'],
+                age: userData['age'],
+                trainerCode: userData['trainerCode']);
 
-            if (userOK.id != null) {
-              final agenda = await obtenerAgendaClases(userOK.id!);
-              userOK.setAgenda(agenda);
-            }
+            final agenda = await obtenerAgendaClases(userOK.trainerCode);
+            userOK.setAgenda(agenda);            
 
             _trainerManager.setLoggedUser(userOK);
             _trainerManager.agregarUsuario(userOK);
             return true;
           }
         }
-        throw Exception('User not found. Users: ${_trainerManager.getLoggedUser()}');
+        throw Exception(
+            'User not found. Users: ${_trainerManager.getLoggedUser()}');
       } else {
         throw Exception('Failed to load users');
       }
@@ -67,14 +66,13 @@ class AuthService {
 
       // Filtrar las clases que correspondan al idTrainer
       final List<Clase> agenda = clasesData
-          .where(
-              (claseData) => claseData['idTrainer'] == idTrainer)
+          .where((claseData) => claseData['idTrainer'] == idTrainer)
           .map((claseData) => Clase(
-                id: DateTime.fromMillisecondsSinceEpoch(
-                    claseData['horaInicio'] * 1000),
+                id: claseData['id'],
+                horaInicio: DateTime.parse(claseData['horaInicio']),
                 duracionHs: claseData['duracionHs'],
                 alumno:
-                    null, // Aquí puedes mapear el objeto alumno si está disponible
+                    claseData['alumno'] != null ? Usuario.fromJson(claseData['alumno']) : null,
                 precio: claseData['precio'].toDouble(),
               ))
           .toList();
@@ -111,7 +109,7 @@ class AuthService {
     }
   }
 
-    Future<bool> validateMail(String mail) async{
+  Future<bool> validateMail(String mail) async {
     try {
       final response = await http.get(
         Uri.parse('$baseUrl/Trainer'),
@@ -122,7 +120,7 @@ class AuthService {
         final List<dynamic> users = jsonDecode(response.body);
         bool result = false;
         for (var userData in users) {
-          if (userData['mail'] == mail){
+          if (userData['mail'] == mail) {
             result = true;
           }
         }
@@ -133,6 +131,6 @@ class AuthService {
     } catch (e) {
       print('Auth Error: $e');
       return true;
-    }  
+    }
   }
 }

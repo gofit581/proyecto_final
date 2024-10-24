@@ -21,10 +21,6 @@ class Entrenador {
     required this.ejercicios,
   });
 
-  @override
-  String toString() {
-    return '$nombre $apellido';
-  }
 
   String getNombre() {
     return nombre;
@@ -56,5 +52,26 @@ class Entrenador {
 
   void setAgenda(List<Clase> agenda) {
     this.agenda = agenda;
+  }
+
+  List<Routine>? getRutinas() {
+    return rutinas;
+  }
+
+  void setRutinas(List<Routine> rutinas) {
+    this.rutinas = rutinas;
+  }
+
+  List<Exercise>? getEjercicios() {
+    return ejercicios;
+  }
+
+  void setEjercicios(List<Exercise> ejercicios) {
+    this.ejercicios = ejercicios;
+  }
+
+  @override
+  String toString() {
+    return 'Entrenador{id: $id, nombre: $nombre, apellido: $apellido, alumnos: $alumnos, agenda: $agenda, rutinas: $rutinas, ejercicios: $ejercicios}';
   }
 }

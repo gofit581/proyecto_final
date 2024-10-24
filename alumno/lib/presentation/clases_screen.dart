@@ -105,9 +105,9 @@ class ClasesScreen extends StatelessWidget {
     if (profesor != null && profesor.agenda != null) {
       clasesDelDia.addAll(profesor.agenda!
           .where((clase) =>
-              clase.id.year == date.year &&
-              clase.id.month == date.month &&
-              clase.id.day == date.day)
+              clase.horaInicio.year == date.year &&
+              clase.horaInicio.month == date.month &&
+              clase.horaInicio.day == date.day)
           .toList());
     }
     return Scaffold(
@@ -128,7 +128,7 @@ class ClasesScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          'Hora de comienzo: ${clase.id.hour}:${clase.id.minute}',
+                          'Hora de comienzo: ${clase.horaInicio.hour}:${clase.horaInicio.minute}',
                           style: TextStyle(fontSize: 16)),
                       Text('Duración: ${clase.duracionHs} horas',
                           style: TextStyle(fontSize: 16)),
@@ -139,8 +139,10 @@ class ClasesScreen extends StatelessWidget {
                 );
               },
             )
-          : const Center(
-              child: Text('No hay clases programadas para esta fecha.'),
+          : Center(
+              child: Text(
+                'No hay clases programadas para esta fecha. ${profesor != null ? profesor.toString() : 'no hay profesor'}',
+              ),
               // child: Text('No hay clases programadas para esta fecha.${usuario != null ? (usuario.getProfesor()?.agenda != null ? usuario.getProfesor()!.agenda![0].toString() : 'No hay agenda') : 'El profesor es null'}'),
             ),
     );
