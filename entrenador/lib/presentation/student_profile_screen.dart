@@ -24,11 +24,11 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
 
   Future<void> _loadUserData() async {
     setState(() {
-      // Simular la carga de datos
+
       isLoading = true;
     });
 
-    await Future.delayed(const Duration(seconds: 2)); // Simular tiempo de carga
+    await Future.delayed(const Duration(seconds: 1)); 
 
     setState(() {
       isLoading = false;
@@ -94,8 +94,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                         ),
                         const SizedBox(height: 40),
-                        
-                        // Sección de Email
                         const Text(
                           'Email',
                           style: TextStyle(fontSize: 16, color: Colors.grey),
@@ -112,8 +110,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                         ),
                         const SizedBox(height: 40),
-
-                        // Sección de Edad
                         const Text(
                           'Edad',
                           style: TextStyle(fontSize: 16, color: Colors.grey),
@@ -130,8 +126,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                         ),
                         const SizedBox(height: 40),
-
-                        // Información de Entrenamiento
                         const Text(
                           'Información de Entrenamiento',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent),
@@ -161,7 +155,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                         ),
                         onPressed: () {
-                          // Método de "Ver Rutina"
                         },
                         child: const Text(
                           'Ver Rutina',
@@ -178,7 +171,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                         ),
                         onPressed: () {
-                          // Método de "Asignar Rutina"
                         },
                         child: const Text(
                           'Asignar Rutina',
