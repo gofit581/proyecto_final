@@ -1,5 +1,5 @@
-import 'package:alumno/presentation/trainingDay_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:alumno/presentation/trainingDay_screen.dart';
 import '../presentation/profile_screen.dart';
 import 'package:go_router/go_router.dart';
 

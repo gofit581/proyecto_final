@@ -5,8 +5,8 @@ import '../widget/custom_botton_navigation_bar.dart';
 import '../presentation/initial_screen.dart';
 import '../core/entities/UserManager.dart';
 import '../core/entities/User.dart';
-import '../core/entities/Entrenador.dart';
-
+import '../presentation/edit_profile.dart';
+import '../services/auth_service.dart';
 
 class MyProfileScreen extends StatefulWidget {
   static const String name = 'ProfileScreen';
@@ -19,22 +19,24 @@ class MyProfileScreen extends StatefulWidget {
 }
 
 class _MyProfileScreenState extends State<MyProfileScreen> {
-  Usuario? actualUsuario;
-  Entrenador? entrenadorAsignado;
-  bool isLoading = false;
+ Usuario? actualUsuario;
+Entrenador? entrenadorAsignado;
+bool isLoading = false;
 
-  @override
-  void initState() {
-    super.initState();
-    _loadUserData();
-  }
+@override
+void initState() {
+  super.initState();
+  _loadUserData();
+}
 
-   Future<void> _loadUserData() async {
-      setState(() {
-        actualUsuario = UserManager().getLoggedUser();
-        entrenadorAsignado = actualUsuario!.getProfesor();
-      });
-    }
+Future<void> _loadUserData() async {
+  setState(() {
+    actualUsuario = UserManager().getLoggedUser();
+    // Verificamos si getProfesor() devuelve null y asignamos un valor por defecto si es necesario
+    entrenadorAsignado = actualUsuario?.getProfesor() ?? Entrenador();
+  });
+}
+
 
   void _showLogoutConfirmationDialog(BuildContext context) {
     showDialog(
@@ -46,7 +48,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                // Navegar a la pantalla initial_screen
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const InitialScreen()),
@@ -56,7 +57,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Cerrar el diálogo
+                Navigator.of(context).pop();
               },
               child: const Text('No'),
             ),
@@ -71,8 +72,24 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
-      appBar: const CustomAppBar(
+       appBar: CustomAppBar(
         title: 'Profile',
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditProfileScreen(
+                    usuario: actualUsuario!,
+                    authService: AuthService(UserManager()),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 2),
       body: isLoading
