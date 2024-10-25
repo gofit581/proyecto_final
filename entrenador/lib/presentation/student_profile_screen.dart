@@ -1,4 +1,7 @@
+import 'package:entrenador/core/app_router.dart';
+import 'package:entrenador/presentation/add_routine_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../widget/custom_app_bar.dart';
 import '../widget/custom_botton_navigation_bar.dart';
 import '../core/entities/User.dart';
@@ -171,6 +174,16 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                         ),
                         onPressed: () {
+                          if (widget.usuarioSeleccionado.currentRoutine == null) {
+                            context.push('/AddRoutine', extra: widget.usuarioSeleccionado);
+                          }
+                          else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('El usuario ya tiene una rutina asignada en progreso.'),
+                              ),
+                            );
+                          }
                         },
                         child: const Text(
                           'Asignar Rutina',

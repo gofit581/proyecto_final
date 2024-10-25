@@ -1,11 +1,13 @@
+import 'package:entrenador/core/app_router.dart';
 import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
+import 'package:entrenador/presentation/users_list_screen.dart';
 import 'package:entrenador/services/routine_service.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
-import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:entrenador/core/entities/User.dart';
+import 'package:go_router/go_router.dart';
 
 class AddRoutineScreen extends StatefulWidget {
   const AddRoutineScreen({super.key, required this.alumno});
@@ -98,8 +100,20 @@ Widget build(BuildContext context) {
                           Routine selectedRoutine = routines[selectedRoutineIndex!];
                           widget.alumno.currentRoutine = selectedRoutine;
                           print('Rutina seleccionada: ${selectedRoutine.title}');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Rutina asignada con éxito'),
+                            ),
+                          );
+                          context.goNamed(UsersListScreen.name);
+                          
                         } else {
                           print('No se ha seleccionado ninguna rutina.');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('No se pudo asignar una rutina.'),
+                            ),
+                          );
                         }
                       },
                       style: ElevatedButton.styleFrom(

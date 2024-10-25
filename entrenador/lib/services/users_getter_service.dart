@@ -37,7 +37,7 @@ class UsersGetterService {
         throw Exception('Failed to load users');
       }
     } catch (e) {
-      print('Error: $e');
+      print('User getting Error: $e');
       rethrow;
     }
   }

@@ -98,7 +98,7 @@ class AuthService {
         throw Exception('Failed to load users');
       }
     } catch (e) {
-      print('Error: $e');
+      print('Auth Error: $e');
       return false;
     }
   }
@@ -200,7 +200,7 @@ class AuthService {
         throw Exception('IdTrainer not found');
       }
     } catch (e) {
-      print('Error: $e');
+      print('AuthError: $e');
       return true;
     }
   }
@@ -225,7 +225,7 @@ class AuthService {
         throw Exception('Mail not available');
       }
     } catch (e) {
-      print('Error: $e');
+      print('Auth Error: $e');
       return true;
     }
   }

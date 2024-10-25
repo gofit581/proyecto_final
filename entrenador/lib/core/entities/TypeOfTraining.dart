@@ -9,13 +9,13 @@ extension TypeOfTrainingExtension on TypeOfTraining {
   String get name {
     switch (this) {
       case TypeOfTraining.LoseWeight:
-        return 'Lose weight training';
+        return 'Adelgazar';
       case TypeOfTraining.GainWeight:
-        return 'Gain weight training';
+        return 'Aumentar masa muscular';
       case TypeOfTraining.Running:
-        return 'Running training';
+        return 'Cardio';
       case TypeOfTraining.Strength:
-        return 'Strength training'; 
+        return 'Fuerza'; 
       default:
         return '';
     }

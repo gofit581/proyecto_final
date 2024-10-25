@@ -18,22 +18,8 @@ final appRouter = GoRouter(routes: [
   GoRoute(
       path: '/login',
       builder: (context, state) => LoginScreen(),
-      name: LoginScreen.name),
-  // GoRoute(
-  //   path: '/home',
-  //   builder: (context, state) {
-  //     return HomeScreen();
-  //   },
-  //   name: HomeScreen.name,
-  // ),
-  /*
-    GoRoute(
-    path: '/clases',
-    builder: (context, state) => ClasesScreen(
-      date: state.extra as DateTime,
-    ),
-    name: ClasesScreen.name,
-  ),*/
+      name: LoginScreen.name
+      ),
    GoRoute(
      path: '/profile',
       builder: (context, state) {
@@ -63,18 +49,6 @@ final appRouter = GoRouter(routes: [
       path: '/calendar',
       builder: ((context, state) => const CalendarioScreen()),
       name: CalendarioScreen.name),
-  // GoRoute(
-  //     path: '/routine',
-  //     builder: (context, state) => RoutineScreen(),
-  //     name: RoutineScreen.name),
-  // GoRoute(
-  //     path: '/routines',
-  //     builder: (context, state) => RoutinesScreen(),
-  //     name: RoutinesScreen.name),
-  // GoRoute(
-  //     path: '/profile-info',
-  //     builder: (context, state) => ProfileInfoScreen(),
-  //     name: ProfileInfoScreen.name)
   GoRoute(
       path: '/trainingDay',
       builder: ((context, state) =>  TrainingdayScreen()),

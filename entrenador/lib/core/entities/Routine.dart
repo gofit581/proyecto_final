@@ -1,20 +1,18 @@
-import 'package:entrenador/core/entities/Exercise.dart';
+import 'package:entrenador/core/entities/TrainingDay.dart';
 import 'package:entrenador/core/entities/TypeOfTraining.dart';
 
 class Routine {
   String title;
   String? description;
   int duration;
-  late List<List<Exercise>> exercises;
   int? aim;
   String? image;
   TypeOfTraining? typeOfTraining;
   String? id;
-  //  int? id;
   int rest;
   late String idTrainer;
-  late List<String> observationsPerDay;
   late int trainingDays;
+  late List<List<TrainingDay>> exercises;
 
   //esto es de user
   Routine.parcial({
@@ -24,25 +22,26 @@ class Routine {
     required this.rest,
     required this.trainingDays,
   }) {
-    this.exercises = [
-      [Exercise.vacio()],
-      [Exercise.vacio()],
-      [Exercise.vacio()],
-    ];
-    this.observationsPerDay = List<String>.filled(trainingDays, '');
+    exercises = List.generate(
+      duration,
+      (weekIndex) => List.generate(
+        trainingDays,
+        (dayIndex) => TrainingDay(observation: '', exercises: []),
+      ),
+    );
   }
+
 
   Routine({
     required this.title,
     required this.description,
     required this.duration,
-    required this.exercises,
     required this.aim,
     required this.typeOfTraining,
     required this.rest,
     required this.idTrainer,
-    required this.observationsPerDay,
     required this.trainingDays,
+    required this.exercises,
     this.image,
     this.id,
   });
@@ -66,11 +65,6 @@ class Routine {
       title: json['title'],
       description: json['description'],
       duration: json['duration'],
-      exercises: (json['exercises'] as List<dynamic>)
-          .map((group) => (group as List<dynamic>)
-              .map((exercise) => Exercise.fromJson(exercise))
-              .toList())
-          .toList(),
       aim: json['aim'],
       typeOfTraining: json['typeOfTraining'] != null
           ? TypeOfTraining.values.firstWhere(
@@ -79,9 +73,13 @@ class Routine {
           : null,
       rest: json['rest'],
       idTrainer: json['idTrainer'],
-      observationsPerDay: List<String>.from(json['observationsPerDay']),
       trainingDays: json['trainingDays'],
       id: json['id'],
+      exercises:(json['exercises'] as List)
+          .map((week) => (week as List)
+              .map((day) => TrainingDay.fromJson(day))
+              .toList())
+          .toList(),
     );
   }
 }

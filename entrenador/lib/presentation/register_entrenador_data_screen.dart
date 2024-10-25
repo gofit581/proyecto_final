@@ -1,5 +1,6 @@
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/presentation/agenda_screen.dart';
+import 'package:entrenador/presentation/login_screen.dart';
 import 'package:entrenador/services/update_service.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,8 @@ class RegisterEntrenadorDataScreen extends StatelessWidget {
       appBar: const CustomAppBar(
         title: 'Tus datos'
       ),
-      body: _Formulario(trainer: trainer)
+      body: _Formulario(trainer: trainer),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
     );
   }
 }
@@ -61,68 +63,66 @@ class _FormularioState extends State<_Formulario> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               SizedBox(
-                    width: 400,
-                    child: TextField(
-                      controller: _registerPrecioController,
-                      decoration: InputDecoration(
-                        labelText: 'Precio por clase',
-                        border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        )
-                      ),
-                    ),
-              ),
-              const SizedBox(height: 40), 
-              SizedBox(
-                    width: 400,
-                    child: TextField(
-                      controller: _registerDuracionController,
-                      decoration: InputDecoration(
-                        labelText: 'Duración de las clases en minutos',
-                        border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        )
-                      ),
-                    ),
-              ),
-              const SizedBox(height: 40), 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _registerTrabajaDesdeController,
-                      decoration: InputDecoration(
-                        labelText: 'Trabaja desde',
-                        border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        )
-                      ),
-                    ),
+                width: 300,
+                child: TextField(
+                  controller: _registerPrecioController,
+                  decoration: const InputDecoration(
+                    hintText: 'Precio por clase'
                   ),
-                  const SizedBox(width: 10),
-                  const Text('Hasta'),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: TextField(
-                      controller: _registerTrabajaHastaController,
-                      decoration: InputDecoration(
-                        labelText: 'Trabaja hasta',
-                        border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        )
+                ),
+              ),
+              const SizedBox(height: 20), 
+              SizedBox(
+                width: 300,
+                child: TextField(
+                  controller: _registerDuracionController,
+                  decoration: const InputDecoration(
+                    hintText: 'Duración de las clases en minutos'
+                  ),    
+                ),
+              ),
+              const SizedBox(height: 20), 
+              SizedBox(
+                width: 300,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _registerTrabajaDesdeController,
+                        decoration: const InputDecoration(
+                          hintText: 'Trabaja desde'
+                        ), 
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 8),
+                    const Text('Hasta'),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: TextField(
+                        controller: _registerTrabajaHastaController,
+                        /*
+                        decoration: InputDecoration(
+                          labelText: 'Trabaja hasta',
+                          border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          )
+                        ),*/
+                        decoration: const InputDecoration(
+                          hintText: 'Trabaja hasta'
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 40),        
+              const SizedBox(height: 20),        
               SizedBox(
-                width: 400,
+                width: 300,
                 child: Column(
                   children: [
                     Column(
@@ -207,6 +207,25 @@ class _FormularioState extends State<_Formulario> {
                   } 
                 },
                 child: const Text('Registrarse'),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        '¿Ya tenes una cuenta?',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context.goNamed(LoginScreen.name);
+                        },
+                        child: const Text('Inicia Sesión', style: TextStyle(decoration: TextDecoration.underline ,fontSize: 16, color: Color.fromARGB(255, 22, 22, 180), fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                  ),
               ),
             ],
           ),
