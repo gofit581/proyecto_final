@@ -4,6 +4,7 @@ import '../widget/custom_botton_navigation_bar.dart';
 import '../presentation/initial_screen.dart';
 import '../core/entities/TrainerManager.dart';
 import '../core/entities/Trainer.dart';
+import '../presentation/agenda_screen.dart'; // Import the agenda screen
 
 class MyProfileScreen extends StatefulWidget {
   static const String name = 'ProfileScreen';
@@ -25,11 +26,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     _loadUserData();
   }
 
-   Future<void> _loadUserData() async {
-      setState(() {
-        actualEntrenador = TrainerManager().getLoggedUser();
-      });
-    }
+  Future<void> _loadUserData() async {
+    setState(() {
+      actualEntrenador = TrainerManager().getLoggedUser();
+    });
+  }
 
   void _showLogoutConfirmationDialog(BuildContext context) {
     showDialog(
@@ -50,7 +51,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); 
+                Navigator.of(context).pop();
               },
               child: const Text('No'),
             ),
@@ -144,7 +145,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             border: Border(bottom: BorderSide(color: Colors.grey)),
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 8),
-                          child:  Text(
+                          child: Text(
                             actualEntrenador!.getTrainerCode(),
                             style: const TextStyle(fontSize: 16, color: Colors.black),
                           ),
@@ -170,6 +171,27 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         },
                         child: const Text(
                           'CERRAR SESION',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 255, 255, 255)),
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 0, 0, 255),
+                          elevation: 5,
+                          fixedSize: const Size(170, 30),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => AgendaScreen()),
+                          );
+                        },
+                        child: const Text(
+                          'EDITAR AGENDA',
                           style: TextStyle(
                               color: Color.fromARGB(255, 255, 255, 255)),
                         ),

@@ -6,10 +6,15 @@ import 'package:entrenador/core/entities/TrainerManager.dart';
 import 'package:entrenador/presentation/calendar_screen.dart';
 import 'package:entrenador/presentation/register_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   static const String name = 'LoginScreen';
 
-  LoginScreen({super.key});
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  late BuildContext _context;
 
   final TextEditingController _userTextFieldController =
       TextEditingController();
@@ -18,6 +23,12 @@ class LoginScreen extends StatelessWidget {
   final TrainerManager userManager = TrainerManager();
 
   final ValueNotifier<bool> _passwordVisible = ValueNotifier<bool>(true);
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _context = context;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,8 +115,10 @@ class LoginScreen extends StatelessWidget {
                       );
                       Trainer? usuario = userManager.getLoggedUser();
                       if (loginSuccess && usuario != null) {
-                        context.goNamed(CalendarioScreen.name);
-                        userManager.setLoggedUser(usuario);
+                        if (mounted) {
+                          _context.goNamed(CalendarioScreen.name);
+                          userManager.setLoggedUser(usuario);
+                        }
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

@@ -32,6 +32,11 @@ class AuthService {
                 age: userData['age'],
                 trainerCode: userData['trainerCode']);
 
+            userOK.diasLaborales = (userData['diasLaborales'] as List<dynamic>?)?.map((e) => e as int).toList();
+            userOK.duracionClasesMinutos = userData['duracionClasesMinutos'];
+            userOK.trabajaDesdeHora = userData['trabajaDesdeHora'];
+            userOK.trabajaHastaHora = userData['trabajaHastaHora'];
+            userOK.precioPorClase = (userData['precioPorClase'] as num?)?.toDouble();
             final agenda = await obtenerAgendaClases(userOK.trainerCode);
             userOK.setAgenda(agenda);            
 
