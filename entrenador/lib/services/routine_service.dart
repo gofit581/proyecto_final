@@ -72,6 +72,32 @@ class RoutineService {
     }
   }
 
+Future<void> editRoutine(Routine newRoutine, String routineId) async {
+  final response = await http.put(
+    Uri.parse('$baseUrl/Routine/$routineId'),
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({
+      'title': newRoutine.title,
+      'description': newRoutine.description,
+      'duration': newRoutine.duration,
+      'aim': newRoutine.aim,
+      'image': newRoutine.image,
+      'rest': newRoutine.rest,
+      'trainingDays': newRoutine.trainingDays,
+      'exercises': newRoutine.exercises.map((week) => week.map((day) => day.toJson()).toList()).toList(),
+      'idTrainer': newRoutine.idTrainer,
+      'typeOfTraining': newRoutine.typeOfTraining?.toJson(),
+    }),
+  );
+
+  if (response.statusCode != 200) {
+    print('Edit Routine Error: ${response.body}');
+    throw Exception('Failed to edit routine');
+  } else {
+    print('Routine updated successfully');
+  }
+}
+
   /*   Future<void> addTrainerRoutine(Routine routine, Trainer trainer) async{
     try {
       final response = await http.get(

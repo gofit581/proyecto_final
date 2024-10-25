@@ -3,21 +3,26 @@ import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
 import 'package:entrenador/presentation/create_routine_screen.dart';
+import 'package:entrenador/presentation/edit_routine_screen.dart';
+import 'package:entrenador/presentation/provider/exercises_provider.dart';
 import 'package:entrenador/services/routine_service.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class ListRoutine extends StatefulWidget {
-  const ListRoutine({super.key});
+class ListRoutine extends ConsumerStatefulWidget {
+  
   static const String name = 'ListRoutine';
 
+  const ListRoutine({super.key});
+
   @override
-  State<ListRoutine> createState() => _ListRoutineState();
+  ConsumerState<ListRoutine> createState() => _ListRoutineState();
 }
 
-class _ListRoutineState extends State<ListRoutine> {
+class _ListRoutineState extends ConsumerState<ListRoutine> {
   late Future<List<Routine>> _routinesFuture;
   final RoutineService _routineService = RoutineService();
   Trainer? _loggedTrainer;
@@ -102,7 +107,9 @@ class _ListRoutineState extends State<ListRoutine> {
                           IconButton(
                             icon: const Icon(Icons.edit, color: Color.fromARGB(450, 33, 150, 243)),
                             onPressed: () {
-                              // context.push(EditRoutine.name, extra: routines[index]);
+                              //ref.read(exercisesNotifierProvider.notifier).initializeRoutine(routines[index].duration, routines[index].trainingDays);
+                              ref.read(exercisesNotifierProvider.notifier).useRoutine(routines[index].exercises);
+                              context.push('/editRoutine', extra: routines[index]);
                             },
                           ),
                           IconButton(

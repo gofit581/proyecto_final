@@ -1,4 +1,5 @@
 import 'package:entrenador/core/entities/Exercise.dart';
+import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/TrainingDay.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -85,6 +86,19 @@ class ExercisesNotifier extends Notifier<RoutineNoti> {
     state = RoutineNoti(
       weeks: List.from(state.weeks)..[weekIndex] = Week(days: updatedDays),
     );
+  }
+
+  void useRoutine(List<List<TrainingDay>> routine) {
+      // Verifica que la rutina no esté vacía
+  if (routine.isEmpty) return;
+
+  // Crea una lista de semanas a partir de la rutina proporcionada
+  List<Week> weeks = routine.map((days) {
+    return Week(days: List.from(days)); // Crea un objeto Week para cada lista de días
+  }).toList();
+
+  // Actualiza el estado del notifier
+  state = RoutineNoti(weeks: weeks);
   }
 }
 

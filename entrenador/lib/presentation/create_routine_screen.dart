@@ -13,6 +13,8 @@ class CreateRoutineScreen extends ConsumerStatefulWidget {
   static const String name = 'CreateRoutineScreen';
   /*final Usuario actualUser;*/
 
+  //SI EL ACTUALUSER ES NULL, ENTONCES QUE ME APAREZCA LA BARRA PARA COMPLETAR LA CANTIDAD DE DIAS POR SEMANA
+
   CreateRoutineScreen({super.key/*, required this.actualUser*/});
 
   @override
