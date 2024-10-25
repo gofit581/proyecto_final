@@ -7,16 +7,27 @@ import 'package:entrenador/presentation/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   static const String name = 'LoginScreen';
 
-  LoginScreen({super.key});
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  late BuildContext _context;
 
   final TextEditingController _userTextFieldController =
       TextEditingController();
   final TextEditingController _passwordTextFieldController =
       TextEditingController();
   final TrainerManager userManager = TrainerManager();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _context = context;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,8 +94,10 @@ class LoginScreen extends StatelessWidget {
                           _passwordTextFieldController.text);
                       Trainer? usuario = userManager.getLoggedUser();
                       if (loginSuccess && usuario != null) {
-                        context.goNamed(CalendarioScreen.name);
-                        userManager.setLoggedUser(usuario);
+                        if (mounted) {
+                          _context.goNamed(CalendarioScreen.name);
+                          userManager.setLoggedUser(usuario);
+                        }
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

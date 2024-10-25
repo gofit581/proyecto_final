@@ -1,93 +1,45 @@
-//quiero que me hagas una screen(view) la cual recibira un DateTime por parametro . el trainer tendra un atributo agenda (List<Clase>). quiero que se renderice todas las clases donde coincida la fecha del DateTime pasado por parametro y la fecha de la clase(atributo id, de tipo DateTime) dentro de agenda. todas esas fechas que coincidan deberan renderizarse como un listado para poder scrollear, en caso que no quepa en la pantalla. cada box de cada clase renderizada debera ser de la siguiente manera: a la izquierda un icono de reloj. al lado el horario de la clase (tomado del atributo id de la Clase dentro de agenda). debajo de el horario, la clase tiene un atributo alumno(de tipo User), el cual puede ser null. Si alumno es null, que diga "LIBRE" (en verde claro), si el atributo no es null, que muestre el atributo "nombre" del objeto User (el alumno). Si hay alumno un boton azul que diga "IR A PERFIL"(del alumno), que al hacerle tap lleve a "perfil_alumno_screen", el cual ya estara agregado al GoRouter. mas a la derecha un icono de tacho de basura (bin) que permita borrar la Clase de la agenda.
-// import 'package:entrenador/core/entities/Clase.dart';
-// import 'package:flutter/material.dart';
-// import 'package:go_router/go_router.dart';
-// import 'package:entrenador/core/entities/Trainer.dart';
-// import 'package:entrenador/core/entities/TrainerManager.dart';
-// import 'package:entrenador/core/entities/User.dart';
-
-// class ClasesDiaScreen extends StatelessWidget {
-//   final DateTime date;
-  
-//   final TrainerManager manager = TrainerManager();
-
-//   static const String name = 'ClasesDiaScreen';
-
-//   ClasesDiaScreen({super.key, required this.date});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     Trainer? trainer = manager.getLoggedUser();
-//     List<Clase>? clasesDelDia = trainer?.agenda
-//         !.where((clase) => clase.id.year == date.year && clase.id.month == date.month && clase.id.day == date.day)
-//         .toList();
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Clases del Día'),
-//       ),
-//       body: ListView.builder(
-//         itemCount: clasesDelDia?.length,
-//         itemBuilder: (context, index) {
-//           Clase clase = clasesDelDia![index];
-//           return ListTile(
-//             leading: Icon(Icons.access_time),
-//             title: Text('${clase.id.hour}:${clase.id.minute.toString().padLeft(2, '0')}'),
-//             subtitle: clase.alumno == null
-//                 ? Text('LIBRE', style: TextStyle(color: Colors.green))
-//                 : Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       Text(clase.alumno!.userName),
-//                       ElevatedButton(
-//                         onPressed: () {
-//                           context.go('/perfil_alumno_screen', extra: clase.alumno);
-//                         },
-//                         child: Text('IR A PERFIL'),
-//                       ),
-//                     ],
-//                   ),
-//             trailing: IconButton(
-//               icon: Icon(Icons.delete),
-//               onPressed: () {
-//                 // Implement delete functionality here
-//               },
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-
 import 'package:entrenador/core/entities/Clase.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
 
-class ClasesDiaScreen extends StatelessWidget {
+class ClasesDiaScreen extends StatefulWidget {
   final DateTime date;
-  final TrainerManager manager = TrainerManager();
 
   static const String name = 'ClasesDiaScreen';
 
   ClasesDiaScreen({super.key, required this.date});
 
   @override
-  Widget build(BuildContext context) {
-    // Obtener el Trainer logueado
+  _ClasesDiaScreenState createState() => _ClasesDiaScreenState();
+}
+
+class _ClasesDiaScreenState extends State<ClasesDiaScreen> {
+  final TrainerManager manager = TrainerManager();
+  List<Clase> clasesDelDia = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadClasesDelDia();
+  }
+
+  void _loadClasesDelDia() {
     Trainer? trainer = manager.getLoggedUser();
+    setState(() {
+      clasesDelDia = trainer?.agenda
+              ?.where((clase) =>
+                  clase.horaInicio.year == widget.date.year &&
+                  clase.horaInicio.month == widget.date.month &&
+                  clase.horaInicio.day == widget.date.day)
+              .toList() ??
+          [];
+    });
+  }
 
-    // Filtrar las clases que coincidan con la fecha seleccionada
-    List<Clase> clasesDelDia = trainer?.agenda
-            ?.where((clase) =>
-                clase.horaInicio.year == date.year &&
-                clase.horaInicio.month == date.month &&
-                clase.horaInicio.day == date.day)
-            .toList() ??
-        [];
-
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Clases del Día'),
@@ -95,10 +47,7 @@ class ClasesDiaScreen extends StatelessWidget {
       body: clasesDelDia.isEmpty
           ? Center(
               child: Text(
-                'No hay clases programadas para este día. ' 
-                // + (trainer?.agenda?.toString() ?? "agenda de " + trainer!.userName+ " es null. ----"
-                // + clasesDelDia.toString())
-                ,
+                'No hay clases programadas para este día.',
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
             )
@@ -141,7 +90,7 @@ class ClasesDiaScreen extends StatelessWidget {
                     icon: Icon(Icons.delete, color: Colors.red),
                     onPressed: () {
                       // Implementar funcionalidad para eliminar la clase
-                      _eliminarClase(context, trainer, clase);
+                      _eliminarClase(context, clase);
                     },
                   ),
                 );
@@ -150,7 +99,8 @@ class ClasesDiaScreen extends StatelessWidget {
     );
   }
 
-  void _eliminarClase(BuildContext context, Trainer? trainer, Clase clase) {
+  void _eliminarClase(BuildContext context, Clase clase) {
+    Trainer? trainer = manager.getLoggedUser();
     if (trainer != null) {
       manager.borrarClaseId(clase);
       ScaffoldMessenger.of(context).showSnackBar(
@@ -159,7 +109,9 @@ class ClasesDiaScreen extends StatelessWidget {
           duration: Duration(seconds: 2),
         ),
       );
-      // Se podría agregar lógica para actualizar la base de datos o el estado global de la aplicación si es necesario
+      setState(() {
+        clasesDelDia.remove(clase); // Actualizar la lista de clases
+      });
     }
   }
 }
