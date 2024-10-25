@@ -1,7 +1,8 @@
 import 'package:alumno/core/entities/User.dart';
 
 class Clase {
-  DateTime id;
+  String id;
+  DateTime horaInicio;
   int duracionHs;
   Usuario? alumno;
   double precio;
@@ -11,10 +12,11 @@ class Clase {
     required this.duracionHs,
     this.alumno,
     required this.precio,
+    required this.horaInicio,
   });
 
   @override
   String toString() {
-    return 'Clase(id: $id, duracionHs: $duracionHs, alumno: ${alumno?.toString() ?? 'None'}, precio: $precio)';
+    return 'Clase(id: $id, horaInicio: $horaInicio, duracionHs: $duracionHs, alumno: ${alumno?.toString() ?? 'None'}, precio: $precio)';
   }
 }

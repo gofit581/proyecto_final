@@ -82,9 +82,9 @@ class ClasesDiaScreen extends StatelessWidget {
     // Filtrar las clases que coincidan con la fecha seleccionada
     List<Clase> clasesDelDia = trainer?.agenda
             ?.where((clase) =>
-                clase.id.year == date.year &&
-                clase.id.month == date.month &&
-                clase.id.day == date.day)
+                clase.horaInicio.year == date.year &&
+                clase.horaInicio.month == date.month &&
+                clase.horaInicio.day == date.day)
             .toList() ??
         [];
 
@@ -109,7 +109,7 @@ class ClasesDiaScreen extends StatelessWidget {
                 return ListTile(
                   leading: Icon(Icons.access_time),
                   title: Text(
-                    '${clase.id.hour}:${clase.id.minute.toString().padLeft(2, '0')}',
+                    '${clase.horaInicio.hour}:${clase.horaInicio.minute.toString().padLeft(2, '0')}',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   subtitle: clase.alumno == null
@@ -152,7 +152,7 @@ class ClasesDiaScreen extends StatelessWidget {
 
   void _eliminarClase(BuildContext context, Trainer? trainer, Clase clase) {
     if (trainer != null) {
-      trainer.agenda?.remove(clase);
+      manager.borrarClaseId(clase);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Clase eliminada de la agenda.'),
