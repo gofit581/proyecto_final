@@ -77,4 +77,6 @@ class Usuario {
   void setEmail(String email) {
     mail = email;
   }
+
+  static fromJson(claseData) {}
 }

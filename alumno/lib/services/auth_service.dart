@@ -125,7 +125,7 @@ class AuthService {
         nombre: entrenadorData['userName'],
         apellido: '', // Si no hay un campo apellido en la API, dejar vacío o asignar otro valor
         alumnos: [], // Asignar una lista vacía o mapear los alumnos si están disponibles
-        agenda: await obtenerAgendaClases(entrenadorData['id']),
+        agenda: await obtenerAgendaClases(trainerCode),
         rutinas: [], // Asignar las rutinas si están disponibles en los datos de la API
         ejercicios: [], // Asignar los ejercicios si existen en los datos de la API
       );
@@ -150,14 +150,13 @@ class AuthService {
 
       // Filtrar las clases que correspondan al idTrainer
       final List<Clase> agenda = clasesData
-          .where(
-              (claseData) => claseData['idTrainer'] == idTrainer)
+          .where((claseData) => claseData['idTrainer'] == idTrainer)
           .map((claseData) => Clase(
-                id: DateTime.fromMillisecondsSinceEpoch(
-                    claseData['horaInicio'] * 1000),
+                id: claseData['id'],
+                horaInicio: DateTime.parse(claseData['horaInicio']),
                 duracionHs: claseData['duracionHs'],
                 alumno:
-                    null, // Aquí puedes mapear el objeto alumno si está disponible
+                    claseData['alumno'] != null ? Usuario.fromJson(claseData['alumno']) : null,
                 precio: claseData['precio'].toDouble(),
               ))
           .toList();

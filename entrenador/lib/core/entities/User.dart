@@ -122,6 +122,8 @@ class Usuario {
     }
 
     toJson() {}
+
+  static fromJson(claseData) {}
   }
 
   toJson() {}

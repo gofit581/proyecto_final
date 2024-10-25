@@ -18,11 +18,11 @@ class TrainerManager {
     _usuarios.add(usuario);
   }
 
-  Future<void> registerUser(Trainer trainer/*, int trainingId*/) async {
+  Future<void> registerUser(Trainer trainer /*, int trainingId*/) async {
     //final Routine routine = await registerService.fetchRoutine(trainingId);
     //usuario.currentRoutine = routine;
     agregarUsuario(trainer);
-    await registerService.registerUser(trainer/*, trainingId*/);
+    await registerService.registerUser(trainer /*, trainingId*/);
   }
 
   Trainer? existeUsuario(String mail, String password) {
@@ -37,14 +37,7 @@ class TrainerManager {
 
   // Método para generar y agregar la agenda nueva
   void generarAgenda(DateTime desde, DateTime hasta) {
-    List<Clase> agendaConformada = agendaService.generarAgenda(desde, hasta);
-
-    // Si ya hay una agenda existente, agrega los elementos de la nueva
-    if (_loggedUser?.agenda != null) {
-      _loggedUser!.agenda!.addAll(agendaConformada);
-    } else {
-      _loggedUser?.agenda = agendaConformada;
-    }
+    agendaService.generarAgenda(desde, hasta);
   }
 
   // Otros métodos relacionados con la gestión del usuario (login, logout, etc.)
@@ -73,13 +66,14 @@ class TrainerManager {
     }
   }
 
-  void updateUserInfo(String name, String email, String Age, String password/*, TypeOfTraining training*/){
-      _loggedUser!.setUserName(name);
-      _loggedUser!.setEmail(email);
-      _loggedUser!.setAge(Age);
-      //_loggedUser!.setTraining(training);
-      //_loggedUser!.clearTimesDone();
-      updateLoggedUser();
+  void updateUserInfo(String name, String email, String Age,
+      String password /*, TypeOfTraining training*/) {
+    _loggedUser!.setUserName(name);
+    _loggedUser!.setEmail(email);
+    _loggedUser!.setAge(Age);
+    //_loggedUser!.setTraining(training);
+    //_loggedUser!.clearTimesDone();
+    updateLoggedUser();
   }
 
   var validateId = (String idTrainer) async {
@@ -87,10 +81,14 @@ class TrainerManager {
     return success;
   };
 
-    var validateMail = (String mail) async {
+  var validateMail = (String mail) async {
     bool result = await authService.validateMail(mail);
     return result;
   };
+
+  void borrarClaseId(Clase clase){
+    agendaService.borrarClaseId(clase);
+  }
 }
 /*import 'package:entrenador/core/entities/Clase.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
