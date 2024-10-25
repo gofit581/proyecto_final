@@ -110,7 +110,7 @@ class EditRoutineScreen extends ConsumerWidget {
                     const SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
-                          context.push('/editRoutine', extra: routine);
+                          context.push('/createExercise', extra: routine);
                       },
                       child: const Text('Nuevo ejercicio'),
                     ),
@@ -299,8 +299,7 @@ class _ExerciseEntryState extends State<_ExerciseEntry> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(
-          width: 200,
+        IntrinsicWidth(
           child: DropdownButtonFormField<String>(
             value: initialValue,
             decoration: const InputDecoration(

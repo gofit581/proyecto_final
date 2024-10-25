@@ -4,23 +4,25 @@ import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
 import 'package:entrenador/core/entities/User.dart';
+import 'package:entrenador/presentation/provider/exercisesList_provider.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CreateExerciseScreen extends StatefulWidget {
+class CreateExerciseScreen extends ConsumerStatefulWidget {
 
   static const name = 'CreateExerciseScreen';
   final Map<Routine,Usuario> datos;
 
-  const CreateExerciseScreen({super.key, required this.datos,});
+  CreateExerciseScreen({super.key, required this.datos});
 
   @override
-  State<CreateExerciseScreen> createState() => _CreateExerciseScreenState();
+  ConsumerState<CreateExerciseScreen> createState() => _CreateExerciseScreenState();
 }
 
-class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
+class _CreateExerciseScreenState extends ConsumerState<CreateExerciseScreen> {
 
   TextEditingController _exerciseTitleController = TextEditingController();
   TextEditingController _exerciseImageLinkController = TextEditingController();
@@ -109,6 +111,7 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
                             TextButton(
                               onPressed: () {
                                 exerciseManager.addExercise(newExercise);
+                                ref.refresh(exercisesListProvider(actualTrainer.trainerCode));
                                 Navigator.of(context).pop();
                                 if(widget.datos.isNotEmpty){
                                   context.pop(widget.datos);

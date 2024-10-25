@@ -4,6 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final exercisesListProvider = FutureProvider.family<List<Exercise>, String>((ref, trainerCode) async {
   final exerciseManager = ExerciseService();
-  return await exerciseManager.getExercises();
-  //return await exerciseManager.getExercisesByTrainerId(trainerCode); ESTE ES EL QUE VA REALMENTE
+  //return await exerciseManager.getExercises(); ESTO ES PARA TESTEAR
+  return await exerciseManager.getExercisesByTrainerId(trainerCode);
 });
