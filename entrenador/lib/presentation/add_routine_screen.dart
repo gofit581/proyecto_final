@@ -2,8 +2,10 @@ import 'package:entrenador/core/app_router.dart';
 import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
+import 'package:entrenador/presentation/create_routine_screen.dart';
 import 'package:entrenador/presentation/users_list_screen.dart';
 import 'package:entrenador/services/routine_service.dart';
+import 'package:entrenador/services/update_service.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:entrenador/core/entities/User.dart';
@@ -23,6 +25,7 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
   int? selectedRoutineIndex;
   late Future<List<Routine>> _routinesFuture;
   final RoutineService _routineService = RoutineService();
+  final UpdateService _updateService = UpdateService();
   Trainer? _loggedTrainer;
 
   @override
@@ -95,20 +98,28 @@ Widget build(BuildContext context) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (selectedRoutineIndex != null) {
                           Routine selectedRoutine = routines[selectedRoutineIndex!];
                           widget.alumno.currentRoutine = selectedRoutine;
-                          print('Rutina seleccionada: ${selectedRoutine.title}');
-                          ScaffoldMessenger.of(context).showSnackBar(
+
+                          //print('Rutina seleccionada: ${selectedRoutine.title}');
+                          
+                          bool isSaved = await _updateService.saveRoutineForUser(widget.alumno);
+
+                          if (isSaved) {   
+                            print('Rutina seleccionada: ${selectedRoutine.title}');
+                            ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Rutina asignada con éxito'),
                             ),
-                          );
-                          context.goNamed(UsersListScreen.name);
-                          
+                            );
+                            context.goNamed(UsersListScreen.name);                                                
+                          } else {
+                            print('Error al guardar la rutina.');
+                          }   
                         } else {
-                          print('No se ha seleccionado ninguna rutina.');
+                          //print('No se ha seleccionado ninguna rutina.');
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('No se pudo asignar una rutina.'),
@@ -135,7 +146,7 @@ Widget build(BuildContext context) {
                     const SizedBox(width: 20),
                     FloatingActionButton(
                       onPressed: () {
-                        //context.push(CreateRoutineScreen.name);
+                        context.push('/createRoutine');
                       },
                       backgroundColor: const Color.fromARGB(450, 33, 150, 243),
                       child: const Icon(Icons.add),
