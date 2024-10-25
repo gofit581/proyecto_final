@@ -48,7 +48,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No clients found'));
+            return const Center(child: Text('No se encontraron alumnos'));
           } else {
             final clients = snapshot.data!;
             return ListView.builder(
