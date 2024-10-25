@@ -74,7 +74,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
                 Text('Duración en semanas: ${routine.duration}'),
                 Text('Tiempo de descanso entre ejercicios: ${routine.rest} segundos'),
                 const SizedBox(height: 20),
-                _AddExerciseView(exercisesOptions: exercisesOptions, indexDay: indexDay, indexWeek: indexWeek),
+                _AddExerciseView(exercisesOptions: exercisesOptions, indexDay: indexDay, indexWeek: indexWeek, actualTrainerCode: actualTrainer.trainerCode),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller:  _routineObservationDayController,
@@ -226,11 +226,13 @@ class _AddExerciseView extends ConsumerStatefulWidget {
   final List<Exercise> exercisesOptions;
   final int indexDay;
   final int indexWeek;
+  final String actualTrainerCode;
 
   const _AddExerciseView({
     required this.exercisesOptions,
     required this.indexDay,
     required this.indexWeek,
+    required this.actualTrainerCode
   });
 
   @override
@@ -244,6 +246,7 @@ class _AddExerciseViewState extends ConsumerState<_AddExerciseView> {
   @override
   void initState() {
     super.initState();
+    ref.refresh(exercisesListProvider(widget.actualTrainerCode));
   }
 
 
