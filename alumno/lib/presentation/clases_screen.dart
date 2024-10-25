@@ -1,3 +1,5 @@
+import 'package:alumno/widget/custom_app_bar.dart';
+import 'package:alumno/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/core/entities/Clase.dart';
@@ -111,9 +113,10 @@ class ClasesScreen extends StatelessWidget {
           .toList());
     }
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Clases del ${date.day}/${date.month}/${date.year}'),
+      appBar: CustomAppBar(
+        title: 'Clases del ${date.day}/${date.month}/${date.year}',
       ),
+      bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
       body: clasesDelDia.isNotEmpty
           ? ListView.builder(
               itemCount: clasesDelDia.length,
@@ -128,12 +131,12 @@ class ClasesScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          'Hora de comienzo: ${clase.horaInicio.hour}:${clase.horaInicio.minute}',
-                          style: TextStyle(fontSize: 16)),
+                          'Hora de comienzo: ${clase.horaInicio.hour}:${clase.horaInicio.minute.toString().padLeft(2, '0')}',
+                          style: const TextStyle(fontSize: 16)),
                       Text('Duración: ${clase.duracionHs} horas',
-                          style: TextStyle(fontSize: 16)),
+                          style: const TextStyle(fontSize: 16)),
                       Text('Precio: \$${clase.precio}',
-                          style: TextStyle(fontSize: 16)),
+                          style: const TextStyle(fontSize: 16)),
                     ],
                   ),
                 );

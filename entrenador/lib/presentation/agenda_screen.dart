@@ -1,3 +1,5 @@
+import 'package:entrenador/widget/custom_app_bar.dart';
+import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:entrenador/presentation/calendar_screen.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
@@ -50,9 +52,10 @@ class _AgendaScreenState extends State<AgendaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Agenda Screen'),
+      appBar: const CustomAppBar(
+        title: 'Agenda Screen',
       ),
+      bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

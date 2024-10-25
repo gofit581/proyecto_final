@@ -61,6 +61,8 @@
 // }
 
 import 'package:entrenador/core/entities/Clase.dart';
+import 'package:entrenador/widget/custom_app_bar.dart';
+import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
@@ -89,11 +91,12 @@ class ClasesDiaScreen extends StatelessWidget {
         [];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Clases del Día'),
+      appBar: const CustomAppBar(
+        title: 'Clases del Día',
       ),
+      bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
       body: clasesDelDia.isEmpty
-          ? Center(
+          ? const Center(
               child: Text(
                 'No hay clases programadas para este día. ' 
                 // + (trainer?.agenda?.toString() ?? "agenda de " + trainer!.userName+ " es null. ----"
