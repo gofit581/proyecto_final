@@ -1,11 +1,15 @@
-import 'package:alumno/core/entities/Entrenador.dart';
 import 'package:flutter/material.dart';
+
+import '../core/entities/Entrenador.dart';
+import '../core/entities/User.dart';
+import '../core/entities/UserManager.dart';
+
 import '../widget/custom_app_bar.dart';
 import '../widget/custom_botton_navigation_bar.dart';
+
 import '../presentation/initial_screen.dart';
-import '../core/entities/UserManager.dart';
-import '../core/entities/User.dart';
 import '../presentation/edit_profile.dart';
+
 import '../services/auth_service.dart';
 
 class MyProfileScreen extends StatefulWidget {
@@ -13,17 +17,20 @@ class MyProfileScreen extends StatefulWidget {
   UserManager userManager = UserManager();
 
   MyProfileScreen({super.key});
+  
+  get actualUsuario => null;
 
   @override
   _MyProfileScreenState createState() => _MyProfileScreenState();
 }
 
 class _MyProfileScreenState extends State<MyProfileScreen> {
- Usuario? actualUsuario;
-Entrenador? entrenadorAsignado;
-bool isLoading = false;
+  
+  Usuario? actualUsuario;
+  Entrenador? entrenadorAsignado;
+  bool isLoading = false;
 
-@override
+  @override
 void initState() {
   super.initState();
   _loadUserData();
@@ -32,11 +39,11 @@ void initState() {
 Future<void> _loadUserData() async {
   setState(() {
     actualUsuario = UserManager().getLoggedUser();
-    // Verificamos si getProfesor() devuelve null y asignamos un valor por defecto si es necesario
-    entrenadorAsignado = actualUsuario?.getProfesor() ?? Entrenador();
+    if (actualUsuario != null) {
+      entrenadorAsignado = actualUsuario?.getProfesor() ?? Entrenador();
+    }
   });
 }
-
 
   void _showLogoutConfirmationDialog(BuildContext context) {
     showDialog(
@@ -72,7 +79,7 @@ Future<void> _loadUserData() async {
     return Scaffold(
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
-       appBar: CustomAppBar(
+      appBar: CustomAppBar(
         title: 'Profile',
         actions: [
           IconButton(
@@ -167,11 +174,25 @@ Future<void> _loadUserData() async {
                             border: Border(bottom: BorderSide(color: Colors.grey)),
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 8),
-                          child:  Text(
+                          child: Text(
                             entrenadorAsignado!.getNombre(),
                             style: const TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),
+                        const SizedBox(height: 40),
+                        const Text(
+                          'Tus Datos',
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+                        ),
+                        const SizedBox(height: 10),
+                        //_buildInfoRow('Objetivo', actualUsuario?.objectiveDescription), //No se bien por que siempre me devuelve nulo en el metodo '_buildInfoRow' y muestra el texto 'No especificado'
+                        _buildInfoRow('Experiencia', actualUsuario?.experience),
+                        _buildInfoRow('Objetivo', actualUsuario?.objectiveDescription),
+                        _buildInfoRow('Disciplina', actualUsuario?.discipline),
+                        _buildInfoRow('Días de Entrenamiento', actualUsuario?.trainingDays),
+                        _buildInfoRow('Duración del Entrenamiento', actualUsuario?.trainingDuration),
+                        _buildInfoRow('Lesiones', actualUsuario?.injuries),
+                        _buildInfoRow('Actividades Extras', actualUsuario?.extraActivities),
                         const SizedBox(height: 40),
                       ],
                     ),
@@ -193,8 +214,7 @@ Future<void> _loadUserData() async {
                         },
                         child: const Text(
                           'CERRAR SESION',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 255, 255, 255)),
+                          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
                         ),
                       ),
                     ],
@@ -203,6 +223,25 @@ Future<void> _loadUserData() async {
                 ],
               ),
             ),
+    );
+  }
+
+  Widget _buildInfoRow(String label, String? value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontSize: 16, color: Colors.grey),
+          ),
+          Text(
+            value ?? 'No especificado',
+            style: const TextStyle(fontSize: 16, color: Colors.black),
+          ),
+        ],
+      ),
     );
   }
 }

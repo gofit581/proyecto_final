@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import '../core/entities/User.dart';
+import '../core/entities/UserManager.dart';
 import '../services/auth_service.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final Usuario usuario;
   final AuthService authService;
 
-  const EditProfileScreen({required this.usuario, required this.authService});
+  EditProfileScreen({required this.usuario, required this.authService});
 
   @override
   _EditProfileScreenState createState() => _EditProfileScreenState();
@@ -43,26 +44,35 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _extraActivitiesController = TextEditingController(text: widget.usuario.extraActivities ?? "");
   }
 
-  Future<void> _saveProfile() async {
-    if (_formKey.currentState!.validate()) {
-      final updatedUser = Usuario(
-        id: widget.usuario.id,
-        userName: _userNameController.text,
-        password: _passwordController.text,
-        mail: widget.usuario.mail, 
-        age: widget.usuario.age, 
-        idTrainer: widget.usuario.idTrainer, 
-        objectiveDescription: widget.usuario.objectiveDescription, 
-        experience: _experienceController.text,
-        discipline: _disciplineController.text,
-        trainingDays: _trainingDaysController.text,
-        trainingDuration: _trainingDurationController.text,
-        injuries: _injuriesController.text,
-        extraActivities: _extraActivitiesController.text,
-      );
+ Future<void> _saveProfile() async {
+  final UserManager userManager = UserManager();
+  if (_formKey.currentState!.validate()) {
+    final updatedUser = Usuario(
+      id: widget.usuario.id,
+      userName: _userNameController.text,
+      password: _passwordController.text,
+      mail: widget.usuario.mail, 
+      age: widget.usuario.age, 
+      idTrainer: widget.usuario.idTrainer, 
+      objectiveDescription: widget.usuario.objectiveDescription, 
+      experience: _experienceController.text,
+      discipline: _disciplineController.text,
+      trainingDays: _trainingDaysController.text,
+      trainingDuration: _trainingDurationController.text,
+      injuries: _injuriesController.text,
+      extraActivities: _extraActivitiesController.text,
+    );
 
-      bool isSaved = await widget.authService.validateMail(updatedUser.mail);
-      if (!isSaved) {
+
+    bool isMailValid = true;
+    if (widget.usuario.mail != updatedUser.mail) {
+      isMailValid = await widget.authService.validateMail(updatedUser.mail);
+    }
+
+    if (isMailValid) {
+      userManager.setLoggedUser(widget.usuario); 
+      bool isUpdated = await widget.authService.updateUser(updatedUser);
+      if (isUpdated) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Perfil actualizado exitosamente')),
         );
@@ -71,8 +81,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           const SnackBar(content: Text('Error al actualizar el perfil')),
         );
       }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('El correo electrónico ya está en uso')),
+      );
     }
   }
+}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +113,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               _buildTextField('Contraseña', _passwordController),
               _buildTextField('Correo Electrónico', _mailController, readOnly: true),
               _buildTextField('Edad', _ageController, isNumeric: true, readOnly: true),
-              _buildTextField('Descripción del Objetivo', _objectiveDescriptionController, readOnly: true),
+              //_buildTextField('Descripción del Objetivo', _objectiveDescriptionController, readOnly: true),
               _buildTextField('Experiencia', _experienceController),
               _buildTextField('Disciplina', _disciplineController),
               _buildTextField('Días de Entrenamiento', _trainingDaysController, isNumeric: true),
