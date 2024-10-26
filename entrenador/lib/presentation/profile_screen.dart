@@ -154,27 +154,9 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       ],
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 255, 0, 0),
-                          elevation: 5,
-                          fixedSize: const Size(170, 30),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        onPressed: () {
-                          _showLogoutConfirmationDialog(context);
-                        },
-                        child: const Text(
-                          'CERRAR SESION',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 255, 255, 255)),
-                        ),
-                      ),
+                  Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children:
+                    [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color.fromARGB(255, 0, 0, 255),
@@ -192,6 +174,30 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         },
                         child: const Text(
                           'EDITAR AGENDA',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 255, 255, 255)),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 255, 0, 0),
+                          elevation: 5,
+                          fixedSize: const Size(170, 30),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        onPressed: () {
+                          _showLogoutConfirmationDialog(context);
+                        },
+                        child: const Text(
+                          'CERRAR SESION',
                           style: TextStyle(
                               color: Color.fromARGB(255, 255, 255, 255)),
                         ),
