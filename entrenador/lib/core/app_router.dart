@@ -89,16 +89,14 @@ final appRouter = GoRouter(routes: [
   GoRoute(
     path: '/createRoutine',
     builder: (context, state) =>
-        CreateRoutineScreen(/*actualUser: state.extra as Usuario*/),
+        CreateRoutineScreen(),
     name: CreateRoutineScreen.name,
   ),
   GoRoute(
     path: '/createRoutine2',
     builder: (context, state) => CreateRoutine2Screen(
-      datos: state.extra as Map<Routine, Usuario>,
+      routine: state.extra as Routine,
     ),
-    //routine: state.extra['routine'] as Routine,
-    //actualUser: state.extra as Usuario),
     name: CreateRoutine2Screen.name,
   ),
   GoRoute(
@@ -112,16 +110,17 @@ final appRouter = GoRouter(routes: [
     path: '/createExercise',
     // path: '/',
     builder: (context, state) {
-      final datos = state.extra as Map<Routine, Usuario>? ?? {};
-      return CreateExerciseScreen(datos: datos);
+      final routine = state.extra as Routine;
+      return CreateExerciseScreen(routine: routine);
     },
     name: CreateExerciseScreen.name,
   ),
   GoRoute(
     path: '/editRoutine',
-    builder: (context, state) => EditRoutineScreen(
-      routine: state.extra as Routine,
-    ),
+    builder: (context, state) {
+      final routine = state.extra as Routine;
+      return EditRoutineScreen(routine: routine);
+    },
     name: EditRoutineScreen.name,
   ),
 ]);

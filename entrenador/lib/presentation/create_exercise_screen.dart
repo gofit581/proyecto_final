@@ -3,7 +3,6 @@ import 'package:entrenador/core/entities/ExerciseManager.dart';
 import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
-import 'package:entrenador/core/entities/User.dart';
 import 'package:entrenador/presentation/provider/exercisesList_provider.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
@@ -14,9 +13,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class CreateExerciseScreen extends ConsumerStatefulWidget {
 
   static const name = 'CreateExerciseScreen';
-  final Map<Routine,Usuario> datos;
+  final Routine routine;
 
-  CreateExerciseScreen({super.key, required this.datos});
+  const CreateExerciseScreen({super.key, required this.routine});
 
   @override
   ConsumerState<CreateExerciseScreen> createState() => _CreateExerciseScreenState();
@@ -87,14 +86,20 @@ class _CreateExerciseScreenState extends ConsumerState<CreateExerciseScreen> {
                 ),
                 const SizedBox(height: 40),
               ElevatedButton(
-                onPressed: (){
+                onPressed: () async{
                   if (_exerciseTitleController.text.isEmpty || _exerciseImageLinkController.text.isEmpty || _exerciseDescriptionController.text.isEmpty) {
                     
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Todos los campos son obligatorios.')),
                       );
+                      
+                    } else if(await exerciseManager.validateExercise(_exerciseTitleController.text, actualTrainer.trainerCode)){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Nombre de ejercicio ya utilizado, intentelo de nuevo')),
+                      );
                       return;
-                    } else{
+                    }
+                  
                   Exercise newExercise = Exercise(
                     title: _exerciseTitleController.text,
                     imageLink: _exerciseImageLinkController.text,
@@ -111,16 +116,9 @@ class _CreateExerciseScreenState extends ConsumerState<CreateExerciseScreen> {
                             TextButton(
                               onPressed: () {
                                 exerciseManager.addExercise(newExercise);
-                                ref.refresh(exercisesListProvider(actualTrainer.trainerCode));
+                                ref.refresh(exercisesListProvider(actualTrainer.trainerCode));                                
                                 Navigator.of(context).pop();
-                                if(widget.datos.isNotEmpty){
-                                  context.pop(widget.datos);
-
-                                }else{
-                                  context.push('/calendar');
-                                }
-                                
-                                
+                                context.pop(widget.routine);                                
                               },
                               child: const Text('Aceptar'),
                             ),
@@ -134,10 +132,8 @@ class _CreateExerciseScreenState extends ConsumerState<CreateExerciseScreen> {
                         );
                       },
                     );
-                    }
                   },
-                  child: const Text('Agregar ejercicio'),
-                
+                  child: const Text('Agregar ejercicio'),             
                 ),                                          
               ],
             ),

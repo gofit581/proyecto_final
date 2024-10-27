@@ -80,4 +80,36 @@ class ExerciseService {
     }
   }
 
+    Future<bool> validateExercise(String title, String trainerId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/Ejercicio'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> exercisesData = jsonDecode(response.body);
+        final List<Exercise> exercises = exercisesData       
+            .where((exercisesData) {
+              return exercisesData['idTrainer'] == trainerId;
+            })
+            .map((exercisesData) => Exercise.fromJson(exercisesData))
+            .toList();
+
+        bool result = false;
+
+        for (var exercise in exercises) {
+          if (exercise.title == title) {
+            result = true;
+          }
+        }
+        return result;
+      } else {
+        throw Exception('Exercises title not available');
+      }
+    } catch (e) {
+      print('Auth Error: $e');
+      return true;
+    }
+  }
  }
