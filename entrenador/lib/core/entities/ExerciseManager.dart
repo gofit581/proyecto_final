@@ -18,4 +18,9 @@ class ExerciseManager {
     await exerciseService.createExercise(exercise);
   }
 
+  var validateExercise = (String title, String trainerId) async {
+    bool result = await exerciseService.validateExercise(title, trainerId);
+    return result;
+  };
+
 }

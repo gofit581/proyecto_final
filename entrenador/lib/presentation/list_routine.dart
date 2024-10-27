@@ -27,6 +27,7 @@ class _ListRoutineState extends ConsumerState<ListRoutine> {
   final RoutineService _routineService = RoutineService();
   Trainer? _loggedTrainer;
 
+
   @override
   void initState() {
     super.initState();

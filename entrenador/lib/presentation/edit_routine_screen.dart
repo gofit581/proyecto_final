@@ -7,7 +7,6 @@ import 'package:entrenador/presentation/calendar_screen.dart';
 import 'package:entrenador/presentation/provider/counter_day_routine.dart';
 import 'package:entrenador/presentation/provider/exercisesList_provider.dart';
 import 'package:entrenador/presentation/provider/exercises_provider.dart';
-import 'package:entrenador/services/exercise_service.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,6 +23,8 @@ class EditRoutineScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
+    //Usuario user = datos.values.first;
+    //Routine routine = datos.keys.first;
     RoutineManager routineManager = RoutineManager();
     TrainerManager trainerManager = TrainerManager();
     Trainer actualTrainer = trainerManager.getLoggedUser()!;
@@ -215,7 +216,7 @@ class EditRoutineScreen extends ConsumerWidget {
             ),
           ),
         );
-        }, loading: () => Center(child: CircularProgressIndicator()),
+        }, loading: () => const Center(child: CircularProgressIndicator()),
          error: (error, stack) => Center(child: Text('Error: $error')),
       ),
     );

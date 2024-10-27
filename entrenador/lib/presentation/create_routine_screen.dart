@@ -26,6 +26,7 @@ class _CreateRoutineScreenState extends ConsumerState<CreateRoutineScreen> {
   final TextEditingController _routineTypeOfTrainingController = TextEditingController();
   final TextEditingController _routineTitleController = TextEditingController();
   final TextEditingController _routineDurationController = TextEditingController();
+  final TextEditingController _routineDaysController = TextEditingController();
   final TextEditingController _routineRestController = TextEditingController();
   List<TypeOfTraining> typeOfTraining = TypeOfTraining.values;
   TypeOfTraining selectedTraining = TypeOfTraining.LoseWeight;
@@ -94,6 +95,17 @@ class _CreateRoutineScreenState extends ConsumerState<CreateRoutineScreen> {
               ),
               const SizedBox(height: 20),
               TextFormField(
+                controller: _routineDaysController,
+                textCapitalization: TextCapitalization.words,
+                decoration: InputDecoration(
+                  labelText: 'Dias de entrenamiento por semana',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
                 controller: _routineRestController,
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
@@ -120,15 +132,12 @@ class _CreateRoutineScreenState extends ConsumerState<CreateRoutineScreen> {
                       duration: int.parse(_routineDurationController.text),
                       typeOfTraining: selectedTraining,
                       rest: int.parse(_routineRestController.text),
-                      trainingDays : int.parse(actualUser.trainingDays),
+                      trainingDays : int.parse(_routineDaysController.text),
                     );
 
-                    ref.read(exercisesNotifierProvider.notifier).initializeRoutine(int.parse(_routineDurationController.text), int.parse(actualUser.trainingDays));
-                        Map<Routine, Usuario> datos = {
-                          routine: actualUser,
-                        };
+                    ref.read(exercisesNotifierProvider.notifier).initializeRoutine(int.parse(_routineDurationController.text), int.parse(_routineDaysController.text));
                         context.push('/createRoutine2',                          
-                          extra: datos);
+                          extra: routine);
 
                   }
                 },

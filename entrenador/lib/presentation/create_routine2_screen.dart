@@ -1,15 +1,12 @@
 import 'package:entrenador/core/entities/Exercise.dart';
-import 'package:entrenador/core/entities/ExerciseManager.dart';
 import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/RoutineManager.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
-import 'package:entrenador/core/entities/User.dart';
 import 'package:entrenador/presentation/calendar_screen.dart';
 import 'package:entrenador/presentation/provider/counter_day_routine.dart';
 import 'package:entrenador/presentation/provider/exercisesList_provider.dart';
 import 'package:entrenador/presentation/provider/exercises_provider.dart';
-import 'package:entrenador/services/exercise_service.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,17 +14,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class CreateRoutine2Screen extends ConsumerWidget {
-  final Map<Routine, Usuario> datos;
+  final Routine routine;
   static const name = "CreateRoutine2";
 
-  const CreateRoutine2Screen({super.key, required this.datos});
+  const CreateRoutine2Screen({super.key, required this.routine});
   
   
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Usuario user = datos.values.first;
-    Routine routine = datos.keys.first;
+
     RoutineManager routineManager = RoutineManager();
     TrainerManager trainerManager = TrainerManager();
     Trainer actualTrainer = trainerManager.getLoggedUser()!;
@@ -35,7 +31,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
     final TextEditingController _routineObservationDayController = TextEditingController();
     final day = ref.watch(counterDayProvider);
     final week = ref.watch(counterWeekProvider);
-    final maxDays = int.parse(user.trainingDays);
+    final maxDays = routine.trainingDays;
     int indexDay = day - 1;
     int indexWeek = week -1;
 
@@ -94,7 +90,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
                       ElevatedButton(
                         onPressed: () {
                           ref.read(counterDayProvider.notifier).state--;
-                          context.push('/createRoutine2', extra: datos);
+                          context.push('/createRoutine2', extra: routine);
                         },
                         child: const Icon(Icons.arrow_left),
                       ),
@@ -103,14 +99,14 @@ class CreateRoutine2Screen extends ConsumerWidget {
                       onPressed: () {                       
                           ref.read(counterDayProvider.notifier).state++;
                           ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
-                          context.push('/createRoutine2', extra: datos);                      
+                          context.push('/createRoutine2', extra: routine);                      
                       },
                       child: const Icon(Icons.arrow_right),
                     ),
                     const SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
-                          context.push('/createExercise', extra: datos);
+                          context.push('/createExercise', extra: routine);
                       },
                       child: const Text('Nuevo ejercicio'),
                     ),
@@ -120,7 +116,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
                 ElevatedButton(
                   onPressed: (){
                     ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
-                    context.push('/createRoutine2', extra: datos);
+                    context.push('/createRoutine2', extra: routine);
                     resetCounter(ref);
                     ref.read(counterWeekProvider.notifier).state++;
                   },
@@ -131,7 +127,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
                   onPressed: (){
                     ref.read(counterWeekProvider.notifier).state--;
                     refillCounter(ref);
-                    context.push('/createRoutine2', extra: datos);
+                    context.push('/createRoutine2', extra: routine);
                   },
                   child: const Text('Semana anterior')
                   ),
@@ -215,7 +211,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
             ),
           ),
         );
-        }, loading: () => Center(child: CircularProgressIndicator()),
+        }, loading: () => const Center(child: CircularProgressIndicator()),
          error: (error, stack) => Center(child: Text('Error: $error')),
       ),
     );

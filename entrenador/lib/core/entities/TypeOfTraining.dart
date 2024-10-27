@@ -3,6 +3,7 @@ enum TypeOfTraining {
   GainWeight,
   Running,
   Strength,
+  Abs,
 }
 
 extension TypeOfTrainingExtension on TypeOfTraining {
@@ -15,7 +16,10 @@ extension TypeOfTrainingExtension on TypeOfTraining {
       case TypeOfTraining.Running:
         return 'Cardio';
       case TypeOfTraining.Strength:
-        return 'Fuerza'; 
+        return 'Fuerza';
+      case TypeOfTraining.Abs:
+        return 'Full abs'; 
+ 
       default:
         return '';
     }
