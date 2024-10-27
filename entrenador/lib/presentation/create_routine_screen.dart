@@ -30,7 +30,7 @@ class _CreateRoutineScreenState extends ConsumerState<CreateRoutineScreen> {
   List<TypeOfTraining> typeOfTraining = TypeOfTraining.values;
   TypeOfTraining selectedTraining = TypeOfTraining.LoseWeight;
   late TypeOfTraining aim;
-  Usuario actualUser = Usuario.parcial(userName: 'Pepe', password: '1', mail: '1', age: '3', idTrainer: '1', trainingDays: '3', timesDone: []);
+  Usuario actualUser = Usuario.parcial(userName: 'Pepe', password: '1', mail: '1', age: '3', idTrainer: '1', trainingDays: '3', timesDone: [], actualSesion: 0);
 
   @override
   void initState() {

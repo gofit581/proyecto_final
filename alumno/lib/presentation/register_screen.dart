@@ -227,6 +227,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         mail: _registerMailTFController.text,
                         age: _registerAgeTFController.text,
                         idTrainer: _registerIdTrainerTFController.text,
+                        actualSesion: 0,
                       );
 
                       try {

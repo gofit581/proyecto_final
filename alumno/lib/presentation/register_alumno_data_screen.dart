@@ -182,6 +182,7 @@ class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
                       trainingDuration: _registerTimeTFController.text,
                       injuries: _registerInjuriesTFController.text,
                       extraActivities: _registerExtraActivitiesTFController.text,
+                      actualSesion: 0,
                     );
 
                     try {

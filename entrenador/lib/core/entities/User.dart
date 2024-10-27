@@ -20,6 +20,7 @@ class Usuario {
   String? injuries;
   String? extraActivities;
   Trainer? profesor;
+  int actualSesion;
 
   Usuario({
     required this.mail,
@@ -38,6 +39,7 @@ class Usuario {
     this.injuries,
     this.extraActivities,
     List<DateTime>? timesDone,
+    required this.actualSesion,
   }) : this.timesDone = timesDone ?? [];
 
   Usuario.parcial(
@@ -48,7 +50,8 @@ class Usuario {
       required this.age,
       required this.idTrainer,
       required this.trainingDays,
-      required this.timesDone});
+      required this.timesDone,
+      required this.actualSesion});
 
   // Usuario({
   //   this.id,
@@ -139,6 +142,7 @@ class Usuario {
       currentRoutine: json['currentRoutine'] != null
           ? Routine.fromJson(json['currentRoutine'])
           : null,
+      actualSesion: json['actualSesion'],
     );
   }
 

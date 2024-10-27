@@ -83,6 +83,7 @@ class AuthService {
               trainingDuration: userData['trainingDuration'],
               injuries: userData['injuries'],
               extraActivities: userData['extraActivities'],
+              actualSesion: userData['actualSesion'],
             );
 
             userOK.profesor = await crearEntrenador(userData['idTrainer']);

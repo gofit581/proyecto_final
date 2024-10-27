@@ -16,6 +16,7 @@ class Usuario {
   String? injuries;
   String? extraActivities;
   Entrenador? profesor;
+  int actualSesion;
   late Routine actualRoutine;
 
   Usuario.parcial({
@@ -25,6 +26,7 @@ class Usuario {
     required this.mail,
     required this.age,
     required this.idTrainer,
+    required this.actualSesion
   });
 
   Usuario({
@@ -41,6 +43,7 @@ class Usuario {
     required this.trainingDuration,
     required this.injuries,
     required this.extraActivities, 
+    required this.actualSesion,
   });
 
   set entrenador(Future<Entrenador> entrenador) {}

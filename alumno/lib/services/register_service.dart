@@ -26,6 +26,7 @@ class RegisterService {
         'trainingDuration': usuario.trainingDuration ,
         'injuries': usuario.injuries,
         'extraActivities': usuario.extraActivities,
+        'actualSesion': usuario.actualSesion,
         //'training': usuario.training?.name,
         //'idCurrentRoutine': typeOfTrainingId,
         //'timesDone': usuario.timesDone,

@@ -29,7 +29,8 @@ class UsersGetterService {
                   trainingDays: userData['trainingDays'],
                   trainingDuration: userData['trainingDuration'],
                   injuries: userData['injuries'],
-                  extraActivities: userData['extraActivities']
+                  extraActivities: userData['extraActivities'],
+                  actualSesion: userData['actualSesion'],
                 ))
             .toList();
         return users;
