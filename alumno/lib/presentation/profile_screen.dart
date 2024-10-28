@@ -1,5 +1,6 @@
 import 'package:alumno/core/entities/Entrenador.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../widget/custom_app_bar.dart';
 import '../widget/custom_botton_navigation_bar.dart';
 import '../presentation/initial_screen.dart';
@@ -159,6 +160,34 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       ],
                     ),
                   ),
+                  ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 22, 22, 180),
+                          elevation: 5,
+                          fixedSize: const Size(170, 30),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        
+                        onPressed: () {
+                          print(actualUsuario?.actualRoutine);
+                          if (actualUsuario?.actualRoutine != null) {
+                            context.push('/CompleteRoutine', extra: actualUsuario?.actualRoutine);
+                          }
+                          else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('El usuario no tiene una rutina asignada'),
+                              ),
+                            );
+                          }
+                        },
+                        child: const Text(
+                          'Ver Rutina',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                    ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [

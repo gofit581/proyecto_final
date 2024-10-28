@@ -1,5 +1,7 @@
+import 'package:alumno/core/entities/Routine.dart';
 import 'package:alumno/core/entities/User.dart';
 import 'package:alumno/presentation/calendar_screen.dart';
+import 'package:alumno/presentation/comple_routine_screen.dart';
 import 'package:alumno/presentation/initial_screen.dart';
 import 'package:alumno/presentation/login_screen.dart';
 import 'package:alumno/presentation/register_alumno_data_screen.dart';
@@ -53,4 +55,8 @@ final appRouter = GoRouter(routes: [
       path: '/trainingDay',
       builder: ((context, state) =>  TrainingdayScreen()),
       name: TrainingdayScreen.name),
+  GoRoute(
+      path: '/CompleteRoutine',
+      builder: ((context, state) =>  CompleteRoutineScreen(currentRoutine: state.extra as Routine,)),
+      name: CompleteRoutineScreen.name),  
 ]);

@@ -173,7 +173,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                         onPressed: () {
                           print(usuarioActualizado.currentRoutine);
                           if (usuarioActualizado.currentRoutine != null) {
-                            //context.push('/CompleteRoutine', extra: usuarioActualizado.currentRoutine);
+                            context.push('/CompleteRoutine', extra: usuarioActualizado.currentRoutine);
                           }
                           else {
                             ScaffoldMessenger.of(context).showSnackBar(
