@@ -61,6 +61,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       trainingDuration: _trainingDurationController.text,
       injuries: _injuriesController.text,
       extraActivities: _extraActivitiesController.text,
+      actualSesion: widget.usuario.actualSesion,
     );
 
 
