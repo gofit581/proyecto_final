@@ -229,4 +229,33 @@ class AuthService {
       return true;
     }
   }
+    Future<bool> updateUser(Usuario updatedUser) async {
+    try {
+      final response = await http.put(
+        Uri.parse('$baseUrl/user/${updatedUser.id}'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'userName': updatedUser.userName,
+          'password': updatedUser.password,
+          'mail': updatedUser.mail,
+          'age': updatedUser.age,
+          'idTrainer': updatedUser.idTrainer,
+          'objetiveDescription': updatedUser.objectiveDescription,
+          'experience': updatedUser.experience,
+          'discipline': updatedUser.discipline,
+          'trainingDays': updatedUser.trainingDays,
+          'trainingDuration': updatedUser.trainingDuration,
+          'injuries': updatedUser.injuries,
+          'extraActivities': updatedUser.extraActivities,
+        }),
+      );
+
+      return response.statusCode == 200;
+    } catch (e) {
+      print('Update User Error: $e');
+      return false;
+    }
+  }
 }

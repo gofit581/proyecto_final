@@ -13,6 +13,16 @@ class Entrenador {
 
   Entrenador({
     this.id,
+    this.nombre = 'Nombre no disponible',
+    this.apellido = 'Apellido no disponible',
+    this.alumnos = const [],
+    this.agenda = const [],
+    this.rutinas = const [],
+    this.ejercicios = const [],
+  });
+
+  Entrenador.full({
+    this.id,
     required this.nombre,
     required this.apellido,
     required this.alumnos,
