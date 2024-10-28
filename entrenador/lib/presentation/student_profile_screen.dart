@@ -181,7 +181,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                 content: Text('El usuario no tiene una rutina asignada'),
                               ),
                             );
-                          }
+                          }                        
                         },
                         child: const Text(
                           'Ver Rutina',

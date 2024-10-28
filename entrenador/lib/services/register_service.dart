@@ -28,7 +28,6 @@ class RegisterService {
       throw Exception('Failed to register user');
     }
   }
-
   // Future<Routine> fetchRoutineByTrainingId(int typeOfTrainingId) async {
   //   // final response = await http.get(Uri.parse('$baseUrl/routines'));
 

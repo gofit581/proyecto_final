@@ -20,6 +20,8 @@ class TrainingdayScreen extends StatelessWidget {
       Exercise.prueba(title: "Flexiones", series: 4, repetitions: 12),
       Exercise.prueba(title: "Sentadillas", series: 4, repetitions: 10)
     ];
+
+    //HAY QUE TRAER LA RUTINA DESDE LA BASE DE DATOS
     Routine actualRoutine = Routine.parcial(title: "Fuerza", exercises: exercises);
 
     return Scaffold(
