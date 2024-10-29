@@ -1,5 +1,4 @@
-import 'package:entrenador/core/app_router.dart';
-import 'package:entrenador/presentation/add_routine_screen.dart';
+import 'package:entrenador/core/entities/Routine.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../widget/custom_app_bar.dart';
@@ -80,7 +79,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Sección de Nombre Completo
                         const Text(
                           'Nombre Completo',
                           style: TextStyle(fontSize: 16, color: Colors.grey),
@@ -92,7 +90,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            widget.usuarioSeleccionado.userName,
+                            widget.usuarioSeleccionado.toString(),
                             style: const TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),
@@ -130,7 +128,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                         ),
                         const SizedBox(height: 40),
                         const Text(
-                          'Información de Entrenamiento',
+                          'Información del Alumno',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent),
                         ),
                         const SizedBox(height: 10),
@@ -141,6 +139,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                         _buildInfoRow('Duración del Entrenamiento', widget.usuarioSeleccionado.trainingDuration),
                         _buildInfoRow('Lesiones', widget.usuarioSeleccionado.injuries),
                         _buildInfoRow('Actividades Extras', widget.usuarioSeleccionado.extraActivities),
+                        _buildInfoRow('Rutina Asignada',widget.usuarioSeleccionado.currentRoutine?.getTitle() ?? 'Sin rutina asignada',),
                         const SizedBox(height: 40),
                       ],
                     ),
@@ -210,7 +209,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
             style: const TextStyle(fontSize: 16, color: Colors.grey),
           ),
           Text(
-            value ?? 'N/A',
+            value ?? 'Sin especificar',
             style: const TextStyle(fontSize: 16, color: Colors.black),
           ),
         ],

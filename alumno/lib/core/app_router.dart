@@ -8,6 +8,7 @@ import 'package:alumno/presentation/clases_screen.dart';
 import 'package:alumno/presentation/trainingDay_screen.dart';
 import 'package:go_router/go_router.dart';
 import '../presentation/profile_screen.dart';
+import '../presentation/welcome_screen.dart';
 
 final appRouter = GoRouter(routes: [
   GoRoute(
@@ -19,6 +20,11 @@ final appRouter = GoRouter(routes: [
       path: '/login',
       builder: (context, state) => LoginScreen(),
       name: LoginScreen.name
+      ),
+  GoRoute(
+      path: '/welcome',
+      builder: (context, state) => const WelcomeScreen(),
+      name: WelcomeScreen.name
       ),
    GoRoute(
      path: '/profile',

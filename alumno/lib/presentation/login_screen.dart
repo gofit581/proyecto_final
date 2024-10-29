@@ -1,24 +1,29 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/presentation/calendar_screen.dart';
 import 'package:alumno/presentation/register_screen.dart';
+import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/core/entities/User.dart';
 
-class LoginScreen extends StatelessWidget {
+import 'package:shared_preferences/shared_preferences.dart';
+
+class LoginScreen extends StatefulWidget {
   static const String name = 'LoginScreen';
 
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
-  final TextEditingController _userTextFieldController =
-      TextEditingController();
-  final TextEditingController _passwordTextFieldController =
-      TextEditingController();
+  @override
+  // ignore: library_private_types_in_public_api
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _userTextFieldController = TextEditingController();
+  final TextEditingController _passwordTextFieldController = TextEditingController();
   final UserManager userManager = UserManager();
-
-  // ValueNotifier to toggle password visibility
   final ValueNotifier<bool> _passwordVisible = ValueNotifier<bool>(true);
+  final ValueNotifier<bool> _keepLoggedIn = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +60,13 @@ class LoginScreen extends StatelessWidget {
                   builder: (context, isObscured, child) {
                     return TextField(
                       controller: _passwordTextFieldController,
-                      obscureText: isObscured, 
+                      obscureText: isObscured,
                       decoration: InputDecoration(
                         fillColor: const Color.fromARGB(255, 92, 92, 92),
                         label: const Text('Contraseña'),
                         suffixIcon: GestureDetector(
                           onLongPress: () {
-                            _passwordVisible.value = false; 
+                            _passwordVisible.value = false;
                           },
                           onLongPressUp: () {
                             _passwordVisible.value = true;
@@ -76,6 +81,24 @@ class LoginScreen extends StatelessWidget {
                     );
                   },
                 ),
+              ),
+              const SizedBox(height: 20),
+              ValueListenableBuilder<bool>(
+                valueListenable: _keepLoggedIn,
+                builder: (context, keepLoggedIn, child) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Checkbox(
+                        value: keepLoggedIn,
+                        onChanged: (value) {
+                          _keepLoggedIn.value = value ?? false;
+                        },
+                      ),
+                      const Text('Mantener la sesión iniciada'),
+                    ],
+                  );
+                },
               ),
               const SizedBox(height: 20),
               SizedBox(
@@ -104,9 +127,19 @@ class LoginScreen extends StatelessWidget {
                       );
                       Usuario? usuario = userManager.getLoggedUser();
                       if (loginSuccess && usuario != null) {
+                        if (_keepLoggedIn.value) {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.setString('email',
+                              _userTextFieldController.text);
+                          await prefs.setString('password',
+                              _passwordTextFieldController.text);
+                        }
+                        // ignore: use_build_context_synchronously
                         context.goNamed(CalendarioScreen.name);
                         userManager.setLoggedUser(usuario);
                       } else {
+                        // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
@@ -143,13 +176,12 @@ class LoginScreen extends StatelessWidget {
                           decoration: TextDecoration.underline,
                           fontSize: 16,
                           color: Color.fromARGB(255, 22, 22, 180),
-                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ],
                 ),
-              ),
+              )
             ],
           ),
         ),
