@@ -1,39 +1,34 @@
-import 'package:alumno/presentation/calendar_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:alumno/presentation/login_screen.dart';
 import 'package:alumno/presentation/register_alumno_data_screen.dart';
 import 'package:date_format/date_format.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:alumno/core/entities/TypeOfTraining.dart';
 import 'package:alumno/core/entities/User.dart';
 import 'package:alumno/core/entities/UserManager.dart';
-import 'package:alumno/presentation/home_screen.dart';
 import 'package:intl/intl.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  const RegisterScreen({super.key});
 
   static const String name = 'RegisterScreen';
 
   @override
+  // ignore: library_private_types_in_public_api
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final TextEditingController _registerUserTFController =
-      TextEditingController();
-  final TextEditingController _registerPasswordTFController =
-      TextEditingController();
-  final TextEditingController _registerConfirmedPasswordTFController =
-      TextEditingController();
-  final TextEditingController _registerMailTFController =
-      TextEditingController();
-  final TextEditingController _registerAgeTFController =
-      TextEditingController();
-  final TextEditingController _registerIdTrainerTFController =
-      TextEditingController();
+  final TextEditingController _registerUserTFController = TextEditingController();
+  final TextEditingController _registerPasswordTFController = TextEditingController();
+  final TextEditingController _registerConfirmedPasswordTFController = TextEditingController();
+  final TextEditingController _registerMailTFController = TextEditingController();
+  final TextEditingController _registerAgeTFController = TextEditingController();
+  final TextEditingController _registerIdTrainerTFController = TextEditingController();
   final UserManager userManager = UserManager();
   DateTime? _selectedDate;
+
+  bool _isPasswordVisible = false;
+  bool _isConfirmedPasswordVisible = false;
 
   bool validateEmail(String? value) {
     bool result = true;
@@ -136,24 +131,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(
                   width: 300,
                   child: TextField(
-                    obscureText: true,
                     controller: _registerPasswordTFController,
-                    decoration: const InputDecoration(
+                    obscureText: !_isPasswordVisible,
+                    decoration: InputDecoration(
                       hintText: 'Contraseña',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
                 SizedBox(
-                  width: 300,
-                  child: TextField(
-                    obscureText: true,
-                    controller: _registerConfirmedPasswordTFController,
-                    decoration: const InputDecoration(
-                      hintText: 'Confirme su contraseña',
+                    width: 300,
+                    child: TextField(
+                      controller: _registerConfirmedPasswordTFController,
+                      obscureText: !_isConfirmedPasswordVisible,
+                      decoration: InputDecoration(
+                        hintText: 'Confirme su contraseña',
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isConfirmedPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isConfirmedPasswordVisible = !_isConfirmedPasswordVisible;
+                            });
+                          },
+                        ),
+                      ),
                     ),
                   ),
-                ),
                 const SizedBox(height: 20),
                 const Text("Codigo de entrenador"),
                 const SizedBox(height: 20),
@@ -196,12 +211,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       );
                     } else if (validateEmail(_registerMailTFController.text) || await userManager.validateMail(_registerMailTFController.text)) {
+                      // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Por favor, ingrese un email valido'),
                         ),
                       );
                     } else if(!await userManager.validateId(_registerIdTrainerTFController.text)){
+                      // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Codigo de entrenador inexistente, por favor intentelo de nuevo'),
@@ -213,6 +230,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           (_selectedDate!.year == DateTime.now().year &&
                               _selectedDate!.month == DateTime.now().month &&
                               _selectedDate!.day == DateTime.now().day)) {
+                        // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Por favor, ingrese una edad válida'),
@@ -230,9 +248,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       );
 
                       try {
+                        // ignore: use_build_context_synchronously
                         context.goNamed(RegisterAlumnoDataScreen.name,
                             extra: usuario);
                       } catch (e) {
+                        // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Error al registrar usuario: $e'),
