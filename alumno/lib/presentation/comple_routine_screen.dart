@@ -36,7 +36,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
             children: [
               _buildRoutineCard(
                 title: 'Título de la Rutina',
-                content: widget.currentRoutine.title,
+                content: widget.currentRoutine.title!,
               ),
               const SizedBox(height: 16),
               _buildRoutineCard(

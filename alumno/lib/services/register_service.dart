@@ -28,6 +28,7 @@ class RegisterService {
         'injuries': usuario.injuries,
         'extraActivities': usuario.extraActivities,
         'actualSesion': usuario.actualSesion,
+        'currentRoutine': usuario.actualRoutine,
         //'training': usuario.training?.name,
         //'idCurrentRoutine': typeOfTrainingId,
         //'timesDone': usuario.timesDone,

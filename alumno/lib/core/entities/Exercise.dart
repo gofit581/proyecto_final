@@ -1,11 +1,12 @@
 class Exercise {
   final String title;
-  late String imageLink;
-  late String description;
-  late int? series;
-  late int? repetitions;
-  late bool? done;
+  String? imageLink;
+  String? description;
+  int? series;
+  int? repetitions;
+  bool? done;
   late String? idTrainer; //checkear
+
 
   Exercise.prueba({
     required this.title,

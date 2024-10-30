@@ -215,8 +215,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       if (loginSuccess && usuario != null && mounted) {
                         // Verificar si el widget sigue montado antes de navegar
-                        context.goNamed(CalendarioScreen.name);
                         userManager.setLoggedUser(usuario);
+                        context.goNamed(CalendarioScreen.name);
+                        
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

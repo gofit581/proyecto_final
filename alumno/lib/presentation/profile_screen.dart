@@ -159,7 +159,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         const SizedBox(height: 40),
                       ],
                     ),
-                  ),
+                  ),                  
                   ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color.fromARGB(255, 22, 22, 180),
@@ -171,7 +171,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         ),
                         
                         onPressed: () {
-                          print(actualUsuario?.actualRoutine);
                           if (actualUsuario?.actualRoutine != null) {
                             context.push('/CompleteRoutine', extra: actualUsuario?.actualRoutine);
                           }

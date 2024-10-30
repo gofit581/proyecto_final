@@ -19,9 +19,10 @@ extension TypeOfTrainingExtension on TypeOfTraining {
       default:
         return '';
     }
+  
   }
 
    String toJson() {
     return toString().split('.').last;
-  }
+  } 
 }
