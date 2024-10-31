@@ -6,6 +6,9 @@ import '../core/entities/TrainerManager.dart';
 import '../core/entities/Trainer.dart';
 import '../presentation/agenda_screen.dart'; // Import the agenda screen
 
+import 'package:shared_preferences/shared_preferences.dart';
+
+// ignore: must_be_immutable
 class MyProfileScreen extends StatefulWidget {
   static const String name = 'ProfileScreen';
   TrainerManager trainerManager = TrainerManager();
@@ -13,6 +16,7 @@ class MyProfileScreen extends StatefulWidget {
   MyProfileScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyProfileScreenState createState() => _MyProfileScreenState();
 }
 
@@ -41,8 +45,12 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
           content: const Text('¿Seguro que desea cerrar la sesión?'),
           actions: [
             TextButton(
-              onPressed: () {
+              onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.remove('mail');
+                await prefs.remove('password');
                 Navigator.pushReplacement(
+                  // ignore: use_build_context_synchronously
                   context,
                   MaterialPageRoute(builder: (context) => const InitialScreen()),
                 );

@@ -1,7 +1,4 @@
-import 'package:entrenador/core/app_router.dart';
-import 'package:entrenador/presentation/add_routine_screen.dart';
-import 'package:entrenador/services/update_service.dart';
-import 'package:entrenador/services/users_getter_service.dart';
+import 'package:entrenador/core/entities/Routine.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../widget/custom_app_bar.dart';
@@ -20,27 +17,23 @@ class StudentProfileScreen extends StatefulWidget {
 
 class _StudentProfileScreenState extends State<StudentProfileScreen> {
   bool isLoading = false;
-  final UsersGetterService _usersGetterService = UsersGetterService();
-  late Usuario usuarioActualizado; 
 
   @override
   void initState() {
     super.initState();
-    _loadUserData(); 
-    usuarioActualizado = widget.usuarioSeleccionado; 
+    _loadUserData();
   }
 
   Future<void> _loadUserData() async {
     setState(() {
-      
+
+      isLoading = true;
     });
 
-    Usuario usuarioFromDB = await _usersGetterService.getUserById(widget.usuarioSeleccionado.id!);
-    print(usuarioFromDB);
-   
+    await Future.delayed(const Duration(seconds: 1)); 
+
     setState(() {
       isLoading = false;
-      usuarioActualizado = usuarioFromDB;
     });
   }
 
@@ -86,7 +79,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Sección de Nombre Completo
                         const Text(
                           'Nombre Completo',
                           style: TextStyle(fontSize: 16, color: Colors.grey),
@@ -98,13 +90,11 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            usuarioActualizado.userName,
+                            widget.usuarioSeleccionado.toString(),
                             style: const TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),
                         const SizedBox(height: 40),
-                        
-                        // Sección de Email
                         const Text(
                           'Email',
                           style: TextStyle(fontSize: 16, color: Colors.grey),
@@ -116,13 +106,11 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            usuarioActualizado.getEmail(),
+                            widget.usuarioSeleccionado.getEmail(),
                             style: const TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),
                         const SizedBox(height: 40),
-
-                        // Sección de Edad
                         const Text(
                           'Edad',
                           style: TextStyle(fontSize: 16, color: Colors.grey),
@@ -139,20 +127,19 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                         ),
                         const SizedBox(height: 40),
-
-                        // Información de Entrenamiento
                         const Text(
-                          'Información de Entrenamiento',
+                          'Información del Alumno',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent),
                         ),
                         const SizedBox(height: 10),
-                        _buildInfoRow('Objetivo', usuarioActualizado.objectiveDescription),
-                        _buildInfoRow('Experiencia', usuarioActualizado.experience),
-                        _buildInfoRow('Disciplina', usuarioActualizado.discipline),
-                        _buildInfoRow('Días de Entrenamiento', usuarioActualizado.trainingDays),
-                        _buildInfoRow('Duración del Entrenamiento', usuarioActualizado.trainingDuration),
-                        _buildInfoRow('Lesiones', usuarioActualizado.injuries),
-                        _buildInfoRow('Actividades Extras', usuarioActualizado.extraActivities),
+                        _buildInfoRow('Objetivo', widget.usuarioSeleccionado.objectiveDescription),
+                        _buildInfoRow('Experiencia', widget.usuarioSeleccionado.experience),
+                        _buildInfoRow('Disciplina', widget.usuarioSeleccionado.discipline),
+                        _buildInfoRow('Días de Entrenamiento', widget.usuarioSeleccionado.trainingDays),
+                        _buildInfoRow('Duración del Entrenamiento', widget.usuarioSeleccionado.trainingDuration),
+                        _buildInfoRow('Lesiones', widget.usuarioSeleccionado.injuries),
+                        _buildInfoRow('Actividades Extras', widget.usuarioSeleccionado.extraActivities),
+                        _buildInfoRow('Rutina Asignada',widget.usuarioSeleccionado.currentRoutine?.getTitle() ?? 'Sin rutina asignada',),
                         const SizedBox(height: 40),
                       ],
                     ),
@@ -169,19 +156,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
-                        
                         onPressed: () {
-                          print(usuarioActualizado.currentRoutine);
-                          if (usuarioActualizado.currentRoutine != null) {
-                            //context.push('/CompleteRoutine', extra: usuarioActualizado.currentRoutine);
-                          }
-                          else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('El usuario no tiene una rutina asignada'),
-                              ),
-                            );
-                          }
                         },
                         child: const Text(
                           'Ver Rutina',
@@ -198,8 +173,8 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                         ),
                         onPressed: () {
-                          if (usuarioActualizado.currentRoutine == null) {
-                            context.push('/AddRoutine', extra: usuarioActualizado);
+                          if (widget.usuarioSeleccionado.currentRoutine == null) {
+                            context.push('/AddRoutine', extra: widget.usuarioSeleccionado);
                           }
                           else {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -234,7 +209,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
             style: const TextStyle(fontSize: 16, color: Colors.grey),
           ),
           Text(
-            value ?? 'N/A',
+            value ?? 'Sin especificar',
             style: const TextStyle(fontSize: 16, color: Colors.black),
           ),
         ],

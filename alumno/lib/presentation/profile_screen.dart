@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/entities/Entrenador.dart';
 import '../core/entities/User.dart';
@@ -12,6 +13,7 @@ import '../presentation/edit_profile.dart';
 
 import '../services/auth_service.dart';
 
+// ignore: must_be_immutable
 class MyProfileScreen extends StatefulWidget {
   static const String name = 'ProfileScreen';
   UserManager userManager = UserManager();
@@ -21,6 +23,7 @@ class MyProfileScreen extends StatefulWidget {
   get actualUsuario => null;
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyProfileScreenState createState() => _MyProfileScreenState();
 }
 
@@ -54,8 +57,12 @@ Future<void> _loadUserData() async {
           content: const Text('¿Seguro que desea cerrar la sesión?'),
           actions: [
             TextButton(
-              onPressed: () {
+              onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.remove('mail');
+                await prefs.remove('password');
                 Navigator.pushReplacement(
+                  // ignore: use_build_context_synchronously
                   context,
                   MaterialPageRoute(builder: (context) => const InitialScreen()),
                 );

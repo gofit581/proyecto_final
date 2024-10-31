@@ -1,18 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:alumno/presentation/login_screen.dart';
-import 'package:alumno/presentation/register_screen.dart';
+import 'dart:async';
 
-class InitialScreen extends StatelessWidget {
+import '../core/entities/UserManager.dart';
+
+import 'welcome_screen.dart';
+import 'calendar_screen.dart';
+
+import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class InitialScreen extends StatefulWidget {
   static const String name = 'InitialScreen';
 
   const InitialScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
+  _InitialScreenState createState() => _InitialScreenState();
+}
+
+class _InitialScreenState extends State<InitialScreen> {
+  final UserManager userManager = UserManager();
+
+  @override
+  void initState() {
+    super.initState();
+    checkSession();
+  }
+
+  Future<void> checkSession() async {
+    await Future.delayed(const Duration(seconds: 3));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedEmail = prefs.getString('email');
+    String? savedPassword = prefs.getString('password');
+
+    if (savedEmail != null && savedPassword != null && await userManager.login(savedEmail, savedPassword)) {
+      // ignore: use_build_context_synchronously
+      context.goNamed(CalendarioScreen.name);
+    }
+    else{
+      // ignore: use_build_context_synchronously
+      context.goNamed(WelcomeScreen.name);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -25,42 +61,8 @@ class InitialScreen extends StatelessWidget {
                   height: 200,
                 ),
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 193, 193, 196),
-                  elevation: 5,
-                  fixedSize: Size(200, 40),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                onPressed: () {
-                  context.goNamed(LoginScreen.name);
-                },
-                child: const Text(
-                  'LOGIN',
-                  style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                ),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 22, 22, 180),
-                  elevation: 5,
-                  fixedSize: Size(200, 40),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                onPressed: () {
-                  context.goNamed(RegisterScreen.name);
-                },
-                child: const Text(
-                  'REGISTRARSE',
-                  style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
-                ),
-              ),
+              const SizedBox(height: 20),
+              const CircularProgressIndicator(),
             ],
           ),
         ),
