@@ -10,15 +10,13 @@ class Routine {
   int? aim;
   String? image;
   TypeOfTraining? typeOfTraining;
-  String? id; // lo cambie de int a String ver que onda esto
+  String? id;
   int? rest;
   String? idTrainer;
   int? trainingDays;
   Routine? actualRoutine;
 
 
-
-  //esto es de user
   Routine.parcial({
     required this.title,
     required this.exercises,

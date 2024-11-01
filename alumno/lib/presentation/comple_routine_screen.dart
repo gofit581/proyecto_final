@@ -1,5 +1,6 @@
 
 import 'package:alumno/core/entities/Routine.dart';
+import 'package:alumno/core/entities/TrainingDay.dart';
 import 'package:alumno/widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -48,12 +49,12 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
                 title: 'Duración',
                 content: '${widget.currentRoutine.duration} semanas',
               ),
-              /*ROMPE PORQ NO ESTA ESTE ATRIBUTO ACTUALMENTE
+              //ROMPE PORQ NO ESTA ESTE ATRIBUTO ACTUALMENTE
               const SizedBox(height: 16),
               _buildRoutineCard(
                 title: 'Pausa entre ejercicios',
                 content: '${widget.currentRoutine.rest} segundos',
-              ),*/
+              ),
               const SizedBox(height: 16),
               
               SizedBox(
@@ -70,7 +71,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
                           });
                         },
                         itemBuilder: (context, weekIndex) {
-                          //return _buildWeekCard(context, weekIndex);
+                          return _buildWeekCard(context, weekIndex);
                         },
                       ),
                     ),
@@ -139,7 +140,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
     );
   }
 
-  /*ESTOS DOS WIDGETS ROMPEN ACTUALMENTE PORQUE LA LISTA DE EJERCICIOS NO ESTA BIEN DEFINIDA
+ // ESTOS DOS WIDGETS ROMPEN ACTUALMENTE PORQUE LA LISTA DE EJERCICIOS NO ESTA BIEN DEFINIDA
   Widget _buildWeekCard(BuildContext context, int weekIndex) {
     List<TrainingDay> week = widget.currentRoutine.exercises[weekIndex];
 
@@ -294,5 +295,5 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
         ),
     ],
   );
-  }*/
+  }
 }

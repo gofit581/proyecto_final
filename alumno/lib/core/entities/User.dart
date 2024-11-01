@@ -83,6 +83,13 @@ class Usuario {
     mail = email;
   }
 
+  void completeSesion(){
+    actualSesion = (actualSesion ?? 0) + 1;
+  }
+
+  void resetSesions(){
+    this.actualSesion = 0;
+  }
   //static fromJson(claseData) {}
 
     factory Usuario.fromJson(Map<String, dynamic> json) {

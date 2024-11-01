@@ -1,9 +1,12 @@
+import 'package:alumno/core/entities/Exercise.dart';
+import 'package:alumno/core/entities/Routine.dart';
 import 'package:alumno/core/entities/TypeOfTraining.dart';
 import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/internaData/user_data_options.dart';
 import 'package:alumno/presentation/calendar_screen.dart';
 import 'package:alumno/presentation/login_screen.dart';
 import 'package:alumno/services/update_service.dart';
+import 'package:alumno/services/user_getter_service.dart';
 import 'package:alumno/widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -183,12 +186,20 @@ class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
                       injuries: _registerInjuriesTFController.text,
                       extraActivities: _registerExtraActivitiesTFController.text,
                       actualSesion: 0,
+                      actualRoutine: null,
                     );
 
                     try {
                       await userManager.registerUser(newUser);
-                      userManager.setLoggedUser(newUser);
-                      context.goNamed(CalendarioScreen.name, extra: newUser);
+                       bool loginSuccess = await userManager.login(
+                          newUser.mail,
+                          newUser.password);
+                      Usuario? usuario = userManager.getLoggedUser();
+
+                      if (loginSuccess && usuario != null) {
+                        // Verificar si el widget sigue montado antes de navegar
+                        userManager.setLoggedUser(usuario);
+                        context.goNamed(CalendarioScreen.name, extra: usuario);}
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
