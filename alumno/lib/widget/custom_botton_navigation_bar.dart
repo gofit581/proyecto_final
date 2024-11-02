@@ -1,18 +1,28 @@
-import 'package:flutter/material.dart';
+import 'package:alumno/core/entities/User.dart';
+import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/presentation/trainingDay_screen.dart';
+import 'package:flutter/material.dart';
 import '../presentation/profile_screen.dart';
 import 'package:go_router/go_router.dart';
 
-class CustomBottomNavigationBar extends StatelessWidget {
+class CustomBottomNavigationBar extends StatefulWidget {
   final int currentIndex;
 
 
 const CustomBottomNavigationBar({super.key, required this.currentIndex});
 
   @override
+  State<CustomBottomNavigationBar> createState() => _CustomBottomNavigationBarState();
+}
+
+class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
+
+Usuario usuario = UserManager().getLoggedUser()!;
+
+  @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: currentIndex,
+      currentIndex: widget.currentIndex,
       backgroundColor: Colors.white,
       selectedItemColor: Colors.black,
       type: BottomNavigationBarType.fixed,
@@ -42,7 +52,12 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
       onTap: (index) {
         switch (index) {
           case 0:
-            context.goNamed(TrainingdayScreen.name);
+            if(usuario.actualRoutine == null){
+              _rutinaVacia(context, usuario.userName);
+            } else{
+              context.goNamed(TrainingdayScreen.name);
+            }
+            
             break;
           case 1:
             context.goNamed('CalendarioScreen');
@@ -90,4 +105,24 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+void _rutinaVacia(BuildContext context, String userName) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('ATENCIÓN $userName'),
+        content: const Text('Aun no posees una rutina, comunicate con tu entrenador para poder comenzar tu entrenamiento!'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Aceptar'),
+          ),
+        ],
+      );
+    },
+  );
 }

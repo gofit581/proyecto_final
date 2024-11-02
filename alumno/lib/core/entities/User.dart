@@ -17,7 +17,7 @@ class Usuario {
   String? extraActivities;
   Entrenador? profesor;
   int actualSesion;
-  late Routine actualRoutine;
+  Routine? actualRoutine;
 
   Usuario.parcial({
     this.id,
@@ -26,7 +26,8 @@ class Usuario {
     required this.mail,
     required this.age,
     required this.idTrainer,
-    required this.actualSesion
+    required this.actualSesion,
+    this.actualRoutine,
   });
 
   Usuario({
@@ -44,6 +45,7 @@ class Usuario {
     required this.injuries,
     required this.extraActivities, 
     required this.actualSesion,
+    this.actualRoutine,
   });
 
   set entrenador(Future<Entrenador> entrenador) {}
@@ -81,5 +83,36 @@ class Usuario {
     mail = email;
   }
 
-  static fromJson(claseData) {}
+  void completeSesion(){
+    actualSesion = (actualSesion ?? 0) + 1;
+  }
+
+  void resetSesions(){
+    this.actualSesion = 0;
+  }
+  //static fromJson(claseData) {}
+
+    factory Usuario.fromJson(Map<String, dynamic> json) {
+    return Usuario(
+      id: json['id'],
+      userName: json['userName'],
+      password: json['password'],
+      mail: json['mail'],
+      age: json['age'],
+      idTrainer: json['idTrainer'],
+      objectiveDescription: json['objectiveDescription'],
+      experience: json['experience'],
+      discipline: json['discipline'],
+      trainingDays: json['trainingDays'],
+      trainingDuration: json['trainingDuration'],
+      injuries: json['injuries'],
+      extraActivities: json['extraActivities'],
+      actualRoutine: json['currentRoutine'] != null
+          ? Routine.fromJson(json['currentRoutine'])
+          : null,
+      actualSesion: json['actualSesion'],
+    );
+  }
+
+    toJson() {} 
 }

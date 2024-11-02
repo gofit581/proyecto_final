@@ -1,3 +1,4 @@
+import 'package:alumno/core/entities/TrainingDay.dart';
 import 'package:alumno/core/entities/TypeOfTraining.dart';
 import 'package:alumno/core/entities/User.dart';
 import 'package:alumno/core/entities/Routine.dart';
@@ -27,6 +28,7 @@ class RegisterService {
         'injuries': usuario.injuries,
         'extraActivities': usuario.extraActivities,
         'actualSesion': usuario.actualSesion,
+        'currentRoutine': usuario.actualRoutine,
         //'training': usuario.training?.name,
         //'idCurrentRoutine': typeOfTrainingId,
         //'timesDone': usuario.timesDone,
@@ -46,13 +48,11 @@ class RegisterService {
     }
 
     final routineData = jsonDecode(response.body);
-    List<Exercise> exercises = (routineData['exercises'] as List)
-        .map((exerciseData) => Exercise(
-              title: exerciseData['title'],
-              imageLink: exerciseData['imageLink'],
-              description: exerciseData['description'],
-            ))
-        .toList();
+    List<List<TrainingDay>> exercises = (routineData['exercises'] as List)
+            .map((dayData) => (dayData as List)
+                .map((exerciseJson) => TrainingDay.fromJson(exerciseJson))
+                .toList())
+            .toList();
 
     return Routine(
       title: routineData['title'],
@@ -61,6 +61,9 @@ class RegisterService {
       exercises: exercises,
       aim: routineData['aim'],
       typeOfTraining: routineData['typeOfTraining'].index,
+      rest: routineData['rest'],
+      idTrainer: routineData['idTrainer'],
+      trainingDays: routineData['trainingDays'],
     );
   }
 
@@ -75,38 +78,37 @@ class RegisterService {
   }
 
   Future<Routine> fetchRoutine(int typeOfRoutine) async {
-  const baseUrl = 'https://665887705c3617052648e130.mockapi.io/api';
-  final response = await http.get(Uri.parse('$baseUrl/routines?typeOfTraining=$typeOfRoutine'));
+    const baseUrl = 'https://665887705c3617052648e130.mockapi.io/api';
+    final response = await http.get(Uri.parse('$baseUrl/routines?typeOfTraining=$typeOfRoutine'));
 
-  if (response.statusCode != 200) {
-    throw Exception('Failed to fetch routine');
+    if (response.statusCode != 200) {
+      throw Exception('Failed to fetch routine');
+    }
+
+    final routineData = jsonDecode(response.body);
+
+    // Si la respuesta contiene más de una rutina, seleccionamos la primera
+    final List<dynamic> routines = routineData is List ? routineData : [routineData];
+    final routine = routines.first;
+
+      List<List<TrainingDay>> exercises = (routineData['exercises'] as List)
+            .map((dayData) => (dayData as List)
+                .map((exerciseJson) => TrainingDay.fromJson(exerciseJson))
+                .toList())
+            .toList();
+
+    return Routine(
+      title: routine['title'],
+      description: routine['description'],
+      duration: routine['duration'],
+      exercises: exercises,
+      aim: routine['aim'],
+      typeOfTraining: TypeOfTraining.values[typeOfRoutine],
+      rest: routineData['rest'],
+      idTrainer: routineData['idTrainer'],
+      trainingDays: routineData['trainingDays'],
+    );
   }
-
-  final routineData = jsonDecode(response.body);
-
-  // Si la respuesta contiene más de una rutina, seleccionamos la primera
-  final List<dynamic> routines = routineData is List ? routineData : [routineData];
-  final routine = routines.first;
-
-  List<Exercise> exercises = (routine['exercises'] as List)
-    .map((exerciseData) => Exercise(
-      title: exerciseData['title'],
-      imageLink: exerciseData['imageLink'],
-      description: exerciseData['description'],
-    ))
-    .toList();
-
-  return Routine(
-    title: routine['title'],
-    description: routine['description'],
-    duration: routine['duration'],
-    exercises: exercises,
-    aim: routine['aim'],
-    typeOfTraining: TypeOfTraining.values[typeOfRoutine],
-  );
-  
-}
-
 
 
   // Future<Routine> fetchRoutineByTrainingId(int typeOfTrainingId) async {

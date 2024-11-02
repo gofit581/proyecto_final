@@ -1,5 +1,6 @@
 import 'package:alumno/core/entities/Clase.dart';
 import 'package:alumno/core/entities/Entrenador.dart';
+import 'package:alumno/core/entities/Routine.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../core/entities/User.dart';
@@ -84,6 +85,9 @@ class AuthService {
               injuries: userData['injuries'],
               extraActivities: userData['extraActivities'],
               actualSesion: userData['actualSesion'],
+              actualRoutine:  userData['currentRoutine'] != null
+                              ? Routine.fromJson(userData['currentRoutine'])
+                              : null,
             );
 
             userOK.profesor = await crearEntrenador(userData['idTrainer']);

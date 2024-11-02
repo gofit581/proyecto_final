@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../core/entities/Entrenador.dart';
 import '../core/entities/User.dart';
 import '../core/entities/UserManager.dart';
-
+import 'package:alumno/services/auth_service.dart';
+import 'package:go_router/go_router.dart';
 import '../widget/custom_app_bar.dart';
 import '../widget/custom_botton_navigation_bar.dart';
-
 import '../presentation/initial_screen.dart';
 import '../presentation/edit_profile.dart';
-
-import '../services/auth_service.dart';
 
 // ignore: must_be_immutable
 class MyProfileScreen extends StatefulWidget {
@@ -203,7 +200,34 @@ Future<void> _loadUserData() async {
                         const SizedBox(height: 40),
                       ],
                     ),
-                  ),
+                  ),                  
+                  ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 22, 22, 180),
+                          elevation: 5,
+                          fixedSize: const Size(170, 30),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        
+                        onPressed: () {
+                          if (actualUsuario?.actualRoutine != null) {
+                            context.push('/CompleteRoutine', extra: actualUsuario?.actualRoutine);
+                          }
+                          else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('El usuario no tiene una rutina asignada'),
+                              ),
+                            );
+                          }
+                        },
+                        child: const Text(
+                          'Ver Rutina',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                    ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [

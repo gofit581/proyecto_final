@@ -4,6 +4,7 @@ import 'package:entrenador/presentation/add_routine_screen.dart';
 import 'package:entrenador/presentation/agenda_screen.dart';
 import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/presentation/calendar_screen.dart';
+import 'package:entrenador/presentation/comple_routine_screen.dart';
 import 'package:entrenador/presentation/create_exercise_screen.dart';
 import 'package:entrenador/presentation/create_routine2_screen.dart';
 import 'package:entrenador/presentation/create_routine_screen.dart';
@@ -81,6 +82,11 @@ final appRouter = GoRouter(routes: [
       builder: ((context, state) =>
           AddRoutineScreen(alumno: state.extra as Usuario)),
       name: AddRoutineScreen.name),
+  GoRoute(
+      path: '/CompleteRoutine',
+      builder: ((context, state) =>
+          CompleteRoutineScreen(currentRoutine: state.extra as Routine,)),
+      name: CompleteRoutineScreen.name),
   // GoRoute(
   //     path: '/routine',
   //     builder: (context, state) => RoutineScreen(),

@@ -157,6 +157,17 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                         ),
                         onPressed: () {
+                          print(widget.usuarioSeleccionado.currentRoutine);
+                          if (widget.usuarioSeleccionado.currentRoutine != null) {
+                            context.push('/CompleteRoutine', extra: widget.usuarioSeleccionado.currentRoutine);
+                          }
+                          else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('El usuario no tiene una rutina asignada'),
+                              ),
+                            );
+                          }                       
                         },
                         child: const Text(
                           'Ver Rutina',
