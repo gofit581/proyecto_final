@@ -5,7 +5,6 @@ import 'package:alumno/core/entities/User.dart';
 import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/presentation/calendar_screen.dart';
 import 'package:alumno/services/update_service.dart';
-import 'package:alumno/services/user_getter_service.dart';
 import 'package:alumno/widget/custom_app_bar.dart';
 import 'package:alumno/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter/material.dart';
