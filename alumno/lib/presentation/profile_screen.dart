@@ -228,6 +228,7 @@ Future<void> _loadUserData() async {
                           style: TextStyle(color: Colors.white),
                         ),
                     ),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [

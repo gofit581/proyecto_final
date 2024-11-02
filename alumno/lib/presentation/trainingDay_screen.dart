@@ -1,11 +1,9 @@
-import 'package:alumno/core/app_router.dart';
 import 'package:alumno/core/entities/Exercise.dart';
 import 'package:alumno/core/entities/Routine.dart';
 import 'package:alumno/core/entities/User.dart';
 import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/presentation/calendar_screen.dart';
 import 'package:alumno/services/update_service.dart';
-import 'package:alumno/services/user_getter_service.dart';
 import 'package:alumno/widget/custom_app_bar.dart';
 import 'package:alumno/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -161,8 +159,7 @@ void _sesionCompleta(BuildContext context, Usuario actualUser, int totalSesions)
 
               if (loginSuccess && usuario != null) {
                 userManager.setLoggedUser(usuario);
-              }
-              Navigator.of(context).pop();                 
+              }                
               context.goNamed(CalendarioScreen.name);
             },
             
