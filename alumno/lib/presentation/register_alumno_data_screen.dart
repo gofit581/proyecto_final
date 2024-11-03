@@ -6,7 +6,7 @@ import 'package:alumno/presentation/login_screen.dart';
 import 'package:alumno/services/notification_service.dart';
 import 'package:alumno/services/update_service.dart';
 import 'package:alumno/widget/custom_app_bar.dart';
-import 'package:alumno/core/entities/Notification.dart' as alumno_notification;
+import 'package:alumno/core/entities/CustomNotification.dart' as alumno_notification;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -196,7 +196,7 @@ class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
                           newUser.password);
                       Usuario? usuario = userManager.getLoggedUser();
                       if (usuario!.id != null) {
-                        NotificationService().addNotification(alumno_notification.Notification(idAlumno: usuario!.id!, idTrainer: newUser.idTrainer, typeOfNotification: TypeOfNotification.newUser));
+                        NotificationService().addNotification(alumno_notification.CustomNotification(idAlumno: usuario.id!, idTrainer: newUser.idTrainer, typeOfNotification: TypeOfNotification.newUser, visto: false));
                       } else {
                         print('Error: Usuario ID es Null');
                       }

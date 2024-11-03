@@ -12,6 +12,7 @@ import 'package:entrenador/presentation/edit_routine_screen.dart';
 import 'package:entrenador/presentation/initial_screen.dart';
 import 'package:entrenador/presentation/list_routine.dart';
 import 'package:entrenador/presentation/login_screen.dart';
+import 'package:entrenador/presentation/notification_screen.dart';
 import 'package:entrenador/presentation/register_entrenador_data_screen.dart';
 import 'package:entrenador/presentation/register_screen.dart';
 import '../presentation/profile_screen.dart';
@@ -135,5 +136,11 @@ final appRouter = GoRouter(routes: [
       return EditRoutineScreen(routine: routine);
     },
     name: EditRoutineScreen.name,
+  ),
+  GoRoute(
+    path: '/notifications',
+    builder: (context, state) =>
+        NotificationScreen(),
+    name: NotificationScreen.name,
   ),
 ]);

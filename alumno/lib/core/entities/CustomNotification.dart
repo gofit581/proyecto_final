@@ -1,35 +1,38 @@
 import 'package:alumno/core/entities/TypeOfNotification.dart';
 
-class Notification {
+class CustomNotification {
+  String? id;
   String idAlumno;
   String idTrainer;
-  //String? mensaje;
   TypeOfNotification typeOfNotification;
+  bool visto;
 
-  Notification({
+  CustomNotification({
     required this.idAlumno,
     required this.idTrainer,
     required this.typeOfNotification,
-    //this.mensaje
+    required this.visto,
+    this.id,
   });
 
   Map<String, dynamic> toJson() {
     return {
       'idAlumno': idAlumno,
       'idTrainer': idTrainer,
-      //'mensaje': mensaje,
       'typeOfNotification': typeOfNotification.toString().split('.').last,
+      'visto': visto,
     };
   }
 
-  factory Notification.fromJson(Map<String, dynamic> json) {
-    return Notification(
+  factory CustomNotification.fromJson(Map<String, dynamic> json) {
+    return CustomNotification(
       idAlumno: json['idAlumno'],
       idTrainer: json['idTrainer'],
-      //mensaje: json['mensaje'],
       typeOfNotification: TypeOfNotification.values.firstWhere(
         (e) => e.toString().split('.').last == json['typeOfNotification'],
       ),
+      visto: json['visto'],
+      id: json['id'],
     );
   }
 }
