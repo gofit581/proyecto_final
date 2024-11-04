@@ -84,7 +84,8 @@ class _CalendarioScreenState extends State<CalendarioScreen> {
   DateTime? _selectedDay;
   Usuario? actualUsuario;
   late int totalDays;
-  late double progress;
+  late double progress = 0;
+  bool hasRoutine = false;
 
   @override
   void initState() {
@@ -100,7 +101,14 @@ Future<void> _loadUserData() async {
       if (userRoutine != null) {
         totalDays = ((userRoutine.duration)! * (userRoutine.trainingDays!));
         progress = (actualUsuario!.actualSesion / totalDays);
-      }      
+        hasRoutine = true;
+      } 
+      else
+      {
+        totalDays = 1;
+        progress = 0;
+        hasRoutine = false;
+      }     
     }
   });
 }
@@ -117,9 +125,9 @@ Future<void> _loadUserData() async {
           children: [
             _buildTableCalendar(),
             const SizedBox(height: 20),
-            const Text(
-              'PROGRESO DE TU RUTINA',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
+            Text(
+              hasRoutine ? 'PROGRESO DE TU RUTINA' : 'No tenes una rutina activa',
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
             ),
             const SizedBox(height: 5),
             ClipRRect(
@@ -136,7 +144,7 @@ Future<void> _loadUserData() async {
             ),
             const SizedBox(height: 5),
             Text(
-              'DÍA ${actualUsuario!.actualSesion} DE $totalDays',
+              hasRoutine ? 'DÍA ${actualUsuario!.actualSesion} DE $totalDays' : '',
               style: const TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
             ),
           ],
