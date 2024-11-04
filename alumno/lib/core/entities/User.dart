@@ -90,6 +90,12 @@ class Usuario {
   void resetSesions(){
     this.actualSesion = 0;
   }
+
+  void deleteRoutine(){
+    this.actualRoutine = null;
+  }
+
+
   //static fromJson(claseData) {}
 
     factory Usuario.fromJson(Map<String, dynamic> json) {

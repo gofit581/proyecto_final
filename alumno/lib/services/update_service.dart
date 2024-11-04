@@ -26,7 +26,8 @@ class UpdateService {
         'injuries': usuario.injuries,
         'extraActivities': usuario.extraActivities,
         'actualSesion': usuario.actualSesion,
-        'currentRoutine': usuario.actualRoutine!.toJson(),
+        'currentRoutine': usuario.actualRoutine != null ? 
+        usuario.actualRoutine!.toJson() : [],
       }),
     );
 

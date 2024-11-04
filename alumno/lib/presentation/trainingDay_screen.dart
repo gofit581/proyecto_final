@@ -139,8 +139,9 @@ void _sesionCompleta(BuildContext context, Usuario actualUser, int totalSesions)
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Entrenamiento del dia terminado'),
-        content: const Text('¡Has completado todos los ejercicios!'),
+        title: actualUser.actualSesion < totalSesions ? const Text('Entrenamiento del dia terminado') : const Text('Rutina terminada'),
+        content: actualUser.actualSesion < totalSesions ? Text('¡Has completado todos los ejercicios!') : 
+        Text('¡Has completado todas las sesiones de tu rutina!'),
         actions: [
           TextButton(
             onPressed: () async {
@@ -149,6 +150,7 @@ void _sesionCompleta(BuildContext context, Usuario actualUser, int totalSesions)
                 actualUser.completeSesion();
               } else{
                 actualUser.resetSesions();
+                actualUser.deleteRoutine();
               }
               // Falta pegada a la BD para actualizar el Usuario
               await _update.updateUser(actualUser);
