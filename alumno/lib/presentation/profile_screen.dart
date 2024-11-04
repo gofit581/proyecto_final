@@ -88,17 +88,22 @@ Future<void> _loadUserData() async {
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EditProfileScreen(
-                    usuario: actualUsuario!,
-                    authService: AuthService(UserManager()),
-                  ),
+            onPressed: () async {
+            final updatedUsuario = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EditProfileScreen(
+                  usuario: actualUsuario!,
+                  authService: AuthService(UserManager()),
                 ),
-              );
-            },
+              ),
+            );
+            if (updatedUsuario != null) {
+              setState(() {
+                actualUsuario = updatedUsuario;
+              });
+            }
+          },
           ),
         ],
       ),

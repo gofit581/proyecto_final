@@ -74,6 +74,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       userManager.setLoggedUser(widget.usuario); 
       bool isUpdated = await widget.authService.updateUser(updatedUser);
       if (isUpdated) {
+        Navigator.pop(context, updatedUser);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Perfil actualizado exitosamente')),
         );
