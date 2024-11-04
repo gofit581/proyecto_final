@@ -62,6 +62,8 @@
 //   }
 // }
 
+import 'package:alumno/core/entities/User.dart';
+import 'package:alumno/core/entities/UserManager.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:alumno/widget/custom_app_bar.dart';
@@ -80,7 +82,28 @@ class _CalendarioScreenState extends State<CalendarioScreen> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  Usuario? actualUsuario;
+  late int totalDays;
+  late double progress;
 
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+Future<void> _loadUserData() async {
+  setState(() {
+    actualUsuario = UserManager().getLoggedUser();
+    if (actualUsuario != null) {
+      final userRoutine = actualUsuario?.actualRoutine;
+      if (userRoutine != null) {
+        totalDays = ((userRoutine.duration)! * (userRoutine.trainingDays!));
+        progress = (actualUsuario!.actualSesion / totalDays);
+      }      
+    }
+  });
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,6 +115,38 @@ class _CalendarioScreenState extends State<CalendarioScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Text(
+              'HOLA ${actualUsuario?.userName.toUpperCase()}!',
+              style: const TextStyle(             
+                fontSize: 20, 
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline
+              )
+            ),
+            const SizedBox(height: 40),
+            const Text(
+              'PROGRESO DE LA RUTINA',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
+            ),
+            const SizedBox(height: 10),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.6,
+                height: 25,
+                child: LinearProgressIndicator(
+                  value: progress,
+                  backgroundColor: Colors.grey[300],
+                  color:const Color.fromARGB(255, 22, 22, 180),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'DÍA ${actualUsuario!.actualSesion} DE $totalDays',
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
+            ),
+            const SizedBox(height: 40),
             _buildTableCalendar(),
           ],
         ),
