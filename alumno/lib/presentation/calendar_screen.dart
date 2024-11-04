@@ -108,27 +108,20 @@ Future<void> _loadUserData() async {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      appBar: const CustomAppBar(
-        title: 'Calendario',
+      appBar: CustomAppBar(
+        title: 'Hola ${actualUsuario?.userName}!',
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Text(
-              'HOLA ${actualUsuario?.userName.toUpperCase()}!',
-              style: const TextStyle(             
-                fontSize: 20, 
-                fontWeight: FontWeight.bold,
-                decoration: TextDecoration.underline
-              )
-            ),
-            const SizedBox(height: 40),
+            _buildTableCalendar(),
+            const SizedBox(height: 20),
             const Text(
-              'PROGRESO DE LA RUTINA',
+              'PROGRESO DE TU RUTINA',
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: SizedBox(
@@ -141,13 +134,11 @@ Future<void> _loadUserData() async {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             Text(
               'DÍA ${actualUsuario!.actualSesion} DE $totalDays',
               style: const TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
             ),
-            const SizedBox(height: 40),
-            _buildTableCalendar(),
           ],
         ),
       ),
