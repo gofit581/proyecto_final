@@ -33,6 +33,9 @@ class UsersGetterService {
                   actualSesion: userData['actualSesion'],
                 ))
             .toList();
+
+            users.sort((a, b) => a.userName.compareTo(b.userName));
+
         return users;
       } else {
         throw Exception('Failed to load users');
