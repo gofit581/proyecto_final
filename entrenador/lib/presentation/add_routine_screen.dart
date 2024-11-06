@@ -1,8 +1,6 @@
-import 'package:entrenador/core/app_router.dart';
 import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
-import 'package:entrenador/presentation/create_routine_screen.dart';
 import 'package:entrenador/presentation/users_list_screen.dart';
 import 'package:entrenador/services/routine_service.dart';
 import 'package:entrenador/services/update_service.dart';
@@ -18,6 +16,7 @@ class AddRoutineScreen extends StatefulWidget {
   final Usuario alumno;
   
   @override
+  // ignore: library_private_types_in_public_api
   _AddRoutineScreenState createState() => _AddRoutineScreenState();
 }
 
@@ -37,7 +36,7 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
       //alumno = Usuario( )
       
     } else {
-      _routinesFuture = Future.error('No trainer logged in');
+      _routinesFuture = Future.error('Ningún entrenador ha iniciado sesión');
     }
   }
 
@@ -108,14 +107,18 @@ Widget build(BuildContext context) {
                           bool isSaved = await _updateService.saveRoutineForUser(widget.alumno);
 
                           if (isSaved) {   
+                            // ignore: avoid_print
                             print('Rutina seleccionada: ${selectedRoutine.title}');
+                            // ignore: use_build_context_synchronously
                             ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Rutina asignada con éxito'),
                             ),
                             );
+                            // ignore: use_build_context_synchronously
                             context.goNamed(UsersListScreen.name);                                                
                           } else {
+                            // ignore: avoid_print
                             print('Error al guardar la rutina.');
                           }   
                         } else {

@@ -105,8 +105,8 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
   }
 
   Widget _buildRoutineCard({required String title, required String content}) {
-    return Container(
-      width: double.infinity, // Ocupa todo el ancho de la pantalla
+    return SizedBox(
+      width: double.infinity,
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(
@@ -144,7 +144,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
   Widget _buildWeekCard(BuildContext context, int weekIndex) {
     List<TrainingDay> week = widget.currentRoutine.exercises[weekIndex];
 
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Card(
         elevation: 4.0,
@@ -156,7 +156,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center, // Centra horizontalmente
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   'Semana ${weekIndex + 1}',
@@ -237,7 +237,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          exercise.title!,
+                          exercise.title,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -290,7 +290,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 16), // Separación entre días
+            const SizedBox(height: 16),
           ],
         ),
     ],

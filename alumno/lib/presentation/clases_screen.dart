@@ -4,25 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/core/entities/Clase.dart';
 import 'package:alumno/core/entities/Entrenador.dart';
-import 'package:alumno/core/entities/User.dart';
 
 class ClasesScreen extends StatelessWidget {
   static const String name = 'ClasesScreen';
   final DateTime date;
-  final userManager =
-      UserManager(); // UserManager que gestionará el usuario actual
+  final userManager = UserManager();
 
   ClasesScreen({required this.date});
 
   @override
   Widget build(BuildContext context) {
-    final usuario =
-        userManager.getLoggedUser(); // Obtenemos el usuario logueado
-    final Entrenador? profesor =
-        usuario?.getProfesor(); // Obtenemos el profesor desde el usuario
+    final usuario = userManager.getLoggedUser(); 
+    final Entrenador? profesor = usuario?.getProfesor(); 
     final List<Clase> clasesDelDia = [];
-
-    // Solo si profesor no es null y la agenda no es null, filtramos las clases
+    
     if (profesor != null && profesor.agenda != null) {
       clasesDelDia.addAll(profesor.agenda!
           .where((clase) =>

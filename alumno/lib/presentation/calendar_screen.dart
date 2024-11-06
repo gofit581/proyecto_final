@@ -68,13 +68,15 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:alumno/widget/custom_app_bar.dart';
 import 'package:alumno/widget/custom_botton_navigation_bar.dart';
-import 'package:alumno/presentation/clases_screen.dart'; // Asegúrate de importar ClasesScreen
+import 'package:alumno/presentation/clases_screen.dart';
+
 
 class CalendarioScreen extends StatefulWidget {
   static const String name = 'CalendarioScreen';
 
   const CalendarioScreen({super.key});
   @override
+  // ignore: library_private_types_in_public_api
   _CalendarioScreenState createState() => _CalendarioScreenState();
 }
 
@@ -155,6 +157,7 @@ Future<void> _loadUserData() async {
 
   Widget _buildTableCalendar() {
     return TableCalendar(
+      locale: 'es_ES', 
       firstDay: DateTime.utc(2010, 10, 16),
       lastDay: DateTime.utc(2030, 3, 14),
       focusedDay: _focusedDay,
@@ -167,12 +170,10 @@ Future<void> _loadUserData() async {
           _selectedDay = selectedDay;
           _focusedDay = focusedDay;
         });
-
-        // Navegamos a ClasesScreen pasando el día seleccionado como parámetro
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ClasesScreen(date: selectedDay), // Pasamos la fecha seleccionada
+            builder: (context) => ClasesScreen(date: selectedDay),
           ),
         );
       },

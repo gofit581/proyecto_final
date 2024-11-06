@@ -40,7 +40,7 @@ class WelcomeScreen extends StatelessWidget {
                   context.goNamed(LoginScreen.name);
                 },
                 child: const Text(
-                  'LOGIN',
+                  'INICIAR SESION',
                   style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),

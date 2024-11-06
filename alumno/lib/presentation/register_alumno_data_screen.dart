@@ -198,10 +198,13 @@ class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
                       if (usuario!.id != null) {
                         NotificationService().addNotification(alumno_notification.CustomNotification(idAlumno: usuario.id!, idTrainer: newUser.idTrainer, typeOfNotification: TypeOfNotification.newUser, visto: false));
                       } else {
+                        // ignore: avoid_print
                         print('Error: Usuario ID es Null');
                       }
+                      // ignore: use_build_context_synchronously
                       context.goNamed(CalendarioScreen.name, extra: newUser);
                     } catch (e) {
+                      // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text('Error al registrar usuario: $e'),

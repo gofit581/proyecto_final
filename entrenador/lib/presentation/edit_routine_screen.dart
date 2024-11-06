@@ -29,7 +29,7 @@ class EditRoutineScreen extends ConsumerWidget {
     TrainerManager trainerManager = TrainerManager();
     Trainer actualTrainer = trainerManager.getLoggedUser()!;
     final exercisesAsyncValue = ref.watch(exercisesListProvider(actualTrainer.trainerCode));
-    final TextEditingController _routineObservationDayController = TextEditingController();
+    final TextEditingController routineObservationDayController = TextEditingController();
     final day = ref.watch(counterDayProvider);
     final week = ref.watch(counterWeekProvider);
     final maxDays = routine.trainingDays;
@@ -49,9 +49,9 @@ class EditRoutineScreen extends ConsumerWidget {
     }
 
   if (ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation.isNotEmpty) {
-  _routineObservationDayController.text = ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation ?? '';
+  routineObservationDayController.text = ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation;
   } else {
-    _routineObservationDayController.text = '';
+    routineObservationDayController.text = '';
   } 
 
     return Scaffold(
@@ -78,7 +78,7 @@ class EditRoutineScreen extends ConsumerWidget {
                 _AddExerciseView(exercisesOptions: exercisesOptions, indexDay: indexDay, indexWeek: indexWeek),
                 const SizedBox(height: 20),
                 TextFormField(
-                  controller:  _routineObservationDayController,
+                  controller:  routineObservationDayController,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     labelText: 'Observación del día',
@@ -103,7 +103,7 @@ class EditRoutineScreen extends ConsumerWidget {
                     ElevatedButton(
                       onPressed: () {                       
                           ref.read(counterDayProvider.notifier).state++;
-                          ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
+                          ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, routineObservationDayController.text);
                           context.push('/editRoutine', extra: routine);                      
                       },
                       child: const Icon(Icons.arrow_right),
@@ -120,7 +120,7 @@ class EditRoutineScreen extends ConsumerWidget {
                 if(day == maxDays && week < routine.duration)
                 ElevatedButton(
                   onPressed: (){
-                    ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
+                    ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, routineObservationDayController.text);
                     context.push('/editRoutine', extra: routine);
                     resetCounter(ref);
                     ref.read(counterWeekProvider.notifier).state++;
@@ -139,7 +139,7 @@ class EditRoutineScreen extends ConsumerWidget {
                 if (day == maxDays && week == routine.duration) ...[
                   ElevatedButton(
                     onPressed: () {
-                      ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
+                      ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, routineObservationDayController.text);
                       generateRoutine();
                       Routine newRoutine = Routine(
                         title: routine.title,

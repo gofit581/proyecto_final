@@ -12,6 +12,7 @@ class UsersListScreen extends StatefulWidget {
   const UsersListScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _UsersListScreenState createState() => _UsersListScreenState();
 }
 
@@ -25,10 +26,10 @@ class _UsersListScreenState extends State<UsersListScreen> {
     super.initState();
     _loggedTrainer = TrainerManager().getLoggedUser();
     if (_loggedTrainer != null) {
-      _clientsFuture = _usersGetterService.getUsersByTrainerId(_loggedTrainer!.trainerCode!);
+      _clientsFuture = _usersGetterService.getUsersByTrainerId(_loggedTrainer!.trainerCode);
     } else {
       // Manejar el caso en que el entrenador logueado es null
-      _clientsFuture = Future.error('No trainer logged in');
+      _clientsFuture = Future.error('Ningún entrenador ha iniciado sesión');
     }
   }
 

@@ -84,7 +84,7 @@ Future<void> _loadUserData() async {
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
-        title: 'Profile',
+        title: 'Mi Perfil',
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),

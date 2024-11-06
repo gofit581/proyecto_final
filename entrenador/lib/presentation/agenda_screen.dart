@@ -7,7 +7,10 @@ import 'package:go_router/go_router.dart';
 
 class AgendaScreen extends StatefulWidget {
   static const String name = 'AgendaScreen';
+
+  const AgendaScreen({super.key});
   @override
+  // ignore: library_private_types_in_public_api
   _AgendaScreenState createState() => _AgendaScreenState();
 }
 
@@ -40,11 +43,11 @@ class _AgendaScreenState extends State<AgendaScreen> {
       manager.generarAgenda(_startDate!, _endDate!);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Agenda enabled from ${_startDate!.toLocal()} to ${_endDate!.toLocal()}')),
+        SnackBar(content: Text('Agenda habilitada desde ${_startDate!.toLocal()} hasta ${_endDate!.toLocal()}')),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select both start and end dates')),
+        const SnackBar(content: Text('Por favor seleccione las fechas de inicio y finalización')),
       );
     }
   }
@@ -53,7 +56,7 @@ class _AgendaScreenState extends State<AgendaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: 'Agenda Screen',
+        title: 'Agenda',
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
       body: Padding(
@@ -61,12 +64,12 @@ class _AgendaScreenState extends State<AgendaScreen> {
         child: Column(
           children: <Widget>[
             ListTile(
-              title: Text("Start Date: ${_startDate?.toLocal().toString().split(' ')[0] ?? 'Not selected'}"),
+              title: Text("Fecha de inicio: ${_startDate?.toLocal().toString().split(' ')[0] ?? 'No seleccionado'}"),
               trailing: const Icon(Icons.calendar_today),
               onTap: () => _selectDate(context, true),
             ),
             ListTile(
-              title: Text("End Date: ${_endDate?.toLocal().toString().split(' ')[0] ?? 'Not selected'}"),
+              title: Text("Fecha de finalización: ${_endDate?.toLocal().toString().split(' ')[0] ?? 'No seleccionado'}"),
               trailing: const Icon(Icons.calendar_today),
               onTap: () => _selectDate(context, false),
             ),
@@ -76,7 +79,7 @@ class _AgendaScreenState extends State<AgendaScreen> {
               _enableAgenda();
               context.goNamed(CalendarioScreen.name);
               },
-              child: const Text('Enable Agenda'),
+              child: const Text('Habilitar Agenda'),
             ),
           ],
         ),

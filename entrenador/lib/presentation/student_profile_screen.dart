@@ -1,4 +1,3 @@
-import 'package:entrenador/core/entities/Routine.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../widget/custom_app_bar.dart';
@@ -9,9 +8,10 @@ class StudentProfileScreen extends StatefulWidget {
   static const String name = 'ProfileScreen';
   final Usuario usuarioSeleccionado;
 
-  StudentProfileScreen({super.key, required this.usuarioSeleccionado});
+  const StudentProfileScreen({super.key, required this.usuarioSeleccionado});
 
   @override
+  // ignore: library_private_types_in_public_api
   _StudentProfileScreenState createState() => _StudentProfileScreenState();
 }
 
@@ -26,8 +26,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
 
   Future<void> _loadUserData() async {
     setState(() {
-
-      isLoading = true;
     });
 
     await Future.delayed(const Duration(seconds: 1)); 
@@ -43,7 +41,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       appBar: const CustomAppBar(
-        title: 'Student Profile',
+        title: 'Perfil del alumno',
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 2),
       body: isLoading
@@ -157,6 +155,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                         ),
                         onPressed: () {
+                          // ignore: avoid_print
                           print(widget.usuarioSeleccionado.currentRoutine);
                           if (widget.usuarioSeleccionado.currentRoutine != null) {
                             context.push('/CompleteRoutine', extra: widget.usuarioSeleccionado.currentRoutine);

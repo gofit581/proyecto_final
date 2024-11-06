@@ -13,6 +13,7 @@ class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _NotificationScreenState createState() => _NotificationScreenState();
 }
 
@@ -30,7 +31,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           .getUnreadNotifications(_loggedTrainer!.trainerCode);
     } else {
       // Manejar el caso en que el entrenador logueado es null
-      _notificationFuture = Future.error('No trainer logged in');
+      _notificationFuture = Future.error('Ningún entrenador ha iniciado sesión');
     }
   }
 

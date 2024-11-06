@@ -75,7 +75,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       appBar: const CustomAppBar(
-        title: 'Profile',
+        title: 'Mi perfil',
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 2),
       body: isLoading
@@ -177,7 +177,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => AgendaScreen()),
+                            MaterialPageRoute(builder: (context) => const AgendaScreen()),
                           );
                         },
                         child: const Text(

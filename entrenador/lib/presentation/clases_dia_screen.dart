@@ -11,9 +11,10 @@ class ClasesDiaScreen extends StatefulWidget {
 
   static const String name = 'ClasesDiaScreen';
 
-  ClasesDiaScreen({super.key, required this.date});
+  const ClasesDiaScreen({super.key, required this.date});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ClasesDiaScreenState createState() => _ClasesDiaScreenState();
 }
 
@@ -59,13 +60,13 @@ class _ClasesDiaScreenState extends State<ClasesDiaScreen> {
               itemBuilder: (context, index) {
                 Clase clase = clasesDelDia[index];
                 return ListTile(
-                  leading: Icon(Icons.access_time),
+                  leading: const Icon(Icons.access_time),
                   title: Text(
                     '${clase.horaInicio.hour}:${clase.horaInicio.minute.toString().padLeft(2, '0')}',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   subtitle: clase.alumno == null
-                      ? Text(
+                      ? const Text(
                           'LIBRE',
                           style: TextStyle(color: Colors.green, fontSize: 16),
                         )
@@ -74,23 +75,24 @@ class _ClasesDiaScreenState extends State<ClasesDiaScreen> {
                           children: [
                             Text(
                               clase.alumno!.userName,
-                              style: TextStyle(fontSize: 16),
+                              style: const TextStyle(fontSize: 16),
                             ),
                             ElevatedButton(
                               onPressed: () {
                                 // Navegar al perfil del alumno usando GoRouter
                                 context.go('/perfil_alumno_screen', extra: clase.alumno);
                               },
-                              child: Text('IR A PERFIL'),
+                              // ignore: sort_child_properties_last
+                              child: const Text('IR A PERFIL'),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blue,
-                                textStyle: TextStyle(color: Colors.white),
+                                textStyle: const TextStyle(color: Colors.white),
                               ),
                             ),
                           ],
                         ),
                   trailing: IconButton(
-                    icon: Icon(Icons.delete, color: Colors.red),
+                    icon: const Icon(Icons.delete, color: Colors.red),
                     onPressed: () {
                       // Implementar funcionalidad para eliminar la clase
                       _eliminarClase(context, clase);
@@ -107,7 +109,7 @@ class _ClasesDiaScreenState extends State<ClasesDiaScreen> {
     if (trainer != null) {
       manager.borrarClaseId(clase);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Clase eliminada de la agenda.'),
           duration: Duration(seconds: 2),
         ),
