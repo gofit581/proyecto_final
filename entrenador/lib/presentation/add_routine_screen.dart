@@ -70,7 +70,7 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
                padding: const EdgeInsets.all(16.0),
                 child: 
                 Text(
-                  'SELECCIONAR RUTINA PARA EL ALUMNO ${widget.alumno.userName.toUpperCase()}:',
+                  'SELECCIONAR RUTINA PARA EL ALUMNO ${widget.alumno.userName.toUpperCase()}',
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -114,11 +114,11 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(30.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ElevatedButton(
+                    FloatingActionButton(
                       onPressed: () async {
                         if (selectedRoutineIndex != null) {
                           Routine selectedRoutine = routines[selectedRoutineIndex!];
@@ -144,28 +144,23 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
                           }
                         }
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 22, 22, 180),
-                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
+                      backgroundColor: Colors.blue[100],
                       child: const Text(
                         'OK',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 22, 22, 180),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 10),
                     FloatingActionButton(
                       onPressed: () {
                         context.push('/createRoutine');
                       },
-                      backgroundColor: const Color.fromARGB(255, 22, 22, 180),
-                      child: const Icon(Icons.add, color: Colors.white),
+                      backgroundColor:Colors.blue[100],
+                      child: const Icon(Icons.add, color: Color.fromARGB(255, 22, 22, 180)),
                     ),
                   ],
                 ),

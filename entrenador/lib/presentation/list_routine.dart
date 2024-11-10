@@ -105,13 +105,14 @@ class _ListRoutineState extends ConsumerState<ListRoutine> {
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.edit, color: Color.fromARGB(450, 33, 150, 243)),
+                          FloatingActionButton(
                             onPressed: () {
                               //ref.read(exercisesNotifierProvider.notifier).initializeRoutine(routines[index].duration, routines[index].trainingDays);
                               ref.read(exercisesNotifierProvider.notifier).useRoutine(routines[index].exercises);
                               context.push('/editRoutine', extra: routines[index]);
                             },
+                            backgroundColor: Colors.blue[100],
+                            child: const Icon(Icons.edit, color: Color.fromARGB(255, 22, 22, 180)),
                           ),
                           IconButton(
                             icon: const Icon(Icons.delete, color: Colors.black),
@@ -122,7 +123,12 @@ class _ListRoutineState extends ConsumerState<ListRoutine> {
                         ],
                       ),
                     ),
-                    const Divider(),
+                     Divider(
+                      color: Colors.grey[300],
+                      thickness: 0.5,
+                      indent: 16.0,
+                      endIndent: 16.0,
+                    ),
                   ],
                 );
               },
@@ -134,8 +140,8 @@ class _ListRoutineState extends ConsumerState<ListRoutine> {
         onPressed: () {
           context.push('/createRoutine');
         },
-        backgroundColor: const Color.fromARGB(450, 33, 150, 243),
-        child: const Icon(Icons.add),
+        backgroundColor:Colors.blue[100],
+        child: const Icon(Icons.add, color: Color.fromARGB(255, 22, 22, 180)),
       ),
     );
   }

@@ -129,7 +129,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                         const SizedBox(height: 40),
                         const Text(
                           'Información del Alumno',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 22, 22, 180)),
                         ),
                         const SizedBox(height: 10),
                         _buildInfoRow('Objetivo', widget.usuarioSeleccionado.objectiveDescription),
@@ -170,7 +170,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           }                       
                         },
                         child: const Text(
-                          'Ver Rutina',
+                          'VER RUTINA',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -196,7 +196,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           }
                         },
                         child: const Text(
-                          'Asignar Rutina',
+                          'ASIGNAR RUTINA',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
