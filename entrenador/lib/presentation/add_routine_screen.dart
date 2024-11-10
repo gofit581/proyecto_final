@@ -1,8 +1,6 @@
-import 'package:entrenador/core/app_router.dart';
 import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
-import 'package:entrenador/presentation/create_routine_screen.dart';
 import 'package:entrenador/presentation/users_list_screen.dart';
 import 'package:entrenador/services/routine_service.dart';
 import 'package:entrenador/services/update_service.dart';
@@ -41,53 +39,76 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
     }
   }
 
-@override
-Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
+  final int alumnoTrainingDays = int.tryParse(widget.alumno.trainingDays) ?? 0;
+  
   return Scaffold(
     appBar: const CustomAppBar(
       title: 'Agregar Rutina',
     ),
     backgroundColor: Colors.white,
-    //bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 2),
     body: FutureBuilder<List<Routine>>(
       future: _routinesFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return Center(child: Text(
+            'Error: ${snapshot.error}',
+            style: const TextStyle(color: Colors.redAccent, fontSize: 16),
+          ));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No se encontraron rutinas'));
+          return const Center(child: Text('No se encontraron rutinas', style: TextStyle(color: Colors.grey)));
         } else {
-          final routines = snapshot.data!; // Obtiene la lista de rutinas
+          final routines = snapshot.data!
+              .where((routine) => routine.trainingDays == alumnoTrainingDays)
+              .toList();
 
           return Column(
             children: [
+              Padding(
+               padding: const EdgeInsets.all(16.0),
+                child: 
+                Text(
+                  'SELECCIONAR RUTINA PARA EL ALUMNO ${widget.alumno.userName.toUpperCase()}:',
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+              ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: routines.length, // Cambia a routines.length
+                  itemCount: routines.length,
                   itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        ListTile(
-                          title: Text(
-                            routines[index].title, // Accede al título de la rutina
-                            style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
-                          ),
-                          trailing: Checkbox(
-                            value: selectedRoutineIndex == index, // Marca si coincide con el índice seleccionado
-                            onChanged: (bool? value) {
-                              setState(() {
-                                selectedRoutineIndex = value! ? index : null; // Selecciona o desmarca la rutina
-                              });
-                            },
+                    final isSelected = selectedRoutineIndex == index;
+                    
+                    return Card(
+                      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                      color: isSelected ? Colors.blue[50] : Colors.blueGrey[50],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: ListTile(
+                        title: Text(
+                          routines[index].title,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: isSelected ? const Color.fromARGB(255, 22, 22, 180) : Colors.black87,
+                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                           ),
                         ),
-                        const Divider(),
-                      ],
+                        trailing: Checkbox(
+                          activeColor: Colors.blue.shade900,
+                          value: isSelected,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              selectedRoutineIndex = value! ? index : null;
+                            });
+                          },
+                        ),
+                      ),
                     );
                   },
                 ),
@@ -103,32 +124,28 @@ Widget build(BuildContext context) {
                           Routine selectedRoutine = routines[selectedRoutineIndex!];
                           widget.alumno.currentRoutine = selectedRoutine;
 
-                          //print('Rutina seleccionada: ${selectedRoutine.title}');
-                          
                           bool isSaved = await _updateService.saveRoutineForUser(widget.alumno);
 
-                          if (isSaved) {   
-                            print('Rutina seleccionada: ${selectedRoutine.title}');
+                          if (isSaved) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Rutina asignada con éxito'),
-                            ),
+                              SnackBar(
+                                content: const Text('Rutina asignada con éxito'),
+                                backgroundColor: Colors.green.shade400,
+                              ),
                             );
-                            context.goNamed(UsersListScreen.name);                                                
+                            context.goNamed(UsersListScreen.name);
                           } else {
-                            print('Error al guardar la rutina.');
-                          }   
-                        } else {
-                          //print('No se ha seleccionado ninguna rutina.');
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('No se pudo asignar una rutina.'),
-                            ),
-                          );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Error al guardar la rutina'),
+                                backgroundColor: Colors.redAccent,
+                              ),
+                            );
+                          }
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(450, 33, 150, 243),
+                        backgroundColor: const Color.fromARGB(255, 22, 22, 180),
                         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -138,9 +155,8 @@ Widget build(BuildContext context) {
                         'OK',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.black,
-                          ),
-                      
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 20),
@@ -148,8 +164,8 @@ Widget build(BuildContext context) {
                       onPressed: () {
                         context.push('/createRoutine');
                       },
-                      backgroundColor: const Color.fromARGB(450, 33, 150, 243),
-                      child: const Icon(Icons.add),
+                      backgroundColor: const Color.fromARGB(255, 22, 22, 180),
+                      child: const Icon(Icons.add, color: Colors.white),
                     ),
                   ],
                 ),
