@@ -1,3 +1,4 @@
+import 'package:alumno/core/entities/Routine.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../core/entities/Entrenador.dart';
@@ -28,6 +29,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   
   Usuario? actualUsuario;
   Entrenador? entrenadorAsignado;
+  Routine? rutinaAsignada;
   bool isLoading = false;
 
   @override
@@ -41,6 +43,7 @@ Future<void> _loadUserData() async {
     actualUsuario = UserManager().getLoggedUser();
     if (actualUsuario != null) {
       entrenadorAsignado = actualUsuario?.getProfesor() ?? Entrenador();
+      rutinaAsignada = actualUsuario?.getRutina();
     }
   });
 }
@@ -194,14 +197,14 @@ Future<void> _loadUserData() async {
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent),
                         ),
                         const SizedBox(height: 10),
-                        //_buildInfoRow('Objetivo', actualUsuario?.objectiveDescription), //No se bien por que siempre me devuelve nulo en el metodo '_buildInfoRow' y muestra el texto 'No especificado'
+                        _buildInfoRow('Objetivo', rutinaAsignada?.getNameTypeOfTraining()), 
                         _buildInfoRow('Experiencia', actualUsuario?.experience),
-                        _buildInfoRow('Objetivo', actualUsuario?.objectiveDescription),
                         _buildInfoRow('Disciplina', actualUsuario?.discipline),
                         _buildInfoRow('Días de Entrenamiento', actualUsuario?.trainingDays),
                         _buildInfoRow('Duración del Entrenamiento', actualUsuario?.trainingDuration),
                         _buildInfoRow('Lesiones', actualUsuario?.injuries),
                         _buildInfoRow('Actividades Extras', actualUsuario?.extraActivities),
+                        _buildInfoRow('Rutina actual', rutinaAsignada?.getTitle() ?? 'No hay una rutina asignada'),
                         const SizedBox(height: 40),
                       ],
                     ),

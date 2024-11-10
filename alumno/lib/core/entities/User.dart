@@ -67,6 +67,10 @@ class Usuario {
     return profesor;
   }
 
+  Routine? getRutina(){
+    return actualRoutine;
+  }
+
   void setUserName(String name) {
     userName = name;
   }
@@ -84,15 +88,15 @@ class Usuario {
   }
 
   void completeSesion(){
-    actualSesion = (actualSesion ?? 0) + 1;
+    actualSesion = (actualSesion) + 1; //actualSesion = (actualSesion ?? 0) + 1;
   }
 
   void resetSesions(){
-    this.actualSesion = 0;
+    actualSesion = 0;
   }
 
   void deleteRoutine(){
-    this.actualRoutine = null;
+    actualRoutine = null;
   }
 
 
