@@ -185,12 +185,32 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                         onPressed: () {
                           if (widget.usuarioSeleccionado.currentRoutine == null) {
                             context.push('/AddRoutine', extra: widget.usuarioSeleccionado);
-                          }
-                          else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('El usuario ya tiene una rutina asignada en progreso.'),
-                              ),
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Asignar Nueva Rutina'),
+                                  content: const Text(
+                                      'El alumno posee una rutina en proceso. ¿Desea asignarle una nueva rutina?'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: const Text('Cancelar'),
+                                      onPressed: () {
+                                        // Cierra el diálogo sin hacer nada
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('Asignar'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        context.push('/AddRoutine', extra: widget.usuarioSeleccionado);
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
                             );
                           }
                         },
