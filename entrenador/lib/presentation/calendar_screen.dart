@@ -14,6 +14,7 @@ class CalendarioScreen extends StatefulWidget {
 
   CalendarioScreen({super.key});
   @override
+  // ignore: library_private_types_in_public_api
   _CalendarioScreenState createState() => _CalendarioScreenState();
 }
 
@@ -75,6 +76,7 @@ class _CalendarioScreenState extends State<CalendarioScreen> {
 
   Widget _buildTableCalendar() {
     return TableCalendar(
+      locale: 'es_ES', 
       firstDay: DateTime.utc(2010, 10, 16),
       lastDay: DateTime.utc(2030, 3, 14),
       focusedDay: _focusedDay,

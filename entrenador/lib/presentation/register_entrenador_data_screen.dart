@@ -11,7 +11,7 @@ class RegisterEntrenadorDataScreen extends StatelessWidget {
   static const String name = 'RegisterEntrenadorDataScreen';
   final Trainer trainer;
 
-  RegisterEntrenadorDataScreen({super.key, required this.trainer});
+  const RegisterEntrenadorDataScreen({super.key, required this.trainer});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,6 @@ class RegisterEntrenadorDataScreen extends StatelessWidget {
 
 class _Formulario extends StatefulWidget {
   const _Formulario({
-    super.key,
     required this.trainer,
   });
 
@@ -40,14 +39,10 @@ class _FormularioState extends State<_Formulario> {
   late final DateTime fin;
   final TrainerManager trainerManager = TrainerManager();
   final UpdateService updateService = UpdateService();
-  final TextEditingController _registerDuracionController =
-      TextEditingController();
-  final TextEditingController _registerPrecioController =
-      TextEditingController();
-  final TextEditingController _registerTrabajaDesdeController =
-      TextEditingController();
-  final TextEditingController _registerTrabajaHastaController =
-      TextEditingController();
+  final TextEditingController _registerDuracionController = TextEditingController();
+  final TextEditingController _registerPrecioController = TextEditingController();
+  final TextEditingController _registerTrabajaDesdeController = TextEditingController();
+  final TextEditingController _registerTrabajaHastaController = TextEditingController();
 
   final List<String> dias = [
     'Domingo',
@@ -204,8 +199,10 @@ class _FormularioState extends State<_Formulario> {
                   try {
                     await trainerManager.registerUser(newTrainer);
                     trainerManager.setLoggedUser(newTrainer);
+                    // ignore: use_build_context_synchronously
                     context.goNamed(AgendaScreen.name);
                   } catch (e) {
+                    // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Error al registrar usuario: $e'),

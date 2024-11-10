@@ -23,9 +23,9 @@ class CreateExerciseScreen extends ConsumerStatefulWidget {
 
 class _CreateExerciseScreenState extends ConsumerState<CreateExerciseScreen> {
 
-  TextEditingController _exerciseTitleController = TextEditingController();
-  TextEditingController _exerciseImageLinkController = TextEditingController();
-  TextEditingController _exerciseDescriptionController = TextEditingController();
+  final TextEditingController _exerciseTitleController = TextEditingController();
+  final TextEditingController _exerciseImageLinkController = TextEditingController();
+  final TextEditingController _exerciseDescriptionController = TextEditingController();
   ExerciseManager exerciseManager = ExerciseManager();
 
 
@@ -94,6 +94,7 @@ class _CreateExerciseScreenState extends ConsumerState<CreateExerciseScreen> {
                       );
                       
                     } else if(await exerciseManager.validateExercise(_exerciseTitleController.text, actualTrainer.trainerCode)){
+                      // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Nombre de ejercicio ya utilizado, intentelo de nuevo')),
                       );
@@ -107,6 +108,7 @@ class _CreateExerciseScreenState extends ConsumerState<CreateExerciseScreen> {
                     idTrainer: actualTrainer.getTrainerCode()
                     );
                    showDialog(
+                      // ignore: use_build_context_synchronously
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
@@ -116,6 +118,7 @@ class _CreateExerciseScreenState extends ConsumerState<CreateExerciseScreen> {
                             TextButton(
                               onPressed: () {
                                 exerciseManager.addExercise(newExercise);
+                                // ignore: unused_result
                                 ref.refresh(exercisesListProvider(actualTrainer.trainerCode));                                
                                 Navigator.of(context).pop();
                                 context.pop(widget.routine);                                

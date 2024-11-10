@@ -7,9 +7,10 @@ class EditProfileScreen extends StatefulWidget {
   final Usuario usuario;
   final AuthService authService;
 
-  EditProfileScreen({required this.usuario, required this.authService});
+  const EditProfileScreen({super.key, required this.usuario, required this.authService});
 
   @override
+  // ignore: library_private_types_in_public_api
   _EditProfileScreenState createState() => _EditProfileScreenState();
 }
 
@@ -19,7 +20,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController _passwordController;
   late TextEditingController _mailController;
   late TextEditingController _ageController;
-  late TextEditingController _objectiveDescriptionController;
   late TextEditingController _experienceController;
   late TextEditingController _disciplineController;
   late TextEditingController _trainingDaysController;
@@ -35,7 +35,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _passwordController = TextEditingController(text: widget.usuario.password);
     _mailController = TextEditingController(text: widget.usuario.mail);
     _ageController = TextEditingController(text: widget.usuario.age.toString());
-    _objectiveDescriptionController = TextEditingController(text: widget.usuario.objectiveDescription ?? "");
     _experienceController = TextEditingController(text: widget.usuario.experience ?? "");
     _disciplineController = TextEditingController(text: widget.usuario.discipline ?? "");
     _trainingDaysController = TextEditingController(text: widget.usuario.trainingDays.toString());
@@ -74,16 +73,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       userManager.setLoggedUser(widget.usuario); 
       bool isUpdated = await widget.authService.updateUser(updatedUser);
       if (isUpdated) {
+        // ignore: use_build_context_synchronously
         Navigator.pop(context, updatedUser);
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Perfil actualizado exitosamente')),
         );
       } else {
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Error al actualizar el perfil')),
         );
       }
     } else {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('El correo electrónico ya está en uso')),
       );

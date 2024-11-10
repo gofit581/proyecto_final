@@ -1,3 +1,6 @@
+// ignore_for_file: file_names
+
+import 'package:flutter/material.dart';
 import 'package:alumno/core/entities/Exercise.dart';
 import 'package:alumno/core/entities/Routine.dart';
 import 'package:alumno/core/entities/User.dart';
@@ -6,7 +9,6 @@ import 'package:alumno/presentation/calendar_screen.dart';
 import 'package:alumno/services/update_service.dart';
 import 'package:alumno/widget/custom_app_bar.dart';
 import 'package:alumno/widget/custom_botton_navigation_bar.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class TrainingdayScreen extends StatefulWidget {
@@ -49,6 +51,7 @@ Usuario actualUser = UserManager().getLoggedUser()!;
   }
 }
 
+// ignore: must_be_immutable
 class _ExercisesView extends StatefulWidget {
   final Routine actualRoutine;
   int indexWeek;
@@ -133,15 +136,15 @@ class _ExercisesViewState extends State<_ExercisesView> {
 }
 
 void _sesionCompleta(BuildContext context, Usuario actualUser, int totalSesions) {
-  UpdateService _update = UpdateService();
+  UpdateService update = UpdateService();
   UserManager userManager = UserManager();
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
         title: actualUser.actualSesion < totalSesions ? const Text('Entrenamiento del dia terminado') : const Text('Rutina terminada'),
-        content: actualUser.actualSesion < totalSesions ? Text('¡Has completado todos los ejercicios!') : 
-        Text('¡Has completado todas las sesiones de tu rutina!'),
+        content: actualUser.actualSesion < totalSesions ? const Text('¡Has completado todos los ejercicios!') : 
+        const Text('¡Has completado todas las sesiones de tu rutina!'),
         actions: [
           TextButton(
             onPressed: () async {
@@ -153,7 +156,7 @@ void _sesionCompleta(BuildContext context, Usuario actualUser, int totalSesions)
                 actualUser.deleteRoutine();
               }
               // Falta pegada a la BD para actualizar el Usuario
-              await _update.updateUser(actualUser);
+              await update.updateUser(actualUser);
               bool loginSuccess = await userManager.login(
                     actualUser.mail,
                     actualUser.password);
@@ -162,6 +165,7 @@ void _sesionCompleta(BuildContext context, Usuario actualUser, int totalSesions)
               if (loginSuccess && usuario != null) {
                 userManager.setLoggedUser(usuario);
               }                
+              // ignore: use_build_context_synchronously
               context.goNamed(CalendarioScreen.name);
             },
             

@@ -32,21 +32,21 @@ Usuario usuario = UserManager().getLoggedUser()!;
             'assets/image/ROUTINE.jpg',
             width: 40, height: 40,
           ),
-          label: 'Routine'
+          label: 'Rutina'
         ),
         BottomNavigationBarItem(
           icon: Image.asset(
             'assets/image/HOME.jpg',
             width: 40, height: 40,
           ),
-          label: 'Home',
+          label: 'Inicio',
         ),
         BottomNavigationBarItem(
           icon: Image.asset(
             'assets/image/PROFILE.jpg',
             width: 40, height: 40,
           ),
-          label: 'Profile',
+          label: 'Mi Perfil',
         ),
       ],
       onTap: (index) {
@@ -82,7 +82,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
+  final int _currentIndex = 0;
   final List<Widget> _children = [
     const Center(child: Text('Pantalla Rutina')),
     const Center(child: Text('Pantalla Principal')),
@@ -90,11 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   ];
 
-  void _onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

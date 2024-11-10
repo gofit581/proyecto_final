@@ -1,9 +1,6 @@
-import 'package:entrenador/core/app_router.dart';
 import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
-import 'package:entrenador/presentation/create_routine_screen.dart';
-import 'package:entrenador/presentation/edit_routine_screen.dart';
 import 'package:entrenador/presentation/provider/exercises_provider.dart';
 import 'package:entrenador/services/routine_service.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
@@ -35,7 +32,7 @@ class _ListRoutineState extends ConsumerState<ListRoutine> {
     if (_loggedTrainer != null) {
       _routinesFuture = _routineService.getRoutinesByTrainerId(_loggedTrainer!.trainerCode);
     } else {
-      _routinesFuture = Future.error('No trainer logged in');
+      _routinesFuture = Future.error('Ningún entrenador ha iniciado sesión');
     }
   }
 
@@ -58,6 +55,7 @@ class _ListRoutineState extends ConsumerState<ListRoutine> {
           ],
         ),
       );
+      // ignore: avoid_print
       print('confirmed: $confirmed');
       if (confirmed == true) {
           await _routineService.deleteRoutineById(idRoutine); 
@@ -66,6 +64,7 @@ class _ListRoutineState extends ConsumerState<ListRoutine> {
           });
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error al eliminar la rutina: $e');
     }
   }

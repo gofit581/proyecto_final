@@ -102,7 +102,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
   }
 
   Widget _buildRoutineCard({required String title, required String content}) {
-    return Container(
+    return SizedBox(
       width: double.infinity, // Ocupa todo el ancho de la pantalla
       child: Card(
         elevation: 4,
@@ -140,7 +140,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
   Widget _buildWeekCard(BuildContext context, int weekIndex) {
     List<TrainingDay> week = widget.currentRoutine.exercises[weekIndex];
 
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Card(
         elevation: 4.0,
