@@ -3,7 +3,6 @@ import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/presentation/trainingDay_screen.dart';
 import 'package:flutter/material.dart';
 import '../presentation/profile_screen.dart';
-import '../presentation/calendar_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
@@ -58,17 +57,47 @@ Usuario usuario = UserManager().getLoggedUser()!;
             } else{
               context.goNamed(TrainingdayScreen.name);
             }
+            
             break;
           case 1:
-            context.goNamed(CalendarioScreen.name);
+            context.goNamed('CalendarioScreen');
             break;
           case 2:
-            context.goNamed(MyProfileScreen.name);
+            context.goNamed('ProfileScreen');
             break;
           default:
             break;
         }
       },
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final int _currentIndex = 0;
+  final List<Widget> _children = [
+    const Center(child: Text('Pantalla Rutina')),
+    const Center(child: Text('Pantalla Principal')),
+    MyProfileScreen(),
+
+  ];
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _children[_currentIndex],
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _currentIndex
+      ),
     );
   }
 }

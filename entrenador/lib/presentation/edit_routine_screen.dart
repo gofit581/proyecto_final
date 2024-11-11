@@ -5,6 +5,7 @@ import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
 import 'package:entrenador/presentation/calendar_screen.dart';
 import 'package:entrenador/presentation/provider/counter_day_routine.dart';
+import 'package:entrenador/presentation/provider/current_screen.dart';
 import 'package:entrenador/presentation/provider/exercisesList_provider.dart';
 import 'package:entrenador/presentation/provider/exercises_provider.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
@@ -29,7 +30,7 @@ class EditRoutineScreen extends ConsumerWidget {
     TrainerManager trainerManager = TrainerManager();
     Trainer actualTrainer = trainerManager.getLoggedUser()!;
     final exercisesAsyncValue = ref.watch(exercisesListProvider(actualTrainer.trainerCode));
-    final TextEditingController routineObservationDayController = TextEditingController();
+    final TextEditingController _routineObservationDayController = TextEditingController();
     final day = ref.watch(counterDayProvider);
     final week = ref.watch(counterWeekProvider);
     final maxDays = routine.trainingDays;
@@ -49,9 +50,15 @@ class EditRoutineScreen extends ConsumerWidget {
     }
 
   if (ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation.isNotEmpty) {
-  routineObservationDayController.text = ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation;
+  _routineObservationDayController.text = ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation ?? '';
   } else {
-    routineObservationDayController.text = '';
+    _routineObservationDayController.text = '';
+  }
+
+  void resetProviders(){
+    ref.read(counterDayProvider.notifier).state = 1;
+    ref.read(counterWeekProvider.notifier).state = 1;
+    ref.read(changesProvider.notifier).state = false;
   } 
 
     return Scaffold(
@@ -78,7 +85,7 @@ class EditRoutineScreen extends ConsumerWidget {
                 _AddExerciseView(exercisesOptions: exercisesOptions, indexDay: indexDay, indexWeek: indexWeek),
                 const SizedBox(height: 20),
                 TextFormField(
-                  controller:  routineObservationDayController,
+                  controller:  _routineObservationDayController,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     labelText: 'Observación del día',
@@ -103,7 +110,7 @@ class EditRoutineScreen extends ConsumerWidget {
                     ElevatedButton(
                       onPressed: () {                       
                           ref.read(counterDayProvider.notifier).state++;
-                          ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, routineObservationDayController.text);
+                          ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
                           context.push('/editRoutine', extra: routine);                      
                       },
                       child: const Icon(Icons.arrow_right),
@@ -120,7 +127,7 @@ class EditRoutineScreen extends ConsumerWidget {
                 if(day == maxDays && week < routine.duration)
                 ElevatedButton(
                   onPressed: (){
-                    ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, routineObservationDayController.text);
+                    ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
                     context.push('/editRoutine', extra: routine);
                     resetCounter(ref);
                     ref.read(counterWeekProvider.notifier).state++;
@@ -139,7 +146,7 @@ class EditRoutineScreen extends ConsumerWidget {
                 if (day == maxDays && week == routine.duration) ...[
                   ElevatedButton(
                     onPressed: () {
-                      ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, routineObservationDayController.text);
+                      ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
                       generateRoutine();
                       Routine newRoutine = Routine(
                         title: routine.title,
@@ -163,7 +170,7 @@ class EditRoutineScreen extends ConsumerWidget {
                               TextButton(
                                 onPressed: () {
                                   routineManager.editRoutine(newRoutine, routine.id!);
-                                  ref.read(counterDayProvider.notifier).state = 1;
+                                  resetProviders();
                                   Navigator.of(context).pop(); 
                                   context.goNamed(CalendarioScreen.name); 
                                 },
@@ -193,6 +200,7 @@ class EditRoutineScreen extends ConsumerWidget {
                             actions: [
                               TextButton(
                                 onPressed: () {
+                                  resetProviders();
                                   Navigator.of(context).pop();
                                   context.goNamed(CalendarioScreen.name); 
                                 },
@@ -261,13 +269,15 @@ class _AddExerciseViewState extends ConsumerState<_AddExerciseView> {
             return _ExerciseEntry(
               exercise: exerciseSelected[index],
               exercises: widget.exercisesOptions,
-              onRemove: () { ref.read(exercisesNotifierProvider.notifier).removeExercise(widget.indexWeek,widget.indexDay,index);},
+              onRemove: () { ref.read(exercisesNotifierProvider.notifier).removeExercise(widget.indexWeek,widget.indexDay,index);
+              ref.read(changesProvider.notifier).state = true;},
             );
           },
         ),     
         const SizedBox(height: 20),
         ElevatedButton(
-          onPressed: (){ ref.read(exercisesNotifierProvider.notifier).addExercise(widget.indexWeek, widget.indexDay,Exercise.create("", 0, 0));},
+          onPressed: (){ ref.read(exercisesNotifierProvider.notifier).addExercise(widget.indexWeek, widget.indexDay,Exercise.create("", 0, 0));
+          ref.read(changesProvider.notifier).state = true;},
           child: const Text('+'),
         ),
       ],
@@ -275,7 +285,7 @@ class _AddExerciseViewState extends ConsumerState<_AddExerciseView> {
   }
 }
 
-class _ExerciseEntry extends StatefulWidget {
+class _ExerciseEntry extends ConsumerStatefulWidget {
   final Exercise exercise;
   final List<Exercise> exercises;
   final VoidCallback onRemove;
@@ -287,10 +297,10 @@ class _ExerciseEntry extends StatefulWidget {
   });
 
   @override
-  State<_ExerciseEntry> createState() => _ExerciseEntryState();
+  ConsumerState<_ExerciseEntry> createState() => _ExerciseEntryState();
 }
 
-class _ExerciseEntryState extends State<_ExerciseEntry> {
+class _ExerciseEntryState extends ConsumerState<_ExerciseEntry> {
   late String? exerciseSelected;
 
   @override
@@ -317,6 +327,7 @@ class _ExerciseEntryState extends State<_ExerciseEntry> {
               if (value != null) {
                 setState(() {
                   exerciseSelected = value;
+                  ref.read(changesProvider.notifier).state = true;
                   widget.exercise.setTitle(value);
                 });
               }
@@ -336,6 +347,7 @@ class _ExerciseEntryState extends State<_ExerciseEntry> {
                   icon: const Icon(Icons.arrow_upward, size: 15),
                   onPressed: () {
                     setState(() {
+                      ref.read(changesProvider.notifier).state = true;
                       widget.exercise.aumentarSerie();
                     });
                   },
@@ -346,6 +358,7 @@ class _ExerciseEntryState extends State<_ExerciseEntry> {
                   onPressed: () {
                     setState(() {
                       if (widget.exercise.series! > 0) {
+                        ref.read(changesProvider.notifier).state = true;
                         widget.exercise.restarSerie();
                       }
                     });
@@ -364,6 +377,7 @@ class _ExerciseEntryState extends State<_ExerciseEntry> {
                   icon: const Icon(Icons.arrow_upward, size: 15),
                   onPressed: () {
                     setState(() {
+                      ref.read(changesProvider.notifier).state = true;
                       widget.exercise.aumentarRepeticiones();
                     });
                   },
@@ -374,6 +388,7 @@ class _ExerciseEntryState extends State<_ExerciseEntry> {
                   onPressed: () {
                     setState(() {
                       if (widget.exercise.repetitions! > 0) {
+                        ref.read(changesProvider.notifier).state = true;
                         widget.exercise.restarRepeticiones();
                       }
                     });
