@@ -33,8 +33,6 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
     _loggedTrainer = TrainerManager().getLoggedUser();
     if (_loggedTrainer != null) {
       _routinesFuture = _routineService.getRoutinesByTrainerId(_loggedTrainer!.trainerCode);
-      //alumno = Usuario( )
-      
     } else {
       _routinesFuture = Future.error('Ningún entrenador ha iniciado sesión');
     }
@@ -47,7 +45,6 @@ Widget build(BuildContext context) {
       title: 'Agregar Rutina',
     ),
     backgroundColor: Colors.white,
-    //bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 2),
     body: FutureBuilder<List<Routine>>(
       future: _routinesFuture,
       builder: (context, snapshot) {
@@ -58,29 +55,29 @@ Widget build(BuildContext context) {
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return const Center(child: Text('No se encontraron rutinas'));
         } else {
-          final routines = snapshot.data!; // Obtiene la lista de rutinas
+          final routines = snapshot.data!; 
 
           return Column(
             children: [
               Expanded(
                 child: ListView.builder(
-                  itemCount: routines.length, // Cambia a routines.length
+                  itemCount: routines.length,
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
                         ListTile(
                           title: Text(
-                            routines[index].title, // Accede al título de la rutina
+                            routines[index].title, 
                             style: const TextStyle(
                               fontSize: 18,
                               color: Colors.black,
                             ),
                           ),
                           trailing: Checkbox(
-                            value: selectedRoutineIndex == index, // Marca si coincide con el índice seleccionado
+                            value: selectedRoutineIndex == index, 
                             onChanged: (bool? value) {
                               setState(() {
-                                selectedRoutineIndex = value! ? index : null; // Selecciona o desmarca la rutina
+                                selectedRoutineIndex = value! ? index : null; 
                               });
                             },
                           ),
@@ -100,13 +97,11 @@ Widget build(BuildContext context) {
                       onPressed: () async {
                         if (selectedRoutineIndex != null) {
                           Routine selectedRoutine = routines[selectedRoutineIndex!];
-                          widget.alumno.currentRoutine = selectedRoutine;
-
-                          //print('Rutina seleccionada: ${selectedRoutine.title}');
-                          
+                          widget.alumno.currentRoutine = selectedRoutine;    
                           bool isSaved = await _updateService.saveRoutineForUser(widget.alumno);
 
                           if (isSaved) {   
+                            widget.alumno.actualSesion = 0; 
                             // ignore: avoid_print
                             print('Rutina seleccionada: ${selectedRoutine.title}');
                             // ignore: use_build_context_synchronously
@@ -122,7 +117,6 @@ Widget build(BuildContext context) {
                             print('Error al guardar la rutina.');
                           }   
                         } else {
-                          //print('No se ha seleccionado ninguna rutina.');
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('No se pudo asignar una rutina.'),

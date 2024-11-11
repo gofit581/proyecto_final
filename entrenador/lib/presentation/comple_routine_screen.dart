@@ -21,7 +21,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final pageViewHeight = screenHeight * 1; // la altura de la pantalla
+    final pageViewHeight = screenHeight * 1; 
 
     return Scaffold(
       appBar: const CustomAppBar(
@@ -55,7 +55,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
               ),
               const SizedBox(height: 16),
               SizedBox(
-                height: pageViewHeight, // O la altura que necesites
+                height: pageViewHeight, 
                 child: Column(
                   children: [
                     Expanded(
@@ -103,7 +103,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
 
   Widget _buildRoutineCard({required String title, required String content}) {
     return SizedBox(
-      width: double.infinity, // Ocupa todo el ancho de la pantalla
+      width: double.infinity, 
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(
@@ -152,7 +152,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center, // Centra horizontalmente
+              crossAxisAlignment: CrossAxisAlignment.center, 
               children: [
                 Text(
                   'Semana ${weekIndex + 1}',
@@ -286,7 +286,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 16), // Separación entre días
+            const SizedBox(height: 16), 
           ],
         ),
     ],

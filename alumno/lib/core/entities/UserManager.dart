@@ -39,6 +39,20 @@ class UserManager {
     return _loggedUser;
   }
 
+  void updateUser(Usuario usuarioViejo, Usuario usuarioActualizado){
+    usuarioViejo.userName = usuarioActualizado.userName;
+    usuarioViejo.password = usuarioActualizado.password;
+
+    usuarioViejo.experience = usuarioActualizado.experience;
+    usuarioViejo.discipline = usuarioActualizado.discipline;
+    usuarioViejo.trainingDays = usuarioActualizado.trainingDays;
+    usuarioViejo.trainingDuration = usuarioActualizado.trainingDuration;
+    usuarioViejo.injuries = usuarioActualizado.injuries;
+    usuarioViejo.extraActivities = usuarioActualizado.extraActivities;
+    
+    //Agregar mas si es necesario
+  }
+
   void logoutUser() {
     _loggedUser = null;
   }

@@ -104,6 +104,7 @@ Future<void> _loadUserData() async {
             if (updatedUsuario != null) {
               setState(() {
                 actualUsuario = updatedUsuario;
+                //UserManager().updateUser(actualUsuario!, updatedUsuario);
               });
             }
           },
