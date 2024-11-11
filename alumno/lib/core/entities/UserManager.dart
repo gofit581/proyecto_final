@@ -43,6 +43,7 @@ class UserManager {
     usuarioViejo.userName = usuarioActualizado.userName;
     usuarioViejo.password = usuarioActualizado.password;
 
+    usuarioViejo.objectiveDescription = usuarioActualizado.objectiveDescription;
     usuarioViejo.experience = usuarioActualizado.experience;
     usuarioViejo.discipline = usuarioActualizado.discipline;
     usuarioViejo.trainingDays = usuarioActualizado.trainingDays;
