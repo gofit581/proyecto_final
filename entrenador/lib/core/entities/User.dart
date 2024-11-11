@@ -20,7 +20,7 @@ class Usuario {
   String? injuries;
   String? extraActivities;
   Trainer? profesor;
-  int? actualSesion;
+  int actualSesion;
 
   Usuario({
     required this.mail,
@@ -122,6 +122,13 @@ class Usuario {
 
     void setEmail(String email) {
       mail = email;
+    }
+    void completeSesion(){
+    actualSesion = (actualSesion) + 1; //actualSesion = (actualSesion ?? 0) + 1;
+    }
+
+    void resetSesions(){
+      actualSesion = 0;
     }
 
     factory Usuario.fromJson(Map<String, dynamic> json) {
