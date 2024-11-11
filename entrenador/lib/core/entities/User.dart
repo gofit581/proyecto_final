@@ -20,7 +20,7 @@ class Usuario {
   String? injuries;
   String? extraActivities;
   Trainer? profesor;
-  int actualSesion;
+  int? actualSesion;
 
   Usuario({
     required this.mail,

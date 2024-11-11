@@ -42,7 +42,7 @@ class UpdateService {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'userName': usuario.userName,
-        'objetiveDescription' : usuario.objectiveDescription,
+        'objectiveDescription' : usuario.objectiveDescription,
         'experience' : usuario.experience,
         'discipline' : usuario.discipline,
         'trainingDays' : usuario.trainingDays,

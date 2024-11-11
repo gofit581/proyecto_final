@@ -1,4 +1,3 @@
-import 'package:alumno/core/entities/Exercise.dart';
 import 'package:alumno/core/entities/TrainingDay.dart';
 import 'package:alumno/core/entities/TypeOfTraining.dart';
 
@@ -40,8 +39,12 @@ class Routine {
     return this.duration!;
   }
 
-  String getTitle() {
-    return title!;
+  String? getTitle() {
+    return title;
+  }
+
+  String? getNameTypeOfTraining(){
+    return typeOfTraining?.name;
   }
 
     factory Routine.fromJson(Map<String, dynamic> json) {
