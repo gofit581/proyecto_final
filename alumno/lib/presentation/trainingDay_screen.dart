@@ -1,5 +1,8 @@
 // ignore_for_file: file_names
 
+import 'package:alumno/core/entities/CustomNotification.dart';
+import 'package:alumno/core/entities/TypeOfNotification.dart';
+import 'package:alumno/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:alumno/core/entities/Exercise.dart';
 import 'package:alumno/core/entities/Routine.dart';
@@ -154,6 +157,7 @@ void _sesionCompleta(BuildContext context, Usuario actualUser, int totalSesions)
               } else{
                 actualUser.resetSesions();
                 actualUser.deleteRoutine();
+                NotificationService().addNotification(CustomNotification(idAlumno: actualUser.id ?? "", idTrainer: actualUser.idTrainer, typeOfNotification: TypeOfNotification.finishedRoutine, visto: false));
               }
               // Falta pegada a la BD para actualizar el Usuario
               await update.updateUser(actualUser);

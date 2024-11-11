@@ -140,7 +140,7 @@ class Usuario {
       injuries: json['injuries'],
       extraActivities: json['extraActivities'],
       currentRoutine: json['currentRoutine'] != null
-          ? Routine.fromJson(json['currentRoutine'])
+          ? null
           : null,
       actualSesion: json['actualSesion'],
     );
