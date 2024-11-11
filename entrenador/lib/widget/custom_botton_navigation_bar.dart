@@ -1,16 +1,19 @@
+import 'package:entrenador/presentation/provider/counter_day_routine.dart';
+import 'package:entrenador/presentation/provider/current_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:entrenador/presentation/create_routine_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../presentation/profile_screen.dart';
 
-class CustomBottomNavigationBar extends StatelessWidget {
+class CustomBottomNavigationBar extends ConsumerWidget {
   final int currentIndex;
 
 
 const CustomBottomNavigationBar({super.key, required this.currentIndex});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return BottomNavigationBar(
       currentIndex: currentIndex,
       backgroundColor: Colors.white,
@@ -46,26 +49,76 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
           label: 'Profile',
         ),
       ],
-      onTap: (index) {
-        switch (index) {
-          case 0:
-            context.goNamed('ListRoutine');
-            // context.goNamed(CreateRoutineScreen.name);
-            break;
-          case 1:
-            context.goNamed('UsersListScreen');
-            break;
-          case 2:
-            context.goNamed('CalendarioScreen');
-            break;
-          case 3:
-            context.goNamed('ProfileScreen');
-            break;
-          default:
-            break;
+      onTap: (index) async {
+        bool changeValue = ref.watch(changesProvider);
+        if(changeValue){
+          bool discardChanges = await _showDiscardChangesDialog(context, ref);
+          if (discardChanges) {
+          switch (index) {
+            case 0:
+              context.goNamed('ListRoutine');
+              break;
+            case 1:
+              context.goNamed('UsersListScreen');
+              break;
+            case 2:
+              context.goNamed('CalendarioScreen');
+              break;
+            case 3:
+              context.goNamed('ProfileScreen');
+              break;
+            default:
+              break;
+          }
         }
+        }
+        switch (index) {
+            case 0:
+              context.goNamed('ListRoutine');
+              break;
+            case 1:
+              context.goNamed('UsersListScreen');
+              break;
+            case 2:
+              context.goNamed('CalendarioScreen');
+              break;
+            case 3:
+              context.goNamed('ProfileScreen');
+              break;
+            default:
+              break;
+          }
       },
     );
+  }
+    Future<bool> _showDiscardChangesDialog(BuildContext context, WidgetRef ref) async {
+    return await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Descartar cambios'),
+          content: const Text('¿Estás seguro de que deseas salir y descartar los cambios?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                ref.read(changesProvider.notifier).state = false;
+                ref.read(counterDayProvider.notifier).state = 1;
+                ref.read(counterWeekProvider.notifier).state = 1;
+                Navigator.of(context).pop(true);
+              },
+              child: const Text('Sí'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); // Cancelar salida
+              },
+              child: const Text('No'),
+            ),
+          ],
+        );
+      },
+    ) ??
+        false;
   }
 }
 

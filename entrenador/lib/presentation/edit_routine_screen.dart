@@ -5,6 +5,7 @@ import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
 import 'package:entrenador/presentation/calendar_screen.dart';
 import 'package:entrenador/presentation/provider/counter_day_routine.dart';
+import 'package:entrenador/presentation/provider/current_screen.dart';
 import 'package:entrenador/presentation/provider/exercisesList_provider.dart';
 import 'package:entrenador/presentation/provider/exercises_provider.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
@@ -52,6 +53,12 @@ class EditRoutineScreen extends ConsumerWidget {
   _routineObservationDayController.text = ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation ?? '';
   } else {
     _routineObservationDayController.text = '';
+  }
+
+  void resetProviders(){
+    ref.read(counterDayProvider.notifier).state = 1;
+    ref.read(counterWeekProvider.notifier).state = 1;
+    ref.read(changesProvider.notifier).state = false;
   } 
 
     return Scaffold(
@@ -163,7 +170,7 @@ class EditRoutineScreen extends ConsumerWidget {
                               TextButton(
                                 onPressed: () {
                                   routineManager.editRoutine(newRoutine, routine.id!);
-                                  ref.read(counterDayProvider.notifier).state = 1;
+                                  resetProviders();
                                   Navigator.of(context).pop(); 
                                   context.goNamed(CalendarioScreen.name); 
                                 },
@@ -193,6 +200,7 @@ class EditRoutineScreen extends ConsumerWidget {
                             actions: [
                               TextButton(
                                 onPressed: () {
+                                  resetProviders();
                                   Navigator.of(context).pop();
                                   context.goNamed(CalendarioScreen.name); 
                                 },
@@ -261,13 +269,15 @@ class _AddExerciseViewState extends ConsumerState<_AddExerciseView> {
             return _ExerciseEntry(
               exercise: exerciseSelected[index],
               exercises: widget.exercisesOptions,
-              onRemove: () { ref.read(exercisesNotifierProvider.notifier).removeExercise(widget.indexWeek,widget.indexDay,index);},
+              onRemove: () { ref.read(exercisesNotifierProvider.notifier).removeExercise(widget.indexWeek,widget.indexDay,index);
+              ref.read(changesProvider.notifier).state = true;},
             );
           },
         ),     
         const SizedBox(height: 20),
         ElevatedButton(
-          onPressed: (){ ref.read(exercisesNotifierProvider.notifier).addExercise(widget.indexWeek, widget.indexDay,Exercise.create("", 0, 0));},
+          onPressed: (){ ref.read(exercisesNotifierProvider.notifier).addExercise(widget.indexWeek, widget.indexDay,Exercise.create("", 0, 0));
+          ref.read(changesProvider.notifier).state = true;},
           child: const Text('+'),
         ),
       ],
@@ -275,7 +285,7 @@ class _AddExerciseViewState extends ConsumerState<_AddExerciseView> {
   }
 }
 
-class _ExerciseEntry extends StatefulWidget {
+class _ExerciseEntry extends ConsumerStatefulWidget {
   final Exercise exercise;
   final List<Exercise> exercises;
   final VoidCallback onRemove;
@@ -287,10 +297,10 @@ class _ExerciseEntry extends StatefulWidget {
   });
 
   @override
-  State<_ExerciseEntry> createState() => _ExerciseEntryState();
+  ConsumerState<_ExerciseEntry> createState() => _ExerciseEntryState();
 }
 
-class _ExerciseEntryState extends State<_ExerciseEntry> {
+class _ExerciseEntryState extends ConsumerState<_ExerciseEntry> {
   late String? exerciseSelected;
 
   @override
@@ -317,6 +327,7 @@ class _ExerciseEntryState extends State<_ExerciseEntry> {
               if (value != null) {
                 setState(() {
                   exerciseSelected = value;
+                  ref.read(changesProvider.notifier).state = true;
                   widget.exercise.setTitle(value);
                 });
               }
@@ -336,6 +347,7 @@ class _ExerciseEntryState extends State<_ExerciseEntry> {
                   icon: const Icon(Icons.arrow_upward, size: 15),
                   onPressed: () {
                     setState(() {
+                      ref.read(changesProvider.notifier).state = true;
                       widget.exercise.aumentarSerie();
                     });
                   },
@@ -346,6 +358,7 @@ class _ExerciseEntryState extends State<_ExerciseEntry> {
                   onPressed: () {
                     setState(() {
                       if (widget.exercise.series! > 0) {
+                        ref.read(changesProvider.notifier).state = true;
                         widget.exercise.restarSerie();
                       }
                     });
@@ -364,6 +377,7 @@ class _ExerciseEntryState extends State<_ExerciseEntry> {
                   icon: const Icon(Icons.arrow_upward, size: 15),
                   onPressed: () {
                     setState(() {
+                      ref.read(changesProvider.notifier).state = true;
                       widget.exercise.aumentarRepeticiones();
                     });
                   },
@@ -374,6 +388,7 @@ class _ExerciseEntryState extends State<_ExerciseEntry> {
                   onPressed: () {
                     setState(() {
                       if (widget.exercise.repetitions! > 0) {
+                        ref.read(changesProvider.notifier).state = true;
                         widget.exercise.restarRepeticiones();
                       }
                     });
