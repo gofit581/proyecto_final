@@ -6,7 +6,7 @@ import '../widget/custom_botton_navigation_bar.dart';
 import '../core/entities/User.dart';
 
 class StudentProfileScreen extends StatefulWidget {
-  static const String name = 'ProfileScreen';
+  static const String name = 'StudentProfileScreen';
   final Usuario usuarioSeleccionado;
 
   const StudentProfileScreen({super.key, required this.usuarioSeleccionado});

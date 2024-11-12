@@ -110,7 +110,7 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(false); // Cancelar salida
+                Navigator.of(context).pop(false);
               },
               child: const Text('No'),
             ),
