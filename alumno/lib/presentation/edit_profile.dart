@@ -10,7 +10,6 @@ class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key, required this.usuario, required this.authService});
 
   @override
-  // ignore: library_private_types_in_public_api
   _EditProfileScreenState createState() => _EditProfileScreenState();
 }
 
@@ -73,20 +72,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       userManager.setLoggedUser(widget.usuario); 
       bool isUpdated = await widget.authService.updateUser(updatedUser);
       if (isUpdated) {
-        // ignore: use_build_context_synchronously
+
         Navigator.pop(context, updatedUser);
-        // ignore: use_build_context_synchronously
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Perfil actualizado exitosamente')),
         );
       } else {
-        // ignore: use_build_context_synchronously
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Error al actualizar el perfil')),
         );
       }
     } else {
-      // ignore: use_build_context_synchronously
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('El correo electrónico ya está en uso')),
       );

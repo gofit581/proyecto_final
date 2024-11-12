@@ -22,7 +22,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final pageViewHeight = screenHeight * 1; // la altura de la pantalla
+    final pageViewHeight = screenHeight * 1;
 
     return Scaffold(
       appBar: const CustomAppBar(
@@ -140,7 +140,6 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
     );
   }
 
- // ESTOS DOS WIDGETS ROMPEN ACTUALMENTE PORQUE LA LISTA DE EJERCICIOS NO ESTA BIEN DEFINIDA
   Widget _buildWeekCard(BuildContext context, int weekIndex) {
     List<TrainingDay> week = widget.currentRoutine.exercises[weekIndex];
 

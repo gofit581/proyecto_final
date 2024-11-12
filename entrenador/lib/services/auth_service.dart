@@ -51,15 +51,13 @@ class AuthService {
         throw Exception('Failed to load users');
       }
     } catch (e) {
-      // Manejo de excepciones
       print('Auth Error: $e');
-      return true; // Opcional: vuelve a lanzar la excepción si necesitas manejarla en otro lugar
+      return true;
     }
   }
 
-  // Método para obtener la agenda de clases desde la API
   Future<List<Clase>> obtenerAgendaClases(String idTrainer) async {
-    final String claseEndpoint =
+     String claseEndpoint =
         'https://66ff0a2d2b9aac9c997e1fdd.mockapi.io/api/clase';
     final claseResponse = await http.get(
       Uri.parse(claseEndpoint),
@@ -69,7 +67,6 @@ class AuthService {
     if (claseResponse.statusCode == 200) {
       final List<dynamic> clasesData = jsonDecode(claseResponse.body);
 
-      // Filtrar las clases que correspondan al idTrainer
       final List<Clase> agenda = clasesData
           .where((claseData) => claseData['idTrainer'] == idTrainer)
           .map((claseData) => Clase(
@@ -108,9 +105,8 @@ class AuthService {
         throw Exception('IdTrainer not found');
       }
     } catch (e) {
-      // Manejo de excepciones
       print('Auth Error: $e');
-      return true; // Opcional: vuelve a lanzar la excepción si necesitas manejarla en otro lugar
+      return true;
     }
   }
 

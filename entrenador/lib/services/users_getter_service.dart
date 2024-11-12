@@ -53,11 +53,9 @@ class UsersGetterService {
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      // Decodificar la respuesta JSON
       final data = json.decode(response.body);
 
-      // Crear una instancia de Usuario desde los datos obtenidos
-      return Usuario.fromJson(data); // Asegúrate de tener un método fromJson en Usuario
+      return Usuario.fromJson(data);
     } else {
       throw Exception('Error al obtener el usuario');
     }

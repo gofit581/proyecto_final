@@ -13,7 +13,6 @@ class RegisterScreen extends StatefulWidget {
   static const String name = 'RegisterScreen';
 
   @override
-  // ignore: library_private_types_in_public_api
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
@@ -211,14 +210,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       );
                     } else if (validateEmail(_registerMailTFController.text) || await userManager.validateMail(_registerMailTFController.text)) {
-                      // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Por favor, ingrese un email valido'),
                         ),
                       );
                     } else if(!await userManager.validateId(_registerIdTrainerTFController.text)){
-                      // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Codigo de entrenador inexistente, por favor intentelo de nuevo'),
@@ -230,7 +227,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           (_selectedDate!.year == DateTime.now().year &&
                               _selectedDate!.month == DateTime.now().month &&
                               _selectedDate!.day == DateTime.now().day)) {
-                        // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Por favor, ingrese una edad válida'),
@@ -249,11 +245,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       );
 
                       try {
-                        // ignore: use_build_context_synchronously
                         context.goNamed(RegisterAlumnoDataScreen.name,
                             extra: usuario);
                       } catch (e) {
-                        // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Error al registrar usuario: $e'),

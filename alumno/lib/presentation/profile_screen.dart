@@ -11,17 +11,16 @@ import '../widget/custom_botton_navigation_bar.dart';
 import '../presentation/initial_screen.dart';
 import '../presentation/edit_profile.dart';
 
-// ignore: must_be_immutable
+
 class MyProfileScreen extends StatefulWidget {
   static const String name = 'ProfileScreen';
-  UserManager userManager = UserManager();
+  final UserManager userManager = UserManager();
 
   MyProfileScreen({super.key});
   
   get actualUsuario => null;
 
   @override
-  // ignore: library_private_types_in_public_api
   _MyProfileScreenState createState() => _MyProfileScreenState();
 }
 

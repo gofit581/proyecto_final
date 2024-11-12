@@ -41,13 +41,6 @@ final appRouter = GoRouter(routes: [
       path: '/alumnos',
       builder: (context, state) => UsersListScreen(),
       name: UsersListScreen.name),
-  // GoRoute(
-  //   path: '/home',
-  //   builder: (context, state) {
-  //     return HomeScreen();
-  //   },
-  //   name: HomeScreen.name,
-  // ),
   GoRoute(
     path: '/profile',
     builder: (context, state) {
@@ -88,18 +81,6 @@ final appRouter = GoRouter(routes: [
       builder: ((context, state) =>
           CompleteRoutineScreen(currentRoutine: state.extra as Routine,)),
       name: CompleteRoutineScreen.name),
-  // GoRoute(
-  //     path: '/routine',
-  //     builder: (context, state) => RoutineScreen(),
-  //     name: RoutineScreen.name),
-  // GoRoute(
-  //     path: '/routines',
-  //     builder: (context, state) => RoutinesScreen(),
-  //     name: RoutinesScreen.name),
-  // GoRoute(
-  //     path: '/profile-info',
-  //     builder: (context, state) => ProfileInfoScreen(),
-  //     name: ProfileInfoScreen.name)
   GoRoute(
     path: '/createRoutine',
     builder: (context, state) =>

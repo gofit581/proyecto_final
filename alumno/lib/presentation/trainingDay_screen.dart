@@ -54,7 +54,6 @@ Usuario actualUser = UserManager().getLoggedUser()!;
   }
 }
 
-// ignore: must_be_immutable
 class _ExercisesView extends StatefulWidget {
   final Routine actualRoutine;
   int indexWeek;
@@ -84,7 +83,7 @@ class _ExercisesViewState extends State<_ExercisesView> {
   @override
   Widget build(BuildContext context) {
 
-    List<Exercise> exercises = widget.actualRoutine.exercises[widget.indexWeek][widget.indexDay].exercises; // Adjust based on your data structure
+    List<Exercise> exercises = widget.actualRoutine.exercises[widget.indexWeek][widget.indexDay].exercises;
     int completedCount = checked[widget.indexWeek].where((isChecked) => isChecked).length;
     double progress = exercises.isNotEmpty ? completedCount / exercises.length : 0;
     bool allCompleted = completedCount == exercises.length;
@@ -159,7 +158,7 @@ void _sesionCompleta(BuildContext context, Usuario actualUser, int totalSesions)
                 actualUser.deleteRoutine();
                 NotificationService().addNotification(CustomNotification(idAlumno: actualUser.id ?? "", idTrainer: actualUser.idTrainer, typeOfNotification: TypeOfNotification.finishedRoutine, visto: false));
               }
-              // Falta pegada a la BD para actualizar el Usuario
+
               await update.updateUser(actualUser);
               bool loginSuccess = await userManager.login(
                     actualUser.mail,
@@ -169,7 +168,7 @@ void _sesionCompleta(BuildContext context, Usuario actualUser, int totalSesions)
               if (loginSuccess && usuario != null) {
                 userManager.setLoggedUser(usuario);
               }                
-              // ignore: use_build_context_synchronously
+
               context.goNamed(CalendarioScreen.name);
             },
             

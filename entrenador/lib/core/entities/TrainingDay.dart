@@ -2,12 +2,10 @@ import 'package:entrenador/core/entities/Exercise.dart';
 
 class TrainingDay{
   String observation;
- // List<TypeOfExercise> typeOfExercise;
   List<Exercise> exercises;
 
   TrainingDay({
     required this.observation,
-    //required this.typeOfExercise,
     required this.exercises,
   });
 

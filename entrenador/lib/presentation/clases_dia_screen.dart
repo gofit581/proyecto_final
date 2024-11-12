@@ -79,7 +79,6 @@ class _ClasesDiaScreenState extends State<ClasesDiaScreen> {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                // Navegar al perfil del alumno usando GoRouter
                                 context.go('/perfil_alumno_screen', extra: clase.alumno);
                               },
                               // ignore: sort_child_properties_last

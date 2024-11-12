@@ -14,9 +14,9 @@ import '../core/entities/User.dart';
 
 class RegisterAlumnoDataScreen extends StatefulWidget {
   static const String name = 'RegisterAlumnoDataScreen';
-  final Usuario usuario;
+  final Usuario user;
 
-  const RegisterAlumnoDataScreen({super.key, required this.usuario});
+  const RegisterAlumnoDataScreen({super.key, required this.user});
 
   @override
   State<RegisterAlumnoDataScreen> createState() => _RegisterAlumnoDataScreenState();
@@ -65,10 +65,10 @@ class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                items: typeOfTraining.map((dato) {
+                items: typeOfTraining.map((data) {
                   return DropdownMenuItem<TypeOfTraining>(
-                    value: dato,
-                    child: Text(dato.name),
+                    value: data,
+                    child: Text(data.name),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -172,11 +172,11 @@ class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
                     );
                   } else {
                     Usuario newUser = Usuario(
-                      userName: widget.usuario.userName,
-                      password: widget.usuario.password,
-                      mail: widget.usuario.mail,
-                      age: widget.usuario.age,
-                      idTrainer: widget.usuario.idTrainer,
+                      userName: widget.user.userName,
+                      password: widget.user.password,
+                      mail: widget.user.mail,
+                      age: widget.user.age,
+                      idTrainer: widget.user.idTrainer,
                       objectiveDescription: _registerObjectiveTFController.text,
                       experience: _registerExperienceTFController.text,
                       discipline: _registerDisciplineTFController.text,
@@ -189,7 +189,6 @@ class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
 
                     try {
                       await userManager.registerUser(newUser);
-                      // userManager.setLoggedUser(newUser);
 
                       await userManager.login(
                           newUser.mail,
@@ -198,16 +197,13 @@ class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
                       if (usuario!.id != null) {
                         NotificationService().addNotification(alumno_notification.CustomNotification(idAlumno: usuario.id!, idTrainer: newUser.idTrainer, typeOfNotification: TypeOfNotification.newUser, visto: false));
                       } else {
-                        // ignore: avoid_print
                         print('Error: Usuario ID es Null');
                       }
-                      // ignore: use_build_context_synchronously
                       context.goNamed(CalendarioScreen.name, extra: newUser);
-                    } catch (e) {
-                      // ignore: use_build_context_synchronously
+                    } catch (error) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Error al registrar usuario: $e'),
+                          content: Text('Error al registrar usuario: $error'),
                         ),
                       );
                     }

@@ -126,16 +126,16 @@ class _FormularioState extends State<_Formulario> {
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
-                      //padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0), // Espaciado
+                      //padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
                       decoration: BoxDecoration(
                         borderRadius:
-                            BorderRadius.circular(10), // Bordes redondeados
+                            BorderRadius.circular(10),
                       ),
                       child: const Text(
                         'Selecciona los días que quieres trabajar:',
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold, // Negrita para resaltar
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -147,10 +147,8 @@ class _FormularioState extends State<_Formulario> {
                           onChanged: (bool? value) {
                             setState(() {
                               if (value == true) {
-                                // Agregar el día seleccionado
                                 widget.trainer.diasLaborales?.add(index);
                               } else {
-                                // Quitar el día deseleccionado
                                 widget.trainer.diasLaborales?.remove(index);
                               }
                             });

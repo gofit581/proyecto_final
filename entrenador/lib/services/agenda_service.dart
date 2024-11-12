@@ -25,7 +25,6 @@ class AgendaService {
     List<Clase> agendaNueva = [];
     DateTime current = desde;
 
-    // Verificar si ya existen clases en las fechas deseadas
     List<DateTime> fechasOcupadas = [];
     for (var clase in agendaPrevia) {
       DateTime fechaClase = DateTime(
@@ -36,7 +35,6 @@ class AgendaService {
       }
     }
 
-    // Si hay fechas ocupadas, lanzar excepción con los días conflictivos
     if (fechasOcupadas.isNotEmpty && _loggedUser!.agenda != null && _loggedUser!.agenda!.isNotEmpty) {
       String fechasConflictivas = fechasOcupadas
           .map((fecha) => "${fecha.day}/${fecha.month}")
@@ -45,9 +43,9 @@ class AgendaService {
           "Ya existe una agenda dada de alta para la(s) fecha(s): $fechasConflictivas");
     }
 
-    // Generación de nuevas clases en las fechas válidas
+
     while (current.isBefore(hasta) || current.isAtSameMomentAs(hasta)) {
-      // Verificar si el día actual está en los días laborales del entrenador
+
       if (_loggedUser!.diasLaborales!.contains(current.weekday % 7)) {
         if (_loggedUser!.trabajaDesdeHora == null ||
             _loggedUser!.trabajaHastaHora == null) {
@@ -75,7 +73,6 @@ class AgendaService {
       current = current.add(const Duration(days: 1));
     }
 
-    // Guardar nuevas clases en la base de datos
     await guardarClasesNuevas(agendaNueva);
     for (var clase in agendaNueva) {
       _loggedUser!.agenda!.add(clase);
@@ -90,7 +87,6 @@ class AgendaService {
 
     final trainerCode = _loggedUser!.getTrainerCode();
 
-    // Obtener las clases existentes en la base de datos
     final response = await http.get(
       Uri.parse('https://66ff0a2d2b9aac9c997e1fdd.mockapi.io/api/clase'),
     );
@@ -101,21 +97,17 @@ class AgendaService {
 
     List<dynamic> clasesData = jsonDecode(response.body);
 
-    // Filtrar las clases que pertenezcan al entrenador logueado
     List<dynamic> clasesExistentes = clasesData.where((clase) {
       return clase['idTrainer'] == trainerCode;
     }).toList();
 
-    // Guardar o actualizar cada clase nueva
     for (var nuevaClase in nuevasClases) {
-      // Verificar si la clase ya existe en la base de datos
       var claseExistente = clasesExistentes.firstWhere(
           (clase) =>
               clase['horaInicio'] == nuevaClase.horaInicio.toIso8601String(),
           orElse: () => null);
 
       if (claseExistente != null) {
-        // Actualizar clase existente con PUT
         final putResponse = await http.put(
           Uri.parse(
               'https://66ff0a2d2b9aac9c997e1fdd.mockapi.io/api/clase/${claseExistente['id']}'),
@@ -134,7 +126,6 @@ class AgendaService {
               'Error al actualizar la clase: ${putResponse.reasonPhrase}');
         }
       } else {
-        // Crear nueva clase con POST
         final postResponse = await http.post(
           Uri.parse('https://66ff0a2d2b9aac9c997e1fdd.mockapi.io/api/clase'),
           headers: {'Content-Type': 'application/json'},
@@ -168,7 +159,6 @@ class AgendaService {
     if (claseResponse.statusCode == 200) {
       final List<dynamic> clasesData = jsonDecode(claseResponse.body);
 
-      // Filtrar las clases que correspondan al idTrainer
       final List<Clase> agenda = clasesData
           .where((claseData) =>
               claseData['idTrainer'] == _loggedUser?.getTrainerCode())

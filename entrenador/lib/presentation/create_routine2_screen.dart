@@ -59,7 +59,6 @@ class CreateRoutine2Screen extends ConsumerWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        // Aquí puedes hacer alguna lógica antes de salir de la pantalla
         bool shouldPop = await _onExitDialog(context,ref);
         return shouldPop;
       },

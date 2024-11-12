@@ -24,8 +24,6 @@ class EditRoutineScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    //Usuario user = datos.values.first;
-    //Routine routine = datos.keys.first;
     RoutineManager routineManager = RoutineManager();
     TrainerManager trainerManager = TrainerManager();
     Trainer actualTrainer = trainerManager.getLoggedUser()!;
@@ -37,7 +35,6 @@ class EditRoutineScreen extends ConsumerWidget {
     int indexDay = day - 1;
     int indexWeek = week -1;
 
-    //ref.read(exercisesNotifierProvider.notifier).useRoutine(routine.exercises);
 
     void generateRoutine(){
       for(int w = 0; w < routine.duration; w++){
@@ -71,16 +68,12 @@ class EditRoutineScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-/*                Text(routine.id!),
-              Text('$indexWeek'),
-                Text('$indexDay'), */
                 Text('Semana $week de ${routine.duration}'),
                 Text('Día de rutina $day/$maxDays'),
                 Text(routine.title),
                 Text('Objetivo: ${routine.typeOfTraining?.name}'),
                 Text('Duración en semanas: ${routine.duration}'),
                 Text('Tiempo de descanso entre ejercicios: ${routine.rest} segundos'),
-                //if(indexDay == 0 && indexWeek == 0)(Text('hola')),
                 const SizedBox(height: 20),
                 _AddExerciseView(exercisesOptions: exercisesOptions, indexDay: indexDay, indexWeek: indexWeek),
                 const SizedBox(height: 20),

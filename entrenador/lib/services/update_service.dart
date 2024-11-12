@@ -56,10 +56,8 @@ class UpdateService {
       );
 
       if (response.statusCode == 200) {
-          // Actualización exitosa
           return true;
         } else {
-          // Error en la actualización
            print('Error al guardar la rutina: ${response.statusCode}, ${response.body}');
           return false;
         }

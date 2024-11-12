@@ -11,11 +11,8 @@ import 'package:go_router/go_router.dart';
 class CreateRoutineScreen extends ConsumerStatefulWidget {
 
   static const String name = 'CreateRoutineScreen';
-  /*final Usuario actualUser;*/
 
-  //SI EL ACTUALUSER ES NULL, ENTONCES QUE ME APAREZCA LA BARRA PARA COMPLETAR LA CANTIDAD DE DIAS POR SEMANA
-
-  const CreateRoutineScreen({super.key/*, required this.actualUser*/});
+  const CreateRoutineScreen({super.key});
 
   @override
   ConsumerState<CreateRoutineScreen> createState() => _CreateRoutineScreenState();

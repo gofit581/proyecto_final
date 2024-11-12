@@ -5,7 +5,7 @@ class Exercise {
   int? series;
   int? repetitions;
   bool? done;
-  late String? idTrainer; //checkear
+  late String? idTrainer; 
 
 
   Exercise.prueba({

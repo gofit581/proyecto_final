@@ -14,7 +14,6 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _LoginScreenState createState() => _LoginScreenState();
 }
 
@@ -135,11 +134,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           await prefs.setString('password',
                               _passwordTextFieldController.text);
                         }
-                        // ignore: use_build_context_synchronously
                         context.goNamed(CalendarioScreen.name);
                         userManager.setLoggedUser(usuario);
                       } else {
-                        // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(

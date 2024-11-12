@@ -98,28 +98,4 @@ Future<void> editRoutine(Routine newRoutine, String routineId) async {
   }
 }
 
-  /*   Future<void> addTrainerRoutine(Routine routine, Trainer trainer) async{
-    try {
-      final response = await http.get(
-        Uri.parse('$baseUrl/Trainer'),
-        headers: {'Content-Type': 'application/json'},
-      );
-
-      if (response.statusCode == 200) {
-        final List<Trainer> trainers = jsonDecode(response.body);
-        for (var trainerData in trainers) {
-          if (trainerData.id == trainer.id) {
-            trainerData.addRoutine(routine);
-            return;
-          }
-        }
-      }
-       
-    } catch (e) {
-      // Manejo de excepciones
-      print('Error: $e'); 
-    }
-
-  } */
-
 }

@@ -15,7 +15,6 @@ class InitialScreen extends StatefulWidget {
   const InitialScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _InitialScreenState createState() => _InitialScreenState();
 }
 
@@ -35,11 +34,9 @@ class _InitialScreenState extends State<InitialScreen> {
     String? savedPassword = prefs.getString('password');
 
     if (savedEmail != null && savedPassword != null && await userManager.login(savedEmail, savedPassword)) {
-      // ignore: use_build_context_synchronously
       context.goNamed(CalendarioScreen.name);
     }
     else{
-      // ignore: use_build_context_synchronously
       context.goNamed(WelcomeScreen.name);
     }
   }

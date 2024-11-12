@@ -19,7 +19,6 @@ class Trainer {
   double? precioPorClase;
   late List<Routine> routines;
   late List<Exercise> exercises =[];
-  //List<User> clients;
 
 Trainer.parcial({
      this.id,
