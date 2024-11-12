@@ -41,6 +41,7 @@ class UpdateService {
         'injuries': alumno.injuries,
         'extraActivities': alumno.extraActivities,
         'currentRoutine': alumno.currentRoutine?.toJson(),
+        'actualSesion': 0,
         'id': alumno.id
       };
 

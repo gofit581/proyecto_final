@@ -127,6 +127,7 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
                           bool isSaved = await _updateService.saveRoutineForUser(widget.alumno);
 
                           if (isSaved) {
+                            widget.alumno.resetSesions();
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: const Text('Rutina asignada con éxito'),
