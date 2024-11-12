@@ -30,7 +30,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
       _notificationFuture = _notificationService
           .getUnreadNotifications(_loggedTrainer!.trainerCode);
     } else {
-      // Manejar el caso en que el entrenador logueado es null
       _notificationFuture = Future.error('Ningún entrenador ha iniciado sesión');
     }
   }
@@ -62,7 +61,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
               title: const Text('Marcar como leído'),
               onTap: () {
                 NotificationService().markAsRead(notification.id);
-                // reload notifications
                 setState(() {
                   _notificationFuture = _notificationService
                       .getUnreadNotifications(_loggedTrainer!.trainerCode);

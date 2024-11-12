@@ -41,6 +41,7 @@ class UsersGetterService {
         throw Exception('Failed to load users');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('User getting Error: $e');
       rethrow;
     }
@@ -48,22 +49,19 @@ class UsersGetterService {
 
   Future<Usuario> getUserById(String id) async {
   final url = Uri.parse('$baseUrl/user/$id');
-  
   try {
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      // Decodificar la respuesta JSON
       final data = json.decode(response.body);
-
-      // Crear una instancia de Usuario desde los datos obtenidos
-      return Usuario.fromJson(data); // Asegúrate de tener un método fromJson en Usuario
+      return Usuario.fromJson(data);
     } else {
       throw Exception('Error al obtener el usuario');
     }
   } catch (e) {
-    print(e);
-    throw Exception('Error al conectar con la API');
+      // ignore: avoid_print
+      print(e);
+      throw Exception('Error al conectar con la API');
+    }
   }
-}
 }

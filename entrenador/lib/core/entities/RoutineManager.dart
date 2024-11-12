@@ -13,19 +13,11 @@ class RoutineManager {
     _routines.add(routine);
   }
 
-
-
-    Future<void> addRoutine(Routine routine, Trainer trainer) async {
-     //Routine newRoutine =_routines.where((routine)=>routine.id == routine.id) as Routine;
+  Future<void> addRoutine(Routine routine, Trainer trainer) async {
     await routineService.createRoutine(routine);
   }
 
   Future<void> editRoutine(Routine newRoutine, String routineId) async {
     await routineService.editRoutine(newRoutine, routineId);
   }
-
-/*     Future<void> addTrainerRoutine(Routine routine, Trainer trainer) async {
-    await registerService.addTrainerRoutine(routine,trainer);
-  } */
-
 }

@@ -39,7 +39,6 @@ class _AgendaScreenState extends State<AgendaScreen> {
 
   void _enableAgenda() {
     if (_startDate != null && _endDate != null) {
-      // Llama a TrainerManager para generar la agenda
       manager.generarAgenda(_startDate!, _endDate!);
 
       ScaffoldMessenger.of(context).showSnackBar(

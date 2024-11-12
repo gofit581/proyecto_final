@@ -29,7 +29,7 @@ final appRouter = GoRouter(routes: [
   ),
   GoRoute(
       path: '/login',
-      builder: (context, state) => LoginScreen(),
+      builder: (context, state) => const LoginScreen(),
       name: LoginScreen.name
   ),
   GoRoute(
@@ -39,15 +39,8 @@ final appRouter = GoRouter(routes: [
   ),
   GoRoute(
       path: '/alumnos',
-      builder: (context, state) => UsersListScreen(),
+      builder: (context, state) => const UsersListScreen(),
       name: UsersListScreen.name),
-  // GoRoute(
-  //   path: '/home',
-  //   builder: (context, state) {
-  //     return HomeScreen();
-  //   },
-  //   name: HomeScreen.name,
-  // ),
   GoRoute(
     path: '/profile',
     builder: (context, state) {
@@ -67,7 +60,7 @@ final appRouter = GoRouter(routes: [
       name: RegisterEntrenadorDataScreen.name),
   GoRoute(
       path: '/agenda',
-      builder: ((context, state) => AgendaScreen()),
+      builder: ((context, state) => const AgendaScreen()),
       name: AgendaScreen.name),
   GoRoute(
     path: '/calendar',
@@ -88,22 +81,10 @@ final appRouter = GoRouter(routes: [
       builder: ((context, state) =>
           CompleteRoutineScreen(currentRoutine: state.extra as Routine,)),
       name: CompleteRoutineScreen.name),
-  // GoRoute(
-  //     path: '/routine',
-  //     builder: (context, state) => RoutineScreen(),
-  //     name: RoutineScreen.name),
-  // GoRoute(
-  //     path: '/routines',
-  //     builder: (context, state) => RoutinesScreen(),
-  //     name: RoutinesScreen.name),
-  // GoRoute(
-  //     path: '/profile-info',
-  //     builder: (context, state) => ProfileInfoScreen(),
-  //     name: ProfileInfoScreen.name)
   GoRoute(
     path: '/createRoutine',
     builder: (context, state) =>
-        CreateRoutineScreen(),
+        const CreateRoutineScreen(),
     name: CreateRoutineScreen.name,
   ),
   GoRoute(
@@ -140,7 +121,7 @@ final appRouter = GoRouter(routes: [
   GoRoute(
     path: '/notifications',
     builder: (context, state) =>
-        NotificationScreen(),
+       const NotificationScreen(),
     name: NotificationScreen.name,
   ),
 ]);

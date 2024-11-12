@@ -79,7 +79,6 @@ class _ClasesDiaScreenState extends State<ClasesDiaScreen> {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                // Navegar al perfil del alumno usando GoRouter
                                 context.go('/perfil_alumno_screen', extra: clase.alumno);
                               },
                               // ignore: sort_child_properties_last
@@ -94,7 +93,6 @@ class _ClasesDiaScreenState extends State<ClasesDiaScreen> {
                   trailing: IconButton(
                     icon: const Icon(Icons.delete, color: Colors.red),
                     onPressed: () {
-                      // Implementar funcionalidad para eliminar la clase
                       _eliminarClase(context, clase);
                     },
                   ),
@@ -115,7 +113,7 @@ class _ClasesDiaScreenState extends State<ClasesDiaScreen> {
         ),
       );
       setState(() {
-        clasesDelDia.remove(clase); // Actualizar la lista de clases
+        clasesDelDia.remove(clase);
       });
     }
   }

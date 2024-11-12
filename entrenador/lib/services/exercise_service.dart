@@ -32,6 +32,7 @@ class ExerciseService {
         headers: {'Content-Type': 'application/json'},
       );
 
+      // ignore: avoid_print
       print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
@@ -42,13 +43,15 @@ class ExerciseService {
             })
             .map((exercisesData) => Exercise.fromJson(exercisesData))
             .toList();
-        print('raw query' + exercisesData.toString());
+        // ignore: avoid_print
+        print('raw query$exercisesData');
 
         return exercises;
       } else {
         throw Exception('Failed to load exercises');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Routine Error: $e');
       rethrow;
     }
@@ -60,7 +63,7 @@ class ExerciseService {
         Uri.parse('$baseUrl/Ejercicio'),
         headers: {'Content-Type': 'application/json'},
       );
-
+      // ignore: avoid_print
       print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {      
@@ -68,13 +71,15 @@ class ExerciseService {
         final List<Exercise> exercises = exercisesData
             .map((exercisesData) => Exercise.fromJson(exercisesData))
             .toList();
-        print('raw query' + exercisesData.toString());
+        // ignore: avoid_print
+        print('raw query$exercisesData');
 
         return exercises;
       } else {
         throw Exception('Failed to load exercises');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Routine Error: $e');
       rethrow;
     }
@@ -108,6 +113,7 @@ class ExerciseService {
         throw Exception('Exercises title not available');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Auth Error: $e');
       return true;
     }

@@ -36,8 +36,7 @@ class _CalendarioScreenState extends State<CalendarioScreen> {
   }
 
   Future<void> _fetchUnreadNotifications() async {
-    final notifications = await _notificationService
-        .getUnreadNotifications(_loggedTrainer!.trainerCode);
+    final notifications = await _notificationService.getUnreadNotifications(_loggedTrainer!.trainerCode);
     setState(() {
       _unreadNotificationsCount = notifications.length;
     });
@@ -89,12 +88,11 @@ class _CalendarioScreenState extends State<CalendarioScreen> {
           _selectedDay = selectedDay;
           _focusedDay = focusedDay;
         });
-        // Navega a la vista clases_dia_screen.dart
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => ClasesDiaScreen(
-                date: selectedDay), // Pasamos la fecha seleccionada
+                date: selectedDay), 
           ),
         );
       },

@@ -4,7 +4,7 @@ import '../widget/custom_botton_navigation_bar.dart';
 import '../presentation/initial_screen.dart';
 import '../core/entities/TrainerManager.dart';
 import '../core/entities/Trainer.dart';
-import '../presentation/agenda_screen.dart'; // Import the agenda screen
+import '../presentation/agenda_screen.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 

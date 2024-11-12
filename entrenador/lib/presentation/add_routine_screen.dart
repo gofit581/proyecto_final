@@ -16,6 +16,7 @@ class AddRoutineScreen extends StatefulWidget {
   final Usuario alumno;
   
   @override
+  // ignore: library_private_types_in_public_api
   _AddRoutineScreenState createState() => _AddRoutineScreenState();
 }
 
@@ -31,17 +32,15 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
     super.initState();
     _loggedTrainer = TrainerManager().getLoggedUser();
     if (_loggedTrainer != null) {
-      _routinesFuture = _routineService.getRoutinesByTrainerId(_loggedTrainer!.trainerCode);
-      //alumno = Usuario( )
-      
+      _routinesFuture = _routineService.getRoutinesByTrainerId(_loggedTrainer!.trainerCode); 
     } else {
       _routinesFuture = Future.error('No trainer logged in');
     }
   }
 
+  @override
   Widget build(BuildContext context) {
   final int alumnoTrainingDays = int.tryParse(widget.alumno.trainingDays) ?? 0;
-  
   return Scaffold(
     appBar: const CustomAppBar(
       title: 'Agregar Rutina',
@@ -123,19 +122,20 @@ class _AddRoutineScreenState extends State<AddRoutineScreen> {
                         if (selectedRoutineIndex != null) {
                           Routine selectedRoutine = routines[selectedRoutineIndex!];
                           widget.alumno.currentRoutine = selectedRoutine;
-
                           bool isSaved = await _updateService.saveRoutineForUser(widget.alumno);
-
                           if (isSaved) {
                             widget.alumno.resetSesions();
+                            // ignore: use_build_context_synchronously
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: const Text('Rutina asignada con éxito'),
                                 backgroundColor: Colors.green.shade400,
                               ),
                             );
+                            // ignore: use_build_context_synchronously
                             context.goNamed(UsersListScreen.name);
                           } else {
+                            // ignore: use_build_context_synchronously
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Error al guardar la rutina'),

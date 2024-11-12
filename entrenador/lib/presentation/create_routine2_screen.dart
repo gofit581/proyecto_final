@@ -45,7 +45,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
     }
 
   if (ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation.isNotEmpty) {
-  _routineObservationDayController.text = ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation ?? '';
+  _routineObservationDayController.text = ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation;
   } else {
     _routineObservationDayController.text = '';
   }
@@ -57,9 +57,9 @@ class CreateRoutine2Screen extends ConsumerWidget {
   }
 
 
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
-        // Aquí puedes hacer alguna lógica antes de salir de la pantalla
         bool shouldPop = await _onExitDialog(context,ref);
         return shouldPop;
       },
@@ -230,7 +230,6 @@ class CreateRoutine2Screen extends ConsumerWidget {
       ),
     );
   }
-  
 }
 
   Future<bool> _onExitDialog(BuildContext context,ref) async {
@@ -286,6 +285,7 @@ class _AddExerciseViewState extends ConsumerState<_AddExerciseView> {
   @override
   void initState() {
     super.initState();
+    // ignore: unused_result
     ref.refresh(exercisesListProvider(widget.actualTrainerCode));
   }
 

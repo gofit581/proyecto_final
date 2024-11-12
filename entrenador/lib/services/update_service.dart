@@ -44,7 +44,7 @@ class UpdateService {
         'actualSesion': 0,
         'id': alumno.id
       };
-
+      // ignore: avoid_print
       print('Datos a enviar: ${jsonEncode(updateJson)}');
 
       final response = await http.put(
@@ -56,14 +56,14 @@ class UpdateService {
       );
 
       if (response.statusCode == 200) {
-          // Actualización exitosa
           return true;
         } else {
-          // Error en la actualización
+           // ignore: avoid_print
            print('Error al guardar la rutina: ${response.statusCode}, ${response.body}');
           return false;
         }
     } catch (e) {
+      // ignore: avoid_print
       print('Error en la solicitud: $e');
       return false;
     }

@@ -28,7 +28,6 @@ class _UsersListScreenState extends State<UsersListScreen> {
     if (_loggedTrainer != null) {
       _clientsFuture = _usersGetterService.getUsersByTrainerId(_loggedTrainer!.trainerCode);
     } else {
-      // Manejar el caso en que el entrenador logueado es null
       _clientsFuture = Future.error('Ningún entrenador ha iniciado sesión');
     }
   }

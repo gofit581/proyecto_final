@@ -1,12 +1,11 @@
 class Exercise {
   String? title;
   String? imageLink;
-  //Falta atributo para el video
   String? description;
   int? series;
   int? repetitions;
   bool? done;
-  late String? idTrainer; //checkear
+  late String? idTrainer;
 
   Exercise.vacio();
 

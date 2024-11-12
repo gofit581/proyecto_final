@@ -60,7 +60,7 @@ class _ListRoutineState extends ConsumerState<ListRoutine> {
       if (confirmed == true) {
           await _routineService.deleteRoutineById(idRoutine); 
           setState(() {
-            _routinesFuture = _routineService.getRoutinesByTrainerId(_loggedTrainer!.trainerCode);//refresca la lista
+            _routinesFuture = _routineService.getRoutinesByTrainerId(_loggedTrainer!.trainerCode);
           });
       }
     } catch (e) {
@@ -106,7 +106,6 @@ class _ListRoutineState extends ConsumerState<ListRoutine> {
                         children: [
                           FloatingActionButton(
                             onPressed: () {
-                              //ref.read(exercisesNotifierProvider.notifier).initializeRoutine(routines[index].duration, routines[index].trainingDays);
                               ref.read(exercisesNotifierProvider.notifier).useRoutine(routines[index].exercises);
                               context.push('/editRoutine', extra: routines[index]);
                             },

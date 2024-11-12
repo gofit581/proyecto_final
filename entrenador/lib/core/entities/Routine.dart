@@ -14,7 +14,7 @@ class Routine {
   late int trainingDays;
   late List<List<TrainingDay>> exercises;
 
-  //esto es de user
+
   Routine.parcial({
     required this.title,
     required this.duration,
@@ -30,7 +30,6 @@ class Routine {
       ),
     );
   }
-
 
   Routine({
     required this.title,
@@ -53,12 +52,6 @@ class Routine {
   String getTitle() {
     return title;
   }
-
-/*   void resetExercises() {
-      for (var exercise in exercises) {
-        exercise.done = false;
-      }
-  } */
 
   factory Routine.fromJson(Map<String, dynamic> json) {
     return Routine(
