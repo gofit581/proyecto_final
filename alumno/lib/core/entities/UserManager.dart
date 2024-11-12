@@ -54,6 +54,10 @@ class UserManager {
     //Agregar mas si es necesario
   }
 
+  Future<void> refreshUser (Usuario usuarioDesactualizado) async {
+    authService.loginAndSetUser(usuarioDesactualizado.mail, usuarioDesactualizado.password);
+  } 
+
   void logoutUser() {
     _loggedUser = null;
   }
