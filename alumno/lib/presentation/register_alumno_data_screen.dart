@@ -189,11 +189,7 @@ class _RegisterAlumnoDataScreenState extends State<RegisterAlumnoDataScreen> {
 
                     try {
                       await userManager.registerUser(newUser);
-                      // userManager.setLoggedUser(newUser);
-
-                      await userManager.login(
-                          newUser.mail,
-                          newUser.password);
+                      await userManager.login(newUser.mail, newUser.password);
                       Usuario? usuario = userManager.getLoggedUser();
                       if (usuario!.id != null) {
                         NotificationService().addNotification(alumno_notification.CustomNotification(idAlumno: usuario.id!, idTrainer: newUser.idTrainer, typeOfNotification: TypeOfNotification.newUser, visto: false));

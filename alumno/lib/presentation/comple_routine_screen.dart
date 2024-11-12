@@ -1,4 +1,3 @@
-
 import 'package:alumno/core/entities/Routine.dart';
 import 'package:alumno/core/entities/TrainingDay.dart';
 import 'package:alumno/widget/custom_app_bar.dart';
@@ -22,7 +21,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final pageViewHeight = screenHeight * 1; // la altura de la pantalla
+    final pageViewHeight = screenHeight * 1;
 
     return Scaffold(
       appBar: const CustomAppBar(
@@ -49,7 +48,6 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
                 title: 'Duración',
                 content: '${widget.currentRoutine.duration} semanas',
               ),
-              //ROMPE PORQ NO ESTA ESTE ATRIBUTO ACTUALMENTE
               const SizedBox(height: 16),
               _buildRoutineCard(
                 title: 'Pausa entre ejercicios',
@@ -140,7 +138,6 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
     );
   }
 
- // ESTOS DOS WIDGETS ROMPEN ACTUALMENTE PORQUE LA LISTA DE EJERCICIOS NO ESTA BIEN DEFINIDA
   Widget _buildWeekCard(BuildContext context, int weekIndex) {
     List<TrainingDay> week = widget.currentRoutine.exercises[weekIndex];
 

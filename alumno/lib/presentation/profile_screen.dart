@@ -88,6 +88,7 @@ Future<void> _loadUserData() async {
       setState(() {
         isLoading = false;
       });
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Perfil actualizado')),
       );
@@ -224,7 +225,7 @@ Future<void> _loadUserData() async {
                         const SizedBox(height: 40),
                       ],
                     ),
-                  ),                  
+                  ), 
                   ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color.fromARGB(255, 22, 22, 180),

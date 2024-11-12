@@ -88,7 +88,7 @@ class Usuario {
   }
 
   void completeSesion(){
-    actualSesion = (actualSesion) + 1; //actualSesion = (actualSesion ?? 0) + 1;
+    actualSesion = (actualSesion) + 1; 
   }
 
   void resetSesions(){
@@ -98,9 +98,6 @@ class Usuario {
   void deleteRoutine(){
     actualRoutine = null;
   }
-
-
-  //static fromJson(claseData) {}
 
     factory Usuario.fromJson(Map<String, dynamic> json) {
     return Usuario(

@@ -29,15 +29,4 @@ class NotificationService {
       throw Exception('Error al agregar la notificación');
     }
   }
-
-
-  /*
-  Future<void> deleteNotification(String idTrainer) async {
-    final url = '$baseUrl/Notification/$idTrainer'; 
-    final response = await http.delete(Uri.parse(url));
-
-    if (response.statusCode != 200) {
-      throw Exception('Error al eliminar la notificación');
-    }
-  }*/
 }

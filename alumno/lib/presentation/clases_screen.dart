@@ -10,7 +10,7 @@ class ClasesScreen extends StatelessWidget {
   final DateTime date;
   final userManager = UserManager();
 
-  ClasesScreen({required this.date});
+  ClasesScreen({super.key, required this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,6 @@ class ClasesScreen extends StatelessWidget {
               child: Text(
                 'No hay clases programadas para esta fecha.',
               ),
-              // child: Text('No hay clases programadas para esta fecha.${usuario != null ? (usuario.getProfesor()?.agenda != null ? usuario.getProfesor()!.agenda![0].toString() : 'No hay agenda') : 'El profesor es null'}'),
             ),
     );
   }

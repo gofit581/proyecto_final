@@ -63,7 +63,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       actualSesion: widget.usuario.actualSesion,
     );
 
-
     bool isMailValid = true;
     if (widget.usuario.mail != updatedUser.mail) {
       isMailValid = await widget.authService.validateMail(updatedUser.mail);
@@ -94,8 +93,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,7 +115,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               _buildTextField('Contraseña', _passwordController),
               _buildTextField('Correo Electrónico', _mailController, readOnly: true),
               _buildTextField('Edad', _ageController, isNumeric: true, readOnly: true),
-              //_buildTextField('Descripción del Objetivo', _objectiveDescriptionController, readOnly: true),
               _buildTextField('Experiencia', _experienceController),
               _buildTextField('Disciplina', _disciplineController),
               _buildTextField('Días de Entrenamiento', _trainingDaysController, isNumeric: true),

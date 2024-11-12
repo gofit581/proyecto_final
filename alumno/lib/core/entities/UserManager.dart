@@ -50,8 +50,6 @@ class UserManager {
     usuarioViejo.trainingDuration = usuarioActualizado.trainingDuration;
     usuarioViejo.injuries = usuarioActualizado.injuries;
     usuarioViejo.extraActivities = usuarioActualizado.extraActivities;
-    
-    //Agregar mas si es necesario
   }
 
   Future<void> refreshUser (Usuario usuarioDesactualizado) async {
@@ -74,7 +72,6 @@ class UserManager {
       throw Exception('No user is currently logged in');
     }
   }
-
 
   void updateUserInfo(String name, String email, String age, String password){
       _loggedUser!.setUserName(name);

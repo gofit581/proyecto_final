@@ -20,7 +20,7 @@ final appRouter = GoRouter(routes: [
   ),
   GoRoute(
       path: '/login',
-      builder: (context, state) => LoginScreen(),
+      builder: (context, state) => const  LoginScreen(),
       name: LoginScreen.name
       ),
   GoRoute(
@@ -59,7 +59,7 @@ final appRouter = GoRouter(routes: [
       name: CalendarioScreen.name),
   GoRoute(
       path: '/trainingDay',
-      builder: ((context, state) =>  TrainingdayScreen()),
+      builder: ((context, state) =>  const TrainingdayScreen()),
       name: TrainingdayScreen.name),
   GoRoute(
       path: '/CompleteRoutine',
