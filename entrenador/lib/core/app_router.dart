@@ -200,11 +200,11 @@ final appRouter = GoRouter(routes: [
   GoRoute(
     path: '/createRoutine',
     builder: (context, state) =>
-        CreateRoutineScreen(),
+        const CreateRoutineScreen(),
     name: CreateRoutineScreen.name,
     pageBuilder: (context, state) {
           return CustomTransitionPage(
-            child: CalendarioScreen(),
+            child: const CreateRoutineScreen(),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               const begin = Offset(0.0, 1.0);  
               const end = Offset.zero;           
