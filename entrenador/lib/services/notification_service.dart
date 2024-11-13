@@ -12,7 +12,6 @@ class NotificationService {
         Uri.parse('$baseUrl/Notification'),
         headers: {'Content-Type': 'application/json'},
       );
-
       if (response.statusCode == 200) {
         final List<dynamic> notificationsData = jsonDecode(response.body);
         final List<CustomNotification> notifications = notificationsData
@@ -36,6 +35,7 @@ class NotificationService {
         throw Exception('Failed to load notifications');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Notification getting Error: $e');
       rethrow;
     }
@@ -49,7 +49,6 @@ class NotificationService {
         notification.toJson()
       ),
     );
-
     if (response.statusCode != 201) {
       throw Exception('Error al agregar la notificación');
     }
@@ -63,20 +62,8 @@ class NotificationService {
         'visto': true,
       }),
     );
-
     if (response.statusCode != 200) {
       throw Exception('Error al marcar la notificación como leída');
     }
   }
-
-
-  /*
-  Future<void> deleteNotification(String idTrainer) async {
-    final url = '$baseUrl/Notification/$idTrainer'; 
-    final response = await http.delete(Uri.parse(url));
-
-    if (response.statusCode != 200) {
-      throw Exception('Error al eliminar la notificación');
-    }
-  }*/
 }

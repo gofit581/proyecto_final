@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:entrenador/core/entities/Exercise.dart';
 import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/RoutineManager.dart';
@@ -9,10 +13,7 @@ import 'package:entrenador/presentation/provider/current_screen.dart';
 import 'package:entrenador/presentation/provider/exercisesList_provider.dart';
 import 'package:entrenador/presentation/provider/exercises_provider.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
-import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:entrenador/widget/custom_botton_navigation_bar.dart'; 
 
 class EditRoutineScreen extends ConsumerWidget {
   final Routine routine;
@@ -23,21 +24,16 @@ class EditRoutineScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-    //Usuario user = datos.values.first;
-    //Routine routine = datos.keys.first;
     RoutineManager routineManager = RoutineManager();
     TrainerManager trainerManager = TrainerManager();
     Trainer actualTrainer = trainerManager.getLoggedUser()!;
     final exercisesAsyncValue = ref.watch(exercisesListProvider(actualTrainer.trainerCode));
-    final TextEditingController _routineObservationDayController = TextEditingController();
+    final TextEditingController routineObservationDayController = TextEditingController();
     final day = ref.watch(counterDayProvider);
     final week = ref.watch(counterWeekProvider);
     final maxDays = routine.trainingDays;
     int indexDay = day - 1;
     int indexWeek = week -1;
-
-    //ref.read(exercisesNotifierProvider.notifier).useRoutine(routine.exercises);
 
     void generateRoutine(){
       for(int w = 0; w < routine.duration; w++){
@@ -48,11 +44,10 @@ class EditRoutineScreen extends ConsumerWidget {
       }
 
     }
-
   if (ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation.isNotEmpty) {
-  _routineObservationDayController.text = ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation ?? '';
+    routineObservationDayController.text = ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation;
   } else {
-    _routineObservationDayController.text = '';
+    routineObservationDayController.text = '';
   }
 
   void resetProviders(){
@@ -71,21 +66,17 @@ class EditRoutineScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-/*                Text(routine.id!),
-              Text('$indexWeek'),
-                Text('$indexDay'), */
                 Text('Semana $week de ${routine.duration}'),
                 Text('Día de rutina $day/$maxDays'),
                 Text(routine.title),
                 Text('Objetivo: ${routine.typeOfTraining?.name}'),
                 Text('Duración en semanas: ${routine.duration}'),
                 Text('Tiempo de descanso entre ejercicios: ${routine.rest} segundos'),
-                //if(indexDay == 0 && indexWeek == 0)(Text('hola')),
                 const SizedBox(height: 20),
                 _AddExerciseView(exercisesOptions: exercisesOptions, indexDay: indexDay, indexWeek: indexWeek),
                 const SizedBox(height: 20),
                 TextFormField(
-                  controller:  _routineObservationDayController,
+                  controller:  routineObservationDayController,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     labelText: 'Observación del día',
@@ -110,7 +101,7 @@ class EditRoutineScreen extends ConsumerWidget {
                     ElevatedButton(
                       onPressed: () {                       
                           ref.read(counterDayProvider.notifier).state++;
-                          ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
+                          ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, routineObservationDayController.text);
                           context.push('/editRoutine', extra: routine);                      
                       },
                       child: const Icon(Icons.arrow_right),
@@ -127,7 +118,7 @@ class EditRoutineScreen extends ConsumerWidget {
                 if(day == maxDays && week < routine.duration)
                 ElevatedButton(
                   onPressed: (){
-                    ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
+                    ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, routineObservationDayController.text);
                     context.push('/editRoutine', extra: routine);
                     resetCounter(ref);
                     ref.read(counterWeekProvider.notifier).state++;
@@ -146,7 +137,7 @@ class EditRoutineScreen extends ConsumerWidget {
                 if (day == maxDays && week == routine.duration) ...[
                   ElevatedButton(
                     onPressed: () {
-                      ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
+                      ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, routineObservationDayController.text);
                       generateRoutine();
                       Routine newRoutine = Routine(
                         title: routine.title,
@@ -159,7 +150,7 @@ class EditRoutineScreen extends ConsumerWidget {
                         trainingDays: routine.trainingDays,
                         rest: routine.rest,
                         exercises: routine.exercises,
-                      );                    
+                      );
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {

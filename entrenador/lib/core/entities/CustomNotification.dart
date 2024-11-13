@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:entrenador/core/entities/TypeOfNotification.dart';
 import 'package:entrenador/core/entities/User.dart';
 import 'package:entrenador/services/users_getter_service.dart';

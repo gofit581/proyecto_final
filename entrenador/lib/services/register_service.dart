@@ -28,42 +28,4 @@ class RegisterService {
       throw Exception('Failed to register user');
     }
   }
-  // Future<Routine> fetchRoutineByTrainingId(int typeOfTrainingId) async {
-  //   // final response = await http.get(Uri.parse('$baseUrl/routines'));
-
-  //   final response = await http.get(
-  //     Uri.parse('$baseUrl/routines'),
-  //     headers: {'Content-Type': 'application/json'},
-  //   );
-
-  //   if (response.statusCode != 200) {
-  //     throw Exception('Failed to fetch routines');
-  //   }
-
-  //   final List<dynamic> routinesData = jsonDecode(response.body);
-
-  //   // Buscar la rutina que coincida con el typeOfTrainingId
-  //   final routineData = routinesData.firstWhere(
-  //     (routine) => routine['typeOfTraining'] == typeOfTrainingId,
-  //     orElse: () => throw Exception(
-  //         'Routine not found for training id: $typeOfTrainingId, $routinesData'),
-  //   );
-
-  //   List<Exercise> exercises = (routineData['exercises'] as List)
-  //       .map((exerciseData) => Exercise(
-  //             title: exerciseData['title'],
-  //             imageLink: exerciseData['imageLink'],
-  //             description: exerciseData['description'],
-  //           ))
-  //       .toList();
-
-  //   return Routine(
-  //     title: routineData['title'],
-  //     description: routineData['description'],
-  //     duration: routineData['duration'],
-  //     exercises: exercises,
-  //     aim: routineData['aim'],
-  //     typeOfTraining: routineData['typeOfTraining'],
-  //   );
-  // }
 }

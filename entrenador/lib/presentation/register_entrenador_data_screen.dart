@@ -1,11 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:entrenador/core/entities/TrainerManager.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/presentation/agenda_screen.dart';
 import 'package:entrenador/presentation/login_screen.dart';
 import 'package:entrenador/services/update_service.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:entrenador/core/entities/TrainerManager.dart';
-import 'package:go_router/go_router.dart';
+
 
 class RegisterEntrenadorDataScreen extends StatelessWidget {
   static const String name = 'RegisterEntrenadorDataScreen';
@@ -60,8 +62,6 @@ class _FormularioState extends State<_Formulario> {
     widget.trainer.diasLaborales ??= [];
   }
 
-  void agregarClaseAAgenda() {}
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -82,7 +82,8 @@ class _FormularioState extends State<_Formulario> {
               child: TextField(
                 controller: _registerDuracionController,
                 decoration: const InputDecoration(
-                    hintText: 'Duración de las clases en minutos'),
+                  hintText: 'Duración de las clases en minutos'
+                ),
               ),
             ),
             const SizedBox(height: 20),
@@ -104,13 +105,6 @@ class _FormularioState extends State<_Formulario> {
                   Expanded(
                     child: TextField(
                       controller: _registerTrabajaHastaController,
-                      /*
-                        decoration: InputDecoration(
-                          labelText: 'Trabaja hasta',
-                          border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          )
-                        ),*/
                       decoration:
                           const InputDecoration(hintText: 'Trabaja hasta'),
                     ),
@@ -126,16 +120,15 @@ class _FormularioState extends State<_Formulario> {
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
-                      //padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0), // Espaciado
                       decoration: BoxDecoration(
                         borderRadius:
-                            BorderRadius.circular(10), // Bordes redondeados
+                            BorderRadius.circular(10),
                       ),
                       child: const Text(
                         'Selecciona los días que quieres trabajar:',
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold, // Negrita para resaltar
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -147,10 +140,8 @@ class _FormularioState extends State<_Formulario> {
                           onChanged: (bool? value) {
                             setState(() {
                               if (value == true) {
-                                // Agregar el día seleccionado
                                 widget.trainer.diasLaborales?.add(index);
                               } else {
-                                // Quitar el día deseleccionado
                                 widget.trainer.diasLaborales?.remove(index);
                               }
                             });

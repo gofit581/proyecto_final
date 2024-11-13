@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:entrenador/core/entities/Exercise.dart';
 import 'package:entrenador/core/entities/ExerciseManager.dart';
 import 'package:entrenador/core/entities/Routine.dart';
@@ -6,9 +10,6 @@ import 'package:entrenador/core/entities/TrainerManager.dart';
 import 'package:entrenador/presentation/provider/exercisesList_provider.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CreateExerciseScreen extends ConsumerStatefulWidget {
 
@@ -141,8 +142,8 @@ class _CreateExerciseScreenState extends ConsumerState<CreateExerciseScreen> {
               ],
             ),
           ),
-          ),
-        ),    
+        ),
+      ),    
     );
   }
 }

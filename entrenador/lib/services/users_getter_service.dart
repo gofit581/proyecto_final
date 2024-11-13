@@ -11,7 +11,6 @@ class UsersGetterService {
         Uri.parse('$baseUrl/user'),
         headers: {'Content-Type': 'application/json'},
       );
-
       if (response.statusCode == 200) {
         final List<dynamic> usersData = jsonDecode(response.body);
         final List<Usuario> users = usersData
@@ -33,35 +32,32 @@ class UsersGetterService {
                   actualSesion: userData['actualSesion'],
                 ))
             .toList();
-
             users.sort((a, b) => a.userName.compareTo(b.userName));
-
         return users;
       } else {
         throw Exception('Failed to load users');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('User getting Error: $e');
       rethrow;
     }
   }
 
   Future<Usuario> getUserById(String id) async {
-  final url = Uri.parse('$baseUrl/user/$id');
-  
-  try {
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-
-      return Usuario.fromJson(data);
-    } else {
-      throw Exception('Error al obtener el usuario');
+    final url = Uri.parse('$baseUrl/user/$id');
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return Usuario.fromJson(data);
+      } else {
+        throw Exception('Error al obtener el usuario');
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+      throw Exception('Error al conectar con la API');
     }
-  } catch (e) {
-    print(e);
-    throw Exception('Error al conectar con la API');
   }
-}
 }

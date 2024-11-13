@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:entrenador/core/entities/TrainingDay.dart';
 import 'package:entrenador/core/entities/TypeOfTraining.dart';
 
@@ -14,7 +16,6 @@ class Routine {
   late int trainingDays;
   late List<List<TrainingDay>> exercises;
 
-  //esto es de user
   Routine.parcial({
     required this.title,
     required this.duration,
@@ -54,12 +55,6 @@ class Routine {
     return title;
   }
 
-/*   void resetExercises() {
-      for (var exercise in exercises) {
-        exercise.done = false;
-      }
-  } */
-
   factory Routine.fromJson(Map<String, dynamic> json) {
     return Routine(
       title: json['title'],
@@ -94,11 +89,9 @@ class Routine {
       'trainingDays': trainingDays,
       'id': id,
     };
-
     if (description != null) data['description'] = description;
     if (aim != null) data['aim'] = aim;
     if (image != null) data['image'] = image;
-    
     return data;
   }
 }

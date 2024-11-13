@@ -19,21 +19,19 @@ class ExerciseService {
         'idTrainer': exercise.idTrainer,
       }),
     );
-
     if (response.statusCode != 201) {
       throw Exception('Failed to register user');
     }
   }
 
-    Future<List<Exercise>> getExercisesByTrainerId(String trainerId) async {
+  Future<List<Exercise>> getExercisesByTrainerId(String trainerId) async {
     try {
       final response = await http.get(
         Uri.parse('$baseUrl/Ejercicio'),
         headers: {'Content-Type': 'application/json'},
       );
-
+      // ignore: avoid_print
       print('Response body: ${response.body}');
-
       if (response.statusCode == 200) {
         final List<dynamic> exercisesData = jsonDecode(response.body);
         final List<Exercise> exercises = exercisesData       
@@ -42,13 +40,15 @@ class ExerciseService {
             })
             .map((exercisesData) => Exercise.fromJson(exercisesData))
             .toList();
-        print('raw query' + exercisesData.toString());
+        // ignore: avoid_print
+        print('raw query$exercisesData');
 
         return exercises;
       } else {
         throw Exception('Failed to load exercises');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Routine Error: $e');
       rethrow;
     }
@@ -60,33 +60,32 @@ class ExerciseService {
         Uri.parse('$baseUrl/Ejercicio'),
         headers: {'Content-Type': 'application/json'},
       );
-
+      // ignore: avoid_print
       print('Response body: ${response.body}');
-
       if (response.statusCode == 200) {      
         final List<dynamic> exercisesData = jsonDecode(response.body);
         final List<Exercise> exercises = exercisesData
             .map((exercisesData) => Exercise.fromJson(exercisesData))
             .toList();
-        print('raw query' + exercisesData.toString());
-
+        // ignore: avoid_print
+        print('raw query$exercisesData');
         return exercises;
       } else {
         throw Exception('Failed to load exercises');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Routine Error: $e');
       rethrow;
     }
   }
 
-    Future<bool> validateExercise(String title, String trainerId) async {
+  Future<bool> validateExercise(String title, String trainerId) async {
     try {
       final response = await http.get(
         Uri.parse('$baseUrl/Ejercicio'),
         headers: {'Content-Type': 'application/json'},
       );
-
       if (response.statusCode == 200) {
         final List<dynamic> exercisesData = jsonDecode(response.body);
         final List<Exercise> exercises = exercisesData       
@@ -95,9 +94,7 @@ class ExerciseService {
             })
             .map((exercisesData) => Exercise.fromJson(exercisesData))
             .toList();
-
         bool result = false;
-
         for (var exercise in exercises) {
           if (exercise.title == title) {
             result = true;
@@ -108,8 +105,9 @@ class ExerciseService {
         throw Exception('Exercises title not available');
       }
     } catch (e) {
-      print('Auth Error: $e');
-      return true;
+        // ignore: avoid_print
+        print('Auth Error: $e');
+        return true;
+      }
     }
-  }
  }
