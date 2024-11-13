@@ -1,6 +1,6 @@
-import 'package:entrenador/services/users_getter_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:entrenador/services/users_getter_service.dart';
 import '../widget/custom_app_bar.dart';
 import '../widget/custom_botton_navigation_bar.dart';
 import '../core/entities/User.dart';
@@ -33,6 +33,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
     });
 
     Usuario usuarioFromDB = await _usersGetterService.getUserById(widget.usuarioSeleccionado.id!);
+    // ignore: avoid_print
     print(usuarioFromDB);
 
     setState(() {
@@ -203,7 +204,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                     TextButton(
                                       child: const Text('Cancelar'),
                                       onPressed: () {
-                                        // Cierra el diálogo sin hacer nada
                                         Navigator.of(context).pop();
                                       },
                                     ),

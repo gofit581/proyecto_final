@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:entrenador/core/app_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {

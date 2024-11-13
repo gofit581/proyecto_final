@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/services/routine_service.dart';
@@ -5,6 +7,7 @@ import 'package:entrenador/services/update_service.dart';
 
 class RoutineManager {
   static UpdateService updateService = UpdateService();
+  // ignore: prefer_final_fields
   static List<Routine> _routines = [];
   static RoutineService routineService = RoutineService();
 
@@ -13,19 +16,11 @@ class RoutineManager {
     _routines.add(routine);
   }
 
-
-
-    Future<void> addRoutine(Routine routine, Trainer trainer) async {
-     //Routine newRoutine =_routines.where((routine)=>routine.id == routine.id) as Routine;
+  Future<void> addRoutine(Routine routine, Trainer trainer) async {
     await routineService.createRoutine(routine);
   }
 
   Future<void> editRoutine(Routine newRoutine, String routineId) async {
     await routineService.editRoutine(newRoutine, routineId);
   }
-
-/*     Future<void> addTrainerRoutine(Routine routine, Trainer trainer) async {
-    await registerService.addTrainerRoutine(routine,trainer);
-  } */
-
 }

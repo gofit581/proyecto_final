@@ -1,7 +1,8 @@
+// ignore_for_file: file_names
+
 class Exercise {
   String? title;
   String? imageLink;
-  //Falta atributo para el video
   String? description;
   int? series;
   int? repetitions;
@@ -18,7 +19,7 @@ class Exercise {
     this.description,
   );
 
-   Exercise({
+  Exercise({
     required this.title,
     required this.imageLink,
     this.series,
@@ -44,21 +45,21 @@ class Exercise {
     this.imageLink = imageLink;
   }
 
-void aumentarSerie(){
-  series = (series ?? 0) + 1;
-}
+  void aumentarSerie(){
+    series = (series ?? 0) + 1;
+  }
 
-void restarSerie(){
-  series = (series ?? 0) - 1;
-}
+  void restarSerie(){
+    series = (series ?? 0) - 1;
+  }
 
-void aumentarRepeticiones(){
-  repetitions = (repetitions ?? 0) + 1;
-}
+  void aumentarRepeticiones(){
+    repetitions = (repetitions ?? 0) + 1;
+  }
 
-void restarRepeticiones(){
-  repetitions = (repetitions ?? 0) - 1;
-}
+  void restarRepeticiones(){
+    repetitions = (repetitions ?? 0) - 1;
+  }
 
   Map<String, dynamic> toJson() {
     return {
@@ -79,5 +80,4 @@ void restarRepeticiones(){
       repetitions: json['repetitions'],
     );
   }
-
 }

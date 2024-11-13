@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:entrenador/presentation/student_profile_screen.dart';
 import 'package:entrenador/services/notification_service.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
-import 'package:flutter/material.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/User.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
@@ -30,7 +30,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
       _notificationFuture = _notificationService
           .getUnreadNotifications(_loggedTrainer!.trainerCode);
     } else {
-      // Manejar el caso en que el entrenador logueado es null
       _notificationFuture = Future.error('Ningún entrenador ha iniciado sesión');
     }
   }

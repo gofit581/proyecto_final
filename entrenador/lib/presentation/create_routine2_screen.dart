@@ -27,7 +27,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
     TrainerManager trainerManager = TrainerManager();
     Trainer actualTrainer = trainerManager.getLoggedUser()!;
     final exercisesAsync = ref.watch(exercisesListProvider(actualTrainer.trainerCode));
-    final TextEditingController _routineObservationDayController = TextEditingController();
+    final TextEditingController routineObservationDayController = TextEditingController();
     final day = ref.watch(counterDayProvider);
     final week = ref.watch(counterWeekProvider);
     final maxDays = routine.trainingDays;
@@ -45,9 +45,9 @@ class CreateRoutine2Screen extends ConsumerWidget {
     }
 
   if (ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation.isNotEmpty) {
-  _routineObservationDayController.text = ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation ?? '';
+  routineObservationDayController.text = ref.watch(exercisesNotifierProvider).weeks[indexWeek].days[indexDay].observation;
   } else {
-    _routineObservationDayController.text = '';
+    routineObservationDayController.text = '';
   }
 
   void resetProviders(){
@@ -57,9 +57,9 @@ class CreateRoutine2Screen extends ConsumerWidget {
   }
 
 
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
-        // Aquí puedes hacer alguna lógica antes de salir de la pantalla
         bool shouldPop = await _onExitDialog(context,ref);
         return shouldPop;
       },
@@ -85,7 +85,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
                     _AddExerciseView(exercisesOptions: exercisesOptions, indexDay: indexDay, indexWeek: indexWeek, actualTrainerCode: actualTrainer.trainerCode),
                     const SizedBox(height: 20),
                     TextFormField(
-                      controller:  _routineObservationDayController,
+                      controller:  routineObservationDayController,
                       textCapitalization: TextCapitalization.words,
                       decoration: InputDecoration(
                         labelText: 'Observación del día',
@@ -110,7 +110,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
                         ElevatedButton(
                           onPressed: () {                       
                               ref.read(counterDayProvider.notifier).state++;
-                              ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
+                              ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, routineObservationDayController.text);
                               context.push('/createRoutine2', extra: routine);                      
                           },
                           child: const Icon(Icons.arrow_right),
@@ -127,7 +127,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
                     if(day == maxDays && week < routine.duration)
                     ElevatedButton(
                       onPressed: (){
-                        ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
+                        ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, routineObservationDayController.text);
                         context.push('/createRoutine2', extra: routine);
                         resetCounter(ref);
                         ref.read(counterWeekProvider.notifier).state++;
@@ -146,7 +146,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
                     if (day == maxDays && week == routine.duration) ...[
                       ElevatedButton(
                         onPressed: () {
-                          ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
+                          ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, routineObservationDayController.text);
                           generateRoutine();
                           Routine newRoutine = Routine(
                             title: routine.title,
@@ -286,6 +286,7 @@ class _AddExerciseViewState extends ConsumerState<_AddExerciseView> {
   @override
   void initState() {
     super.initState();
+    // ignore: unused_result
     ref.refresh(exercisesListProvider(widget.actualTrainerCode));
   }
 

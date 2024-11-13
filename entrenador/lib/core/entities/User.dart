@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TypeOfTraining.dart';
@@ -40,7 +42,7 @@ class Usuario {
     this.extraActivities,
     List<DateTime>? timesDone,
     required this.actualSesion,
-  }) : this.timesDone = timesDone ?? [];
+  }) : timesDone = timesDone ?? [];
 
   Usuario.parcial(
       {this.id,
@@ -59,63 +61,63 @@ class Usuario {
   }
 
   void clearTimesDone() {
-    this.timesDone.clear();
+    timesDone.clear();
   }
 
-    String getEmail() {
-      return mail;
-    }
+  String getEmail() {
+    return mail;
+  }
 
-    String getAge() {
-      return age;
-    }
+  String getAge() {
+    return age;
+  }
 
-    void setRoutine(Routine rutina) {
-      currentRoutine = rutina;
-      timesDone.clear();
-    }
+  void setRoutine(Routine rutina) {
+    currentRoutine = rutina;
+    timesDone.clear();
+  }
 
-    void addDayDone(DateTime day) {
-      timesDone.add(day);
-      timesDone.sort((a, b) => a.compareTo(b));
-    }
+  void addDayDone(DateTime day) {
+    timesDone.add(day);
+    timesDone.sort((a, b) => a.compareTo(b));
+  }
 
-    void removeDayDone(DateTime day) {
-      timesDone.remove(day);
-    }
+  void removeDayDone(DateTime day) {
+    timesDone.remove(day);
+  }
 
-    void setUserName(String name) {
-      this.userName = name;
-    }
+  void setUserName(String name) {
+    userName = name;
+  }
 
-    Trainer? getProfesor() {
-      return profesor;
-    }
+  Trainer? getProfesor() {
+    return profesor;
+  }
 
-    void setProfesor(Trainer profesor) {
-      profesor = profesor;
-    }
+  void setProfesor(Trainer profesor) {
+    profesor = profesor;
+  }
 
-    void setAge(String edad) {
-      age = edad;
-    }
+  void setAge(String edad) {
+    age = edad;
+  }
 
-    void setTraining(TypeOfTraining training) {
-      this.training = training;
-    }
+  void setTraining(TypeOfTraining training) {
+    this.training = training;
+  }
 
-    void setEmail(String email) {
-      mail = email;
-    }
-    void completeSesion(){
-    actualSesion = (actualSesion) + 1; //actualSesion = (actualSesion ?? 0) + 1;
-    }
+  void setEmail(String email) {
+    mail = email;
+  }
+  void completeSesion(){
+  actualSesion = (actualSesion) + 1; //actualSesion = (actualSesion ?? 0) + 1;
+  }
 
-    void resetSesions(){
-      actualSesion = 0;
-    }
+  void resetSesions(){
+    actualSesion = 0;
+  }
 
-    factory Usuario.fromJson(Map<String, dynamic> json) {
+  factory Usuario.fromJson(Map<String, dynamic> json) {
     return Usuario(
       id: json['id'],
       userName: json['userName'],
@@ -139,6 +141,5 @@ class Usuario {
 
     toJson() {}
   }
-
   toJson() {}
 

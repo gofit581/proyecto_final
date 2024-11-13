@@ -1,11 +1,13 @@
-import 'package:date_format/date_format.dart';
-import 'package:entrenador/presentation/login_screen.dart';
-import 'package:entrenador/presentation/register_entrenador_data_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:date_format/date_format.dart';
+import 'package:intl/intl.dart';
+
+import 'package:entrenador/presentation/login_screen.dart';
+import 'package:entrenador/presentation/register_entrenador_data_screen.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
-import 'package:intl/intl.dart';
+
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

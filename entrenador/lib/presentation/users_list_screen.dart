@@ -1,12 +1,13 @@
-import 'package:entrenador/presentation/student_profile_screen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter/material.dart';
+
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
-import 'package:flutter/material.dart';
 import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/User.dart';
 import 'package:entrenador/services/users_getter_service.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
-import 'package:go_router/go_router.dart';
+
 
 class UsersListScreen extends StatefulWidget {
   static const String name = 'UsersListScreen';
@@ -29,7 +30,6 @@ class _UsersListScreenState extends State<UsersListScreen> {
     if (_loggedTrainer != null) {
       _clientsFuture = _usersGetterService.getUsersByTrainerId(_loggedTrainer!.trainerCode);
     } else {
-      // Manejar el caso en que el entrenador logueado es null
       _clientsFuture = Future.error('Ningún entrenador ha iniciado sesión');
     }
   }

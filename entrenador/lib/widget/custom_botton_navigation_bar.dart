@@ -1,14 +1,12 @@
 import 'package:entrenador/presentation/provider/counter_day_routine.dart';
 import 'package:entrenador/presentation/provider/current_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:entrenador/presentation/create_routine_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../presentation/profile_screen.dart';
 
 class CustomBottomNavigationBar extends ConsumerWidget {
   final int currentIndex;
-
 
 const CustomBottomNavigationBar({super.key, required this.currentIndex});
 
@@ -54,40 +52,48 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
         if(changeValue){
           bool discardChanges = await _showDiscardChangesDialog(context, ref);
           if (discardChanges) {
-          switch (index) {
-            case 0:
-              context.goNamed('ListRoutine');
-              break;
-            case 1:
-              context.goNamed('UsersListScreen');
-              break;
-            case 2:
-              context.goNamed('CalendarioScreen');
-              break;
-            case 3:
-              context.goNamed('ProfileScreen');
-              break;
-            default:
-              break;
+            switch (index) {
+              case 0:
+                // ignore: use_build_context_synchronously
+                context.goNamed('ListRoutine');
+                break;
+              case 1:
+                // ignore: use_build_context_synchronously
+                context.goNamed('UsersListScreen');
+                break;
+              case 2:
+                // ignore: use_build_context_synchronously
+                context.goNamed('CalendarioScreen');
+                break;
+              case 3:
+                // ignore: use_build_context_synchronously
+                context.goNamed('ProfileScreen');
+                break;
+              default:
+                break;
+            }
           }
-        }
         }
         switch (index) {
-            case 0:
-              context.goNamed('ListRoutine');
-              break;
-            case 1:
-              context.goNamed('UsersListScreen');
-              break;
-            case 2:
-              context.goNamed('CalendarioScreen');
-              break;
-            case 3:
-              context.goNamed('ProfileScreen');
-              break;
-            default:
-              break;
-          }
+          case 0:
+            // ignore: use_build_context_synchronously
+            context.goNamed('ListRoutine');
+            break;
+          case 1:
+            // ignore: use_build_context_synchronously
+            context.goNamed('UsersListScreen');
+            break;
+          case 2:
+            // ignore: use_build_context_synchronously
+            context.goNamed('CalendarioScreen');
+            break;
+          case 3:
+            // ignore: use_build_context_synchronously
+            context.goNamed('ProfileScreen');
+            break;
+          default:
+            break;
+        }
       },
     );
   }
@@ -117,8 +123,7 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
           ],
         );
       },
-    ) ??
-        false;
+    ) ?? false;
   }
 }
 
@@ -131,7 +136,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
+  final int _currentIndex = 0;
   final List<Widget> _children = [
     const Center(child: Text('Pantalla Rutina')),
     const Center(child: Text('Pantalla Lista Alumnos')),
@@ -140,11 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   ];
 
-  void _onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

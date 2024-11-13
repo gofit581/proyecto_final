@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:entrenador/widget/custom_botton_navigation_bar.dart';
-import 'package:entrenador/presentation/clases_dia_screen.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
 import 'package:go_router/go_router.dart';
 
