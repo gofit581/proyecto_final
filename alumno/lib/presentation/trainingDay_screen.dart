@@ -241,6 +241,7 @@ void _sesionCompleta(BuildContext context, Usuario actualUser, int totalSesions)
                 userManager.setLoggedUser(usuario);
               }                
               // ignore: use_build_context_synchronously
+              Navigator.of(context).pop();
               context.goNamed(CalendarioScreen.name);
             },
             

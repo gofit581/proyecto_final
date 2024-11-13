@@ -6,6 +6,7 @@ import 'package:entrenador/core/entities/Trainer.dart';
 import 'package:entrenador/core/entities/User.dart';
 import 'package:entrenador/services/users_getter_service.dart';
 import 'package:entrenador/core/entities/TrainerManager.dart';
+import 'package:go_router/go_router.dart';
 
 class UsersListScreen extends StatefulWidget {
   static const String name = 'UsersListScreen';
@@ -65,12 +66,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
                     ],
                   ),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => StudentProfileScreen(usuarioSeleccionado: client),
-                        ),
-                    );
+                    context.push('/studentProfileScreen', extra: client);
                   },
                 );
               },

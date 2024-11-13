@@ -15,6 +15,8 @@ import 'package:entrenador/presentation/login_screen.dart';
 import 'package:entrenador/presentation/notification_screen.dart';
 import 'package:entrenador/presentation/register_entrenador_data_screen.dart';
 import 'package:entrenador/presentation/register_screen.dart';
+import 'package:entrenador/presentation/student_profile_screen.dart';
+import 'package:flutter/material.dart';
 import '../presentation/profile_screen.dart';
 import 'package:entrenador/presentation/users_list_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -40,7 +42,23 @@ final appRouter = GoRouter(routes: [
   GoRoute(
       path: '/alumnos',
       builder: (context, state) => UsersListScreen(),
-      name: UsersListScreen.name),
+      name: UsersListScreen.name,
+      pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: const UsersListScreen(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              const begin = Offset(1.0, 0.0); 
+              const end = Offset.zero;         
+              const curve = Curves.easeInOut;  
+
+              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              var offsetAnimation = animation.drive(tween);
+
+              return SlideTransition(position: offsetAnimation, child: child);
+            },
+          );
+        },    
+    ),  
   // GoRoute(
   //   path: '/home',
   //   builder: (context, state) {
@@ -54,6 +72,21 @@ final appRouter = GoRouter(routes: [
       return MyProfileScreen();
     },
     name: MyProfileScreen.name,
+    pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          child: MyProfileScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(-1.0, 0.0); 
+            const end = Offset.zero;         
+            const curve = Curves.easeInOut;  
+
+            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(position: offsetAnimation, child: child);
+          },
+        );
+      },   
   ),
   GoRoute(
       path: '/register',
@@ -64,20 +97,84 @@ final appRouter = GoRouter(routes: [
       builder: (context, state) => RegisterEntrenadorDataScreen(
             trainer: state.extra as Trainer,
           ),
-      name: RegisterEntrenadorDataScreen.name),
+      name: RegisterEntrenadorDataScreen.name,
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          child: RegisterEntrenadorDataScreen(trainer: state.extra as Trainer),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(1.0, 0.0); 
+            const end = Offset.zero;         
+            const curve = Curves.easeInOut;  
+
+            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(position: offsetAnimation, child: child);
+          },
+        );
+      },     
+      ),
+
   GoRoute(
       path: '/agenda',
       builder: ((context, state) => AgendaScreen()),
-      name: AgendaScreen.name),
+      name: AgendaScreen.name,
+      pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: EditRoutineScreen(routine: state.extra as Routine,),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              const begin = Offset(0.0, 1.0);  
+              const end = Offset.zero;           
+              const curve = Curves.easeInOut;
+
+              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              var offsetAnimation = animation.drive(tween);
+
+              return SlideTransition(position: offsetAnimation, child: child);
+            },
+          );
+        }, 
+      ),
   GoRoute(
     path: '/calendar',
     builder: (context, state) => CalendarioScreen(),
     name: CalendarioScreen.name,
+    pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: CalendarioScreen(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              const begin = Offset(0.0, 1.0);  
+              const end = Offset.zero;           
+              const curve = Curves.easeInOut;
+
+              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              var offsetAnimation = animation.drive(tween);
+
+              return SlideTransition(position: offsetAnimation, child: child);
+            },
+          );
+        },   
   ),
   GoRoute(
       path: '/ListRoutine',
       builder: ((context, state) => const ListRoutine()),
-      name: ListRoutine.name),
+      name: ListRoutine.name,
+      pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: const ListRoutine(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              const begin = Offset(1.0, 0.0); 
+              const end = Offset.zero;         
+              const curve = Curves.easeInOut;  
+
+              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              var offsetAnimation = animation.drive(tween);
+
+              return SlideTransition(position: offsetAnimation, child: child);
+            },
+          );
+        },    
+      ),
   GoRoute(
       path: '/AddRoutine',
       builder: ((context, state) =>
@@ -103,8 +200,23 @@ final appRouter = GoRouter(routes: [
   GoRoute(
     path: '/createRoutine',
     builder: (context, state) =>
-        CreateRoutineScreen(),
+        const CreateRoutineScreen(),
     name: CreateRoutineScreen.name,
+    pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: const CreateRoutineScreen(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              const begin = Offset(0.0, 1.0);  
+              const end = Offset.zero;           
+              const curve = Curves.easeInOut;
+
+              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              var offsetAnimation = animation.drive(tween);
+
+              return SlideTransition(position: offsetAnimation, child: child);
+            },
+          );
+        },  
   ),
   GoRoute(
     path: '/createRoutine2',
@@ -112,6 +224,21 @@ final appRouter = GoRouter(routes: [
       routine: state.extra as Routine,
     ),
     name: CreateRoutine2Screen.name,
+    pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          child: CreateRoutine2Screen(routine: state.extra as Routine,),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(1.0, 0.0); 
+            const end = Offset.zero;         
+            const curve = Curves.easeInOut;  
+
+            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(position: offsetAnimation, child: child);
+          },
+        );
+      }, 
   ),
   GoRoute(
     path: '/clasesDia',
@@ -128,6 +255,21 @@ final appRouter = GoRouter(routes: [
       return CreateExerciseScreen(routine: routine);
     },
     name: CreateExerciseScreen.name,
+    pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          child: CreateExerciseScreen(routine: state.extra as Routine),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(1.0, 0.0); 
+            const end = Offset.zero;         
+            const curve = Curves.easeInOut;  
+
+            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(position: offsetAnimation, child: child);
+          },
+        );
+      },  
   ),
   GoRoute(
     path: '/editRoutine',
@@ -136,11 +278,63 @@ final appRouter = GoRouter(routes: [
       return EditRoutineScreen(routine: routine);
     },
     name: EditRoutineScreen.name,
+    pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          child: EditRoutineScreen(routine: state.extra as Routine,),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(1.0, 0.0); 
+            const end = Offset.zero;         
+            const curve = Curves.easeInOut;  
+
+            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(position: offsetAnimation, child: child);
+          },
+        );
+      }, 
   ),
+  GoRoute(
+    path: '/studentProfileScreen',
+    builder: (context, state) => StudentProfileScreen(
+      usuarioSeleccionado: state.extra as Usuario,
+    ),
+    name: StudentProfileScreen.name,
+    pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          child: StudentProfileScreen(usuarioSeleccionado: state.extra as Usuario),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(1.0, 0.0); 
+            const end = Offset.zero;         
+            const curve = Curves.easeInOut;  
+
+            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(position: offsetAnimation, child: child);
+          },
+        );
+      },   
+    ),
   GoRoute(
     path: '/notifications',
     builder: (context, state) =>
         NotificationScreen(),
     name: NotificationScreen.name,
+    pageBuilder: (context, state) {
+    return CustomTransitionPage(
+      child: const NotificationScreen(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, -1.0); 
+        const end = Offset.zero;           
+        const curve = Curves.easeInOut;
+
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var offsetAnimation = animation.drive(tween);
+
+        return SlideTransition(position: offsetAnimation, child: child);
+      },
+    );
+  },
   ),
 ]);
