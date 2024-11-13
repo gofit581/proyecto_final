@@ -70,7 +70,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
             data: (exercisesOptions){        
             return SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
                     Text('$indexWeek'),
@@ -311,7 +311,7 @@ class _AddExerciseViewState extends ConsumerState<_AddExerciseView> {
         const SizedBox(height: 20),
         ElevatedButton(
           onPressed: (){
-             ref.read(exercisesNotifierProvider.notifier).addExercise(widget.indexWeek, widget.indexDay,Exercise.create("", 0, 0));
+             ref.read(exercisesNotifierProvider.notifier).addExercise(widget.indexWeek, widget.indexDay,Exercise.create("", 0, 0," "," "));
              ref.read(changesProvider.notifier).state = true;
              },
           child: const Text('+'),
@@ -364,6 +364,9 @@ class _ExerciseEntryState extends ConsumerState<_ExerciseEntry> {
                 setState(() {
                   exerciseSelected = value;
                   widget.exercise.setTitle(value);
+                  Exercise exercise = widget.exercises.firstWhere((element)=>element.title == value);
+                  widget.exercise.description = exercise.description;
+                  widget.exercise.imageLink = exercise.imageLink;
                 });
               }
             },

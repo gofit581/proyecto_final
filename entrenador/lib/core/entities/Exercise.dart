@@ -14,6 +14,8 @@ class Exercise {
     this.title,
     this.series,
     this.repetitions,
+    this.imageLink,
+    this.description,
   );
 
    Exercise({
@@ -32,6 +34,14 @@ class Exercise {
 
   void setTitle(String title){
     this.title = title;
+  }
+
+  void setDescription(String description){
+    this.description = description;
+  }
+
+  void setImageLink(String imageLink){
+    this.imageLink = imageLink;
   }
 
 void aumentarSerie(){

@@ -1,5 +1,4 @@
 import 'package:entrenador/core/entities/Exercise.dart';
-import 'package:entrenador/core/entities/Routine.dart';
 import 'package:entrenador/core/entities/TrainingDay.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,7 +27,7 @@ class ExercisesNotifier extends Notifier<RoutineNoti> {
       weeks: List.generate(weeksCount, (weekIndex) => Week(
         days: List.generate(daysPerWeek, (dayIndex) => TrainingDay(
           observation: '',
-          exercises: [Exercise.create(" ", 0, 0)],
+          exercises: [Exercise.create(" ", 0, 0," "," ")],
         )),
       )),
     );
