@@ -9,6 +9,7 @@ class ExerciseDetailScreen extends StatefulWidget {
   final Exercise exercise;
 
   @override
+  // ignore: library_private_types_in_public_api
   _ExerciseDetailScreenState createState() => _ExerciseDetailScreenState();
 }
 
@@ -18,10 +19,12 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
   @override
   void initState() {
     super.initState();
+    // ignore: avoid_print
     print(widget.exercise.imageLink);
     if (widget.exercise.imageLink != null) {
       //podria ser que no le llega bien el parametro por eso no lo convierte
       final videoId = YoutubePlayer.convertUrlToId(widget.exercise.imageLink!);
+      // ignore: avoid_print
       print(videoId);
       _youtubeController = YoutubePlayerController(
         initialVideoId: videoId!,
@@ -59,7 +62,7 @@ Widget build(BuildContext context) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: Card(
                   color: Colors.white,
@@ -93,7 +96,7 @@ Widget build(BuildContext context) {
               ),
               const SizedBox(height: 20),
 
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: Card(
                   color: Colors.white,
@@ -168,139 +171,4 @@ Widget build(BuildContext context) {
       ],
     );
   }
-
 }
-
-
-
-
-/*
-class ExerciseDetailScreen extends StatefulWidget {
-  const ExerciseDetailScreen({super.key, required this.exercise});
-
-  static const String name = 'ExerciseDetail';
-  final Exercise exercise;
-
-  @override
-  _ExerciseDetailScreenState createState() => _ExerciseDetailScreenState();
-}
-
-class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
-  late VideoPlayerController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    
-    if (widget.exercise.imageLink != null && widget.exercise.imageLink!.isNotEmpty) {
-      _controller = VideoPlayerController.networkUrl(Uri.parse(widget.exercise.imageLink!))
-        ..initialize().then((_) {
-          print("Video inicializado correctamente");
-          setState(() {}); // Actualiza el estado cuando el video esté listo
-        }).catchError((error) {
-          print("Error al cargar el video: $error"); // Log de error
-        });
-    } else {
-      print("No hay URL de video disponible");
-    }
-  }
-
-
-  @override
-  void dispose() {
-    _controller.dispose(); // Libera el controlador al salir de la pantalla
-    super.dispose();
-  }
-
-   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.exercise.title, 
-          style: const TextStyle(
-
-          )
-        ),
-        backgroundColor: Colors.white,
-      ),
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Título y Descripción
-              Center(
-                child: Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                  elevation: 5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('DETALLES DEL EJERCICIO', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 10),
-                        Text('SERIES: ${widget.exercise.series}', style: const TextStyle(fontSize: 16)),
-                        Text('REPETICIONES: ${widget.exercise.repetitions}', style: const TextStyle(fontSize: 16)),
-                        Text('DESCRIPCIÓN: ${widget.exercise.description}', style: const TextStyle(fontSize: 16)),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              
-              // Video con Contenedor estilizado
-              if (widget.exercise.imageLink != null && widget.exercise.imageLink!.isNotEmpty)
-                Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                  elevation: 5,
-                  child: Column(
-                    children: [
-                      _controller.value.isInitialized
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: AspectRatio(
-                                aspectRatio: _controller.value.aspectRatio,
-                                child: VideoPlayer(_controller),
-                              ),
-                            )
-                          : const Padding(
-                              padding: EdgeInsets.all(20),
-                              child: CircularProgressIndicator(),
-                            ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: VideoProgressIndicator(_controller, allowScrubbing: true),
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-                          color: Colors.deepPurpleAccent,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _controller.value.isPlaying ? _controller.pause() : _controller.play();
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                )
-              else
-                Center(
-                  child: Text("No hay video disponible para este ejercicio",
-                      style: TextStyle(color: Colors.red[900], fontSize: 16)),
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-*/

@@ -53,22 +53,6 @@ class Usuario {
       required this.timesDone,
       required this.actualSesion});
 
-  // Usuario({
-  //   this.id,
-  //   required this.userName,
-  //   required this.password,
-  //   required this.mail,
-  //   required this.age,
-  //   required this.idTrainer,
-  //   required this.objectiveDescription,
-  //   required this.experience,
-  //   required this.discipline,
-  //   required this.trainingDays,
-  //   required this.trainingDuration,
-  //   required this.injuries,
-  //   required this.extraActivities,
-  // });
-
   @override
   String toString() {
     return userName;
@@ -154,8 +138,6 @@ class Usuario {
   }
 
     toJson() {}
-
-  // static fromJson(claseData) {}
   }
 
   toJson() {}
