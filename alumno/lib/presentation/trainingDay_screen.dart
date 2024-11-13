@@ -41,6 +41,7 @@ Usuario actualUser = UserManager().getLoggedUser()!;
     return Scaffold(
       appBar: CustomAppBar(title: actualRoutine.title!),
       bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -91,47 +92,117 @@ class _ExercisesViewState extends State<_ExercisesView> {
 
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(widget.actualRoutine.exercises[widget.indexWeek][widget.indexDay].observation),
+        Text(
+          widget.actualRoutine.exercises[widget.indexWeek][widget.indexDay].observation.toUpperCase(),
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.grey[700],
+          ),
+          textAlign: TextAlign.center,
+        ),
+
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: exercises.length,
           itemBuilder: (BuildContext context, int index) {
-            return Card(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(exercises[index].title),
-                  Text(' ${exercises[index].series} X ${exercises[index].repetitions}'),
-                  Checkbox(
-                    value: checked[widget.indexWeek][index],
-                    onChanged: (bool? value) {
-                      setState(() {
-                        checked[widget.indexWeek][index] = value!;
-                      });
-                    },
+            return Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Card(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                elevation: 10,
+                shadowColor: const Color.fromARGB(255, 22, 22, 180).withOpacity(0.3),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          exercises[index].title,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ),
+              
+                      Text(
+                        '${exercises[index].series} X ${exercises[index].repetitions}',
+                        style: const TextStyle(fontSize: 14, color: Colors.black87),
+                      ),
+              
+                      Checkbox(
+                        activeColor: const Color.fromARGB(255, 22, 22, 180),
+                        value: checked[widget.indexWeek][index],
+                        onChanged: (bool? value) {
+                          setState(() {
+                            checked[widget.indexWeek][index] = value!;
+                          });
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.arrow_forward, color: Colors.black54),
+                        onPressed: () {
+                          context.push('/ExerciseDetail', extra: exercises[index]);
+                        },
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             );
           },
         ),
-        const SizedBox(height: 20),
-        SizedBox(
-          width: 300,
-          child: LinearProgressIndicator(
-            value: progress,
-            minHeight: 10,
-          ),
+
+        const SizedBox(height: 30),
+
+        Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: SizedBox(
+                width: 300,
+                child: LinearProgressIndicator(
+                  value: progress,
+                  minHeight: 12,
+                  backgroundColor:Colors.blue[100]?.withOpacity(0.5),
+                  valueColor: const AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 22, 22, 180)),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              '${(progress * 100).toStringAsFixed(0)}% completado',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 20),
-        Text('${(progress * 100).toStringAsFixed(0)}% completado'),
-        const SizedBox(height: 20),
+
+        const SizedBox(height: 10),
+
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromARGB(255, 22, 22, 180),
+          ),
           onPressed: allCompleted ? () => _sesionCompleta(context, widget.actualUser, widget.totalSesions) : null,
-          
-          child: const Text('Finalizar Entrenamiento'),
+          child: Text(
+            'Finalizar Entrenamiento',
+            style: TextStyle(
+              fontSize: 15, 
+               color: allCompleted ? Colors.white : Colors.grey[600]
+            ),
+          ),
         ),
       ],
     );

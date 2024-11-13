@@ -33,6 +33,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
     });
 
     Usuario usuarioFromDB = await _usersGetterService.getUserById(widget.usuarioSeleccionado.id!);
+    print(usuarioFromDB);
 
     setState(() {
       isLoading = false;

@@ -276,7 +276,7 @@ class _AddExerciseViewState extends ConsumerState<_AddExerciseView> {
         ),     
         const SizedBox(height: 20),
         ElevatedButton(
-          onPressed: (){ ref.read(exercisesNotifierProvider.notifier).addExercise(widget.indexWeek, widget.indexDay,Exercise.create("", 0, 0));
+          onPressed: (){ ref.read(exercisesNotifierProvider.notifier).addExercise(widget.indexWeek, widget.indexDay,Exercise.create("", 0, 0, " ", " "));
           ref.read(changesProvider.notifier).state = true;},
           child: const Text('+'),
         ),
