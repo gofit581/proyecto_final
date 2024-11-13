@@ -17,8 +17,6 @@ class MyProfileScreen extends StatefulWidget {
   UserManager userManager = UserManager();
 
   MyProfileScreen({super.key});
-  
-  get actualUsuario => null;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -81,6 +79,20 @@ Future<void> _loadUserData() async {
     );
   }
 
+  Future<void> _refreshUserData() async {
+      setState(() {
+        isLoading = true;
+        UserManager().refreshUser(actualUsuario!);
+      });
+      await _loadUserData();
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Perfil actualizado')),
+      );
+    }
+    
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,6 +101,10 @@ Future<void> _loadUserData() async {
       appBar: CustomAppBar(
         title: 'Mi Perfil',
         actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _refreshUserData
+          ),
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () async {
