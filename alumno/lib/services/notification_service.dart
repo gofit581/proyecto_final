@@ -7,7 +7,6 @@ class NotificationService {
 
  Future<List<CustomNotification>> getNotifications() async {
     final response = await http.get(Uri.parse('$baseUrl/Notification'));
-
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       return jsonResponse.map((data) => CustomNotification.fromJson(data)).toList();
@@ -24,20 +23,8 @@ class NotificationService {
         notification.toJson()
       ),
     );
-
     if (response.statusCode != 201) {
       throw Exception('Error al agregar la notificación');
     }
   }
-
-
-  /*
-  Future<void> deleteNotification(String idTrainer) async {
-    final url = '$baseUrl/Notification/$idTrainer'; 
-    final response = await http.delete(Uri.parse(url));
-
-    if (response.statusCode != 200) {
-      throw Exception('Error al eliminar la notificación');
-    }
-  }*/
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:alumno/core/entities/TypeOfNotification.dart';
 
 class CustomNotification {

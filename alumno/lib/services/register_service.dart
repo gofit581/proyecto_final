@@ -80,23 +80,17 @@ class RegisterService {
   Future<Routine> fetchRoutine(int typeOfRoutine) async {
     const baseUrl = 'https://665887705c3617052648e130.mockapi.io/api';
     final response = await http.get(Uri.parse('$baseUrl/routines?typeOfTraining=$typeOfRoutine'));
-
     if (response.statusCode != 200) {
       throw Exception('Failed to fetch routine');
     }
-
     final routineData = jsonDecode(response.body);
-
-    // Si la respuesta contiene más de una rutina, seleccionamos la primera
     final List<dynamic> routines = routineData is List ? routineData : [routineData];
     final routine = routines.first;
-
       List<List<TrainingDay>> exercises = (routineData['exercises'] as List)
             .map((dayData) => (dayData as List)
                 .map((exerciseJson) => TrainingDay.fromJson(exerciseJson))
                 .toList())
             .toList();
-
     return Routine(
       title: routine['title'],
       description: routine['description'],
@@ -109,44 +103,4 @@ class RegisterService {
       trainingDays: routineData['trainingDays'],
     );
   }
-
-
-  // Future<Routine> fetchRoutineByTrainingId(int typeOfTrainingId) async {
-  //   // final response = await http.get(Uri.parse('$baseUrl/routines'));
-
-  //   final response = await http.get(
-  //     Uri.parse('$baseUrl/routines'),
-  //     headers: {'Content-Type': 'application/json'},
-  //   );
-
-  //   if (response.statusCode != 200) {
-  //     throw Exception('Failed to fetch routines');
-  //   }
-
-  //   final List<dynamic> routinesData = jsonDecode(response.body);
-
-  //   // Buscar la rutina que coincida con el typeOfTrainingId
-  //   final routineData = routinesData.firstWhere(
-  //     (routine) => routine['typeOfTraining'] == typeOfTrainingId,
-  //     orElse: () => throw Exception(
-  //         'Routine not found for training id: $typeOfTrainingId, $routinesData'),
-  //   );
-
-  //   List<Exercise> exercises = (routineData['exercises'] as List)
-  //       .map((exerciseData) => Exercise(
-  //             title: exerciseData['title'],
-  //             imageLink: exerciseData['imageLink'],
-  //             description: exerciseData['description'],
-  //           ))
-  //       .toList();
-
-  //   return Routine(
-  //     title: routineData['title'],
-  //     description: routineData['description'],
-  //     duration: routineData['duration'],
-  //     exercises: exercises,
-  //     aim: routineData['aim'],
-  //     typeOfTraining: routineData['typeOfTraining'],
-  //   );
-  // }
 }

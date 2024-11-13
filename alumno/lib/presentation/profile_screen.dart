@@ -88,6 +88,7 @@ Future<void> _loadUserData() async {
       setState(() {
         isLoading = false;
       });
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Perfil actualizado')),
       );

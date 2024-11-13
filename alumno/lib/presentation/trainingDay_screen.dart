@@ -1,9 +1,8 @@
 // ignore_for_file: file_names
-
+import 'package:flutter/material.dart';
 import 'package:alumno/core/entities/CustomNotification.dart';
 import 'package:alumno/core/entities/TypeOfNotification.dart';
 import 'package:alumno/services/notification_service.dart';
-import 'package:flutter/material.dart';
 import 'package:alumno/core/entities/Exercise.dart';
 import 'package:alumno/core/entities/Routine.dart';
 import 'package:alumno/core/entities/User.dart';
@@ -242,6 +241,7 @@ void _sesionCompleta(BuildContext context, Usuario actualUser, int totalSesions)
               }                
               // ignore: use_build_context_synchronously
               Navigator.of(context).pop();
+              // ignore: use_build_context_synchronously
               context.goNamed(CalendarioScreen.name);
             },
             

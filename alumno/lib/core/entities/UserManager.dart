@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:alumno/core/entities/User.dart';
 import '../../services/auth_service.dart';
 import '../../services/update_service.dart';
@@ -7,6 +9,7 @@ class UserManager {
   static RegisterService registerService = RegisterService();
   static UpdateService updateService = UpdateService();
   static AuthService authService = AuthService(UserManager());
+  // ignore: prefer_final_fields
   static List<Usuario> _usuarios = [];
   static Usuario? _loggedUser;
   
@@ -26,6 +29,7 @@ class UserManager {
       return _usuarios.firstWhere(
           (usuario) => usuario.mail == mail && usuario.password == password);
     } catch (e) {
+      // ignore: avoid_print
       print('Error al buscar usuario: $e');
       return null;
     }
@@ -50,8 +54,7 @@ class UserManager {
     usuarioViejo.trainingDuration = usuarioActualizado.trainingDuration;
     usuarioViejo.injuries = usuarioActualizado.injuries;
     usuarioViejo.extraActivities = usuarioActualizado.extraActivities;
-    
-    //Agregar mas si es necesario
+    //Agregar cosas si es necesario
   }
 
   Future<void> refreshUser (Usuario usuarioDesactualizado) async {
@@ -75,22 +78,18 @@ class UserManager {
     }
   }
 
-
   void updateUserInfo(String name, String email, String age, String password){
       _loggedUser!.setUserName(name);
       _loggedUser!.setEmail(email);
       _loggedUser!.setAge(age);
       updateLoggedUser();
   }
-
   var validateId = (String idTrainter) async {
     bool result = await authService.searchIdTrainer(idTrainter);
     return result;
   };
-
   var validateMail = (String mail) async {
     bool result = await authService.validateMail(mail);
     return result;
   };
-
 }

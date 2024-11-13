@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class Exercise {
   final String title;
   String? imageLink;
@@ -46,6 +48,4 @@ class Exercise {
       repetitions: json['repetitions'],
     );
   }
-
-
 }

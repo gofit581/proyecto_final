@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:alumno/core/entities/Entrenador.dart';
 import 'package:alumno/core/entities/Routine.dart';
 
@@ -99,10 +101,7 @@ class Usuario {
     actualRoutine = null;
   }
 
-
-  //static fromJson(claseData) {}
-
-    factory Usuario.fromJson(Map<String, dynamic> json) {
+  factory Usuario.fromJson(Map<String, dynamic> json) {
     return Usuario(
       id: json['id'],
       userName: json['userName'],
@@ -124,5 +123,5 @@ class Usuario {
     );
   }
 
-    toJson() {} 
+  toJson() {} 
 }

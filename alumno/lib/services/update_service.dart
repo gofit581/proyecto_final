@@ -1,6 +1,4 @@
-import 'package:alumno/core/entities/Routine.dart';
 import 'package:alumno/core/entities/User.dart';
-import 'package:alumno/core/entities/UserManager.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -30,7 +28,6 @@ class UpdateService {
         usuario.actualRoutine!.toJson() : [],
       }),
     );
-
     if (response.statusCode != 200) {
       throw Exception('Failed to update user');
     }
@@ -55,6 +52,4 @@ class UpdateService {
       throw Exception('Failed to update user');
     }
   }
-
-
 }

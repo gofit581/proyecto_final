@@ -1,7 +1,13 @@
+// ignore_for_file: file_names
+
 enum TypeOfTraining {
+  // ignore: constant_identifier_names
   LoseWeight,
+  // ignore: constant_identifier_names
   GainWeight,
+  // ignore: constant_identifier_names
   Running,
+  // ignore: constant_identifier_names
   Strength,
 }
 
@@ -19,10 +25,9 @@ extension TypeOfTrainingExtension on TypeOfTraining {
       default:
         return '';
     }
-  
   }
-
-   String toJson() {
+  
+  String toJson() {
     return toString().split('.').last;
   } 
 }
