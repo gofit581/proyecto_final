@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:alumno/core/entities/TrainingDay.dart';
 import 'package:alumno/core/entities/TypeOfTraining.dart';
 
@@ -36,7 +38,7 @@ class Routine {
   });
 
   int getDuration() {
-    return this.duration!;
+    return duration!;
   }
 
   String? getTitle() {
@@ -47,8 +49,9 @@ class Routine {
     return typeOfTraining?.name;
   }
 
-    factory Routine.fromJson(Map<String, dynamic> json) {
-      print(json);
+  factory Routine.fromJson(Map<String, dynamic> json) {
+    // ignore: avoid_print
+    print(json);
     return Routine(
       title: json['title'],
       description: json['description'],
@@ -72,46 +75,20 @@ class Routine {
   }
 
   Map<String, dynamic> toJson() {
-  return {
-    'title': title,
-    'description': description,
-    'duration': duration,
-    'aim': aim,
-    'typeOfTraining': typeOfTraining?.toJson(),
-    'rest': rest,
-    'idTrainer': idTrainer,
-    'trainingDays': trainingDays,
-    'id': id,
-    'exercises': exercises.map((week) =>
-      week.map((trainingDay) => trainingDay.toJson()).toList()
-    ).toList(),
-  };
-}
-
-/*   toJson() {
-    final Map<String, dynamic> data = {
+    return {
       'title': title,
+      'description': description,
       'duration': duration,
-      'exercises': exercises.map((e) => e.map((exercise) => exercise.toJson()).toList()).toList(),
+      'aim': aim,
       'typeOfTraining': typeOfTraining?.toJson(),
       'rest': rest,
       'idTrainer': idTrainer,
       'trainingDays': trainingDays,
       'id': id,
+      'exercises': exercises.map((week) =>
+        week.map((trainingDay) => trainingDay.toJson()).toList()
+      ).toList(),
     };
-
-    if (description != null) data['description'] = description;
-    if (aim != null) data['aim'] = aim;
-    if (image != null) data['image'] = image;
-    
-    return data;
-  } */
-
-/*   void resetExercises() {
-      for (var exercise in exercises) {
-        exercise.done = false;
-      }
-  } */
-
+  }
 
 }

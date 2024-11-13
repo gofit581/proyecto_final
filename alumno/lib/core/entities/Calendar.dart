@@ -1,49 +1,50 @@
-import 'package:alumno/core/entities/UserManager.dart';
+// ignore_for_file: file_names
 
+import '../entities/UserManager.dart';
 class Calendar {
-  UserManager us_manager = UserManager();
+  UserManager userManager = UserManager();
 
   String getMonthName(int month) {
-    String es_month = "";
+    String esMonth = "";
     switch (month) {
       case 1:
-        es_month = "Enero";
+        esMonth = "Enero";
         break;
       case 2:
-        es_month = "Febrero";
+        esMonth = "Febrero";
         break;
       case 3:
-        es_month = "Marzo";
+        esMonth = "Marzo";
         break;
       case 4:
-        es_month = "Abril";
+        esMonth = "Abril";
         break;
       case 5:
-        es_month = "Mayo";
+        esMonth = "Mayo";
         break;
       case 6:
-        es_month = "Junio";
+        esMonth = "Junio";
         break;
       case 7:
-        es_month = "Julio";
+        esMonth = "Julio";
         break;
       case 8:
-        es_month = "Agosto";
+        esMonth= "Agosto";
         break;
       case 9:
-        es_month = "Septiembre";
+        esMonth = "Septiembre";
         break;
       case 10:
-        es_month = "Octubre";
+        esMonth = "Octubre";
         break;
       case 11:
-        es_month = "Noviembre";
+        esMonth = "Noviembre";
         break;
       case 12:
-        es_month = "Diciembre";
+        esMonth = "Diciembre";
         break;
     }
-    return es_month;
+    return esMonth;
   }
 
   String getDayName(int day) {

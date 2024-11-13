@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:alumno/core/entities/TypeOfNotification.dart';
 import 'package:alumno/core/entities/TypeOfTraining.dart';
 import 'package:alumno/core/entities/UserManager.dart';
@@ -7,8 +10,6 @@ import 'package:alumno/services/notification_service.dart';
 import 'package:alumno/services/update_service.dart';
 import 'package:alumno/widget/custom_app_bar.dart';
 import 'package:alumno/core/entities/CustomNotification.dart' as alumno_notification;
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../core/entities/User.dart';
 
