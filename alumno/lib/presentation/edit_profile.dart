@@ -107,7 +107,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             onPressed: _saveProfile,
           ),
         ],
+        backgroundColor: Colors.white,
       ),
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

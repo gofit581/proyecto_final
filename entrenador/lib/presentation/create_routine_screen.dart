@@ -44,6 +44,7 @@ class _CreateRoutineScreenState extends ConsumerState<CreateRoutineScreen> {
       appBar: const CustomAppBar(
         title: 'Crear rutina',
       ),
+      backgroundColor: Colors.white,
       bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 0),
       body: SingleChildScrollView(
         child: Padding(
@@ -141,7 +142,15 @@ class _CreateRoutineScreenState extends ConsumerState<CreateRoutineScreen> {
 
                   }
                 },
-                child: const Text('Continuar'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue[100],
+                ),
+                child: const Text(
+                  'CONTINUAR', 
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 22, 22, 180),
+                  )
+                ),
               ),
             ],
           ),

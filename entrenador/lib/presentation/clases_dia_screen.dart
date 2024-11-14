@@ -47,12 +47,13 @@ class _ClasesDiaScreenState extends State<ClasesDiaScreen> {
       appBar: const CustomAppBar(
         title: 'Clases del Día',
       ),
+      backgroundColor: Colors.white,
       bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
       body: clasesDelDia.isEmpty
-          ? const Center(
+          ? Center(
               child: Text(
                 'No hay clases programadas para este día.',
-                style: TextStyle(fontSize: 16, color: Colors.grey),
+                style: TextStyle(fontSize: 16, color: Colors.grey[700]),
               ),
             )
           : ListView.builder(

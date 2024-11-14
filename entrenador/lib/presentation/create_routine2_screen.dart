@@ -66,6 +66,7 @@ class CreateRoutine2Screen extends ConsumerWidget {
       child: Scaffold(
           appBar: CustomAppBar(title: 'Rutina: ${routine.title}'),
           bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 0),
+          backgroundColor: Colors.white,
           body: exercisesAsync.when(
             data: (exercisesOptions){        
             return SingleChildScrollView(
@@ -73,14 +74,43 @@ class CreateRoutine2Screen extends ConsumerWidget {
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
-                    Text('$indexWeek'),
-                    Text('$indexDay'),
-                    Text('Semana $week de ${routine.duration}'),
-                    Text('Día de rutina $day/$maxDays'),
-                    Text(routine.title),
-                    Text('Objetivo: ${routine.typeOfTraining?.name}'),
-                    Text('Duración en semanas: ${routine.duration}'),
-                    Text('Tiempo de descanso entre ejercicios: ${routine.rest} segundos'),
+                    Container(
+                      margin: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.blue[100]!.withOpacity(0.6),
+                            spreadRadius: 2,
+                            blurRadius: 6,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('ÍNDICE SEMANA: $indexWeek', style: TextStyle(fontSize: 16, color: Colors.grey[800])),
+                          const SizedBox(height: 4.0),
+                          Text('ÍNDICE DÍA: $indexDay', style: TextStyle(fontSize: 16, color: Colors.grey[800])),
+                          const SizedBox(height: 8.0),
+                          Text('SEMANA $week DE ${routine.duration}', style: TextStyle(fontSize: 16, color: Colors.grey[800])),
+                          const SizedBox(height: 4.0),
+                          Text('DÍA DE LA RUTINA $day/$maxDays', style: TextStyle(fontSize: 16, color: Colors.grey[800])),
+                          const SizedBox(height: 8.0),
+                          Text('TÍTULO: ${routine.title}', style: TextStyle(fontSize: 16, color: Colors.grey[800])),
+                          const SizedBox(height: 4.0),
+                          Text('OBJETIVO: ${routine.typeOfTraining?.name}', style: TextStyle(fontSize: 16, color: Colors.grey[800])),
+                          const SizedBox(height: 8.0),
+                          Text('DURACIÓN EN SEMANAS: ${routine.duration}', style: TextStyle(fontSize: 16, color: Colors.grey[800])),
+                          const SizedBox(height: 4.0),
+                          Text('TIEMPO DE DESCANSO ENTRE EJERCICIOS: ${routine.rest} SEGUNDOS', style: TextStyle(fontSize: 16, color: Colors.grey[800])),
+                        ],
+                      )             
+                    ),
+                    
                     const SizedBox(height: 20),
                     _AddExerciseView(exercisesOptions: exercisesOptions, indexDay: indexDay, indexWeek: indexWeek, actualTrainerCode: actualTrainer.trainerCode),
                     const SizedBox(height: 20),
@@ -120,7 +150,15 @@ class CreateRoutine2Screen extends ConsumerWidget {
                           onPressed: () {
                               context.push('/createExercise', extra: routine);
                           },
-                          child: const Text('Nuevo ejercicio'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue[100],
+                          ),
+                          child: const Text(
+                            'NUEVO EJERCICIO',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 22, 22, 180),
+                            )
+                          ),
                         ),
                       ],
                     ),
@@ -144,80 +182,92 @@ class CreateRoutine2Screen extends ConsumerWidget {
                       child: const Text('Semana anterior')
                       ),
                     if (day == maxDays && week == routine.duration) ...[
-                      ElevatedButton(
-                        onPressed: () {
-                          ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
-                          generateRoutine();
-                          Routine newRoutine = Routine(
-                            title: routine.title,
-                            description: routine.description,
-                            duration: routine.duration,
-                            aim: routine.aim,
-                            image: routine.image,
-                            typeOfTraining: routine.typeOfTraining,
-                            idTrainer: actualTrainer.trainerCode,
-                            trainingDays: routine.trainingDays,
-                            rest: routine.rest,
-                            exercises: routine.exercises,
-                          );                    
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Nueva Rutina: ${routine.title}'),
-                                content: const Text('¿Estás seguro que deseas crear esta nueva rutina?'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      routineManager.addRoutine(newRoutine, actualTrainer);
-                                      resetProviders();
-                                      Navigator.of(context).pop(); 
-                                      context.goNamed(CalendarioScreen.name); 
-                                    },
-                                    child: const Text('Aceptar'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop(); 
-                                    },
-                                    child: const Text('Cancelar'),
-                                  ),
-                                ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              ref.read(exercisesNotifierProvider.notifier).addObservation(indexWeek, indexDay, _routineObservationDayController.text);
+                              generateRoutine();
+                              Routine newRoutine = Routine(
+                                title: routine.title,
+                                description: routine.description,
+                                duration: routine.duration,
+                                aim: routine.aim,
+                                image: routine.image,
+                                typeOfTraining: routine.typeOfTraining,
+                                idTrainer: actualTrainer.trainerCode,
+                                trainingDays: routine.trainingDays,
+                                rest: routine.rest,
+                                exercises: routine.exercises,
+                              );                    
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Nueva Rutina: ${routine.title}'),
+                                    content: const Text('¿Estás seguro que deseas crear esta nueva rutina?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          routineManager.addRoutine(newRoutine, actualTrainer);
+                                          resetProviders();
+                                          Navigator.of(context).pop(); 
+                                          context.goNamed(CalendarioScreen.name); 
+                                        },
+                                        child: const Text('Aceptar'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop(); 
+                                        },
+                                        child: const Text('Cancelar'),
+                                      ),
+                                    ],
+                                  );
+                                },
                               );
                             },
-                          );
-                        },
-                        child: const Icon(Icons.check),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Nueva Rutina: ${routine.title}'),
-                                content: const Text('¿Estás seguro que deseas descartar esta nueva rutina?'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      resetProviders();
-                                      context.goNamed(CalendarioScreen.name); 
-                                    },
-                                    child: const Text('Aceptar'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop(); 
-                                    },
-                                    child: const Text('Cancelar'),
-                                  ),
-                                ],
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue[100],
+                            ),
+                            child: const Icon(Icons.check, color: Color.fromARGB(255, 22, 22, 180),
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Nueva Rutina: ${routine.title}'),
+                                    content: const Text('¿Estás seguro que deseas descartar esta nueva rutina?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          resetProviders();
+                                          context.goNamed(CalendarioScreen.name); 
+                                        },
+                                        child: const Text('Aceptar'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop(); 
+                                        },
+                                        child: const Text('Cancelar'),
+                                      ),
+                                    ],
+                                  );
+                                },
                               );
                             },
-                          );
-                        },
-                        child: const Icon(Icons.close),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue[100],
+                            ),
+                            child: const Icon(Icons.close, color: Color.fromARGB(255, 22, 22, 180)),
+                          ),
+                        ],
                       ),
                     ],
                   ],
@@ -309,12 +359,13 @@ class _AddExerciseViewState extends ConsumerState<_AddExerciseView> {
           },
         ),     
         const SizedBox(height: 20),
-        ElevatedButton(
+        FloatingActionButton(
           onPressed: (){
              ref.read(exercisesNotifierProvider.notifier).addExercise(widget.indexWeek, widget.indexDay,Exercise.create("", 0, 0," "," "));
              ref.read(changesProvider.notifier).state = true;
              },
-          child: const Text('+'),
+          backgroundColor: Colors.blue[100],
+          child: const Icon(Icons.add, color: Color.fromARGB(255, 22, 22, 180)),
         ),
       ],
     );
@@ -373,7 +424,7 @@ class _ExerciseEntryState extends ConsumerState<_ExerciseEntry> {
           ),
         ),
         IconButton(
-          icon: const Icon(Icons.remove_circle),
+          icon: const Icon(Icons.highlight_remove_sharp),
           onPressed: widget.onRemove,
         ),
         Column(

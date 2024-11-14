@@ -63,10 +63,19 @@ class _CalendarioScreenState extends State<CalendarioScreen> {
           ),
         ],
       ),
+      backgroundColor: Colors.white,
       bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 2),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Text(
+              'Hola ${_loggedTrainer!.userName}!',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[700],
+              ),
+              textAlign: TextAlign.center,
+            ),
             _buildTableCalendar(),
           ],
         ),
@@ -75,32 +84,52 @@ class _CalendarioScreenState extends State<CalendarioScreen> {
   }
 
   Widget _buildTableCalendar() {
-    return TableCalendar(
-      locale: 'es_ES', 
-      firstDay: DateTime.utc(2010, 10, 16),
-      lastDay: DateTime.utc(2030, 3, 14),
-      focusedDay: _focusedDay,
-      calendarFormat: _calendarFormat,
-      selectedDayPredicate: (day) {
-        return isSameDay(_selectedDay, day);
-      },
-      onDaySelected: (selectedDay, focusedDay) {
-        setState(() {
-          _selectedDay = selectedDay;
-          _focusedDay = focusedDay;
-        });
-        context.push('/clasesDia', extra: selectedDay);
-      },
-      onFormatChanged: (format) {
-        if (_calendarFormat != format) {
+    return Container(
+      margin: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0), 
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 6,
+            offset: const Offset(0, 3), 
+          ),
+        ],
+        border: Border.all(
+          color: const Color.fromARGB(255, 22, 22, 180),
+          width: 2.0,
+        ),
+      ),
+      child: TableCalendar(
+        locale: 'es_ES', 
+        firstDay: DateTime.utc(2010, 10, 16),
+        lastDay: DateTime.utc(2030, 3, 14),
+        focusedDay: _focusedDay,
+        calendarFormat: _calendarFormat,
+        selectedDayPredicate: (day) {
+          return isSameDay(_selectedDay, day);
+        },
+        onDaySelected: (selectedDay, focusedDay) {
           setState(() {
-            _calendarFormat = format;
+            _selectedDay = selectedDay;
+            _focusedDay = focusedDay;
           });
-        }
-      },
-      onPageChanged: (focusedDay) {
-        _focusedDay = focusedDay;
-      },
+          context.push('/clasesDia', extra: selectedDay);
+        },
+        onFormatChanged: (format) {
+          if (_calendarFormat != format) {
+            setState(() {
+              _calendarFormat = format;
+            });
+          }
+        },
+        onPageChanged: (focusedDay) {
+          _focusedDay = focusedDay;
+        },
+      ),
     );
   }
 }
