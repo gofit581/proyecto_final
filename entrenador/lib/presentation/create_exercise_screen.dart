@@ -40,6 +40,7 @@ class _CreateExerciseScreenState extends ConsumerState<CreateExerciseScreen> {
         title: 'Crear Ejercicio',
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 0),
+      backgroundColor: Colors.white,
       body:  SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -59,7 +60,7 @@ class _CreateExerciseScreenState extends ConsumerState<CreateExerciseScreen> {
                         ),
                       ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 30),
                 SizedBox(
                       width: 400,
                       child: TextField(
@@ -72,7 +73,7 @@ class _CreateExerciseScreenState extends ConsumerState<CreateExerciseScreen> {
                         ),
                       ),
                 ),
-                const SizedBox(height: 40),   
+                const SizedBox(height: 30),   
                 SizedBox(
                       width: 400,
                       child: TextField(
@@ -85,7 +86,7 @@ class _CreateExerciseScreenState extends ConsumerState<CreateExerciseScreen> {
                         ),
                       ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () async{
                   if (_exerciseTitleController.text.isEmpty || _exerciseImageLinkController.text.isEmpty || _exerciseDescriptionController.text.isEmpty) {
@@ -137,7 +138,15 @@ class _CreateExerciseScreenState extends ConsumerState<CreateExerciseScreen> {
                       },
                     );
                   },
-                  child: const Text('Agregar ejercicio'),             
+                  style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue[100],
+                        ),
+                  child: const Text(
+                    'AGREGAR EJERCICIO',
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 22, 22, 180),
+                      )
+                  ),            
                 ),                                          
               ],
             ),

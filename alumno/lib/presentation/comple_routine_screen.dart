@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+
 import 'package:alumno/core/entities/Routine.dart';
 import 'package:alumno/core/entities/TrainingDay.dart';
 import 'package:alumno/widget/custom_app_bar.dart';
+import 'package:flutter/material.dart';
 
 
 class CompleteRoutineScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final pageViewHeight = screenHeight * 1; 
+    final pageViewHeight = screenHeight * 0.6; // la altura de la pantalla
 
     return Scaffold(
       appBar: const CustomAppBar(
@@ -35,26 +36,26 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildRoutineCard(
-                title: 'Título de la Rutina',
+                title: 'TÍTULO DE LA RUTINA',
                 content: widget.currentRoutine.title!,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
               _buildRoutineCard(
-                title: 'Objetivo',
+                title: 'OBJETIVO',
                 content: widget.currentRoutine.typeOfTraining?.name ?? 'Sin objetivo',
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
               _buildRoutineCard(
-                title: 'Duración',
+                title: 'DURACIÓN',
                 content: '${widget.currentRoutine.duration} semanas',
               ),
-              //ROMPE PORQ NO ESTA ESTE ATRIBUTO ACTUALMENTE
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
               _buildRoutineCard(
-                title: 'Pausa entre ejercicios',
+                title: 'PAUSA ENTRE EJERCICIOS',
                 content: '${widget.currentRoutine.rest} segundos',
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
+              
               SizedBox(
                 height: pageViewHeight,
                 child: Column(
@@ -106,9 +107,10 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
     return SizedBox(
       width: double.infinity,
       child: Card(
+        color: Colors.blueGrey[50],
         elevation: 4,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(8.0),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -118,12 +120,12 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
               Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
                   color: Color.fromARGB(255, 22, 22, 180),
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 6),
               Text(
                 content,
                 style: const TextStyle(
@@ -138,16 +140,17 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
     );
   }
 
- // ESTOS DOS WIDGETS ROMPEN ACTUALMENTE PORQUE LA LISTA DE EJERCICIOS NO ESTA BIEN DEFINIDA
   Widget _buildWeekCard(BuildContext context, int weekIndex) {
     List<TrainingDay> week = widget.currentRoutine.exercises[weekIndex];
+
     return SizedBox(
       width: double.infinity,
       child: Card(
+        color:Colors.blueGrey[50],
         elevation: 4.0,
-        margin: const EdgeInsets.symmetric(vertical: 10,),
+        margin: const EdgeInsets.symmetric(vertical: 8,),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8.0),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -156,10 +159,10 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Semana ${weekIndex + 1}',
+                  'SEMANA ${weekIndex + 1}',
                   style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
                     color: Color.fromARGB(255, 22, 22, 180),
                   ),
                 ),
@@ -182,10 +185,10 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Día ${dayIndex + 1}',
+              'DÍA ${dayIndex + 1}',
               style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
                 color: Color.fromARGB(255, 22, 22, 180),
               ),
             ),

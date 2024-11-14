@@ -3,6 +3,7 @@ import 'package:entrenador/core/entities/TrainingDay.dart';
 import 'package:entrenador/widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
+
 class CompleteRoutineScreen extends StatefulWidget {
   const CompleteRoutineScreen({super.key, required this.currentRoutine});
 
@@ -20,6 +21,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Rutina Actual',
@@ -31,22 +33,22 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildRoutineCard(
-              title: 'Título de la Rutina',
+              title: 'TÍTULO DE LA RUTINA',
               content: widget.currentRoutine.title,
             ),
             const SizedBox(height: 8),
             _buildRoutineCard(
-              title: 'Objetivo',
+              title: 'OBJETIVO',
               content: widget.currentRoutine.typeOfTraining?.name ?? 'Sin objetivo',
             ),
             const SizedBox(height: 8),
             _buildRoutineCard(
-              title: 'Duración',
+              title: 'DURACIÓN',
               content: '${widget.currentRoutine.duration} semanas',
             ),
             const SizedBox(height: 8),
             _buildRoutineCard(
-              title: 'Pausa entre ejercicios',
+              title: 'PAUSA ENTRE EJERCICIOS',
               content: '${widget.currentRoutine.rest} segundos',
             ),
             const SizedBox(height: 8),
@@ -97,7 +99,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
   }
 
   Widget _buildRoutineCard({required String title, required String content}) {
-    return SizedBox(
+    return Container(
       width: double.infinity,
       child: Card(
         color: Colors.blueGrey[50],
@@ -119,7 +121,6 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
                 ),
               ),
               const SizedBox(height: 6),
-              //const Divider(thickness: 1.0,),
               Text(
                 content,
                 style: const TextStyle(
@@ -134,9 +135,10 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
     );
   }
 
-  Widget _buildWeekCard(BuildContext context, int weekIndex) {
+   Widget _buildWeekCard(BuildContext context, int weekIndex) {
     List<TrainingDay> week = widget.currentRoutine.exercises[weekIndex];
-    return SizedBox(
+
+    return Container(
       width: double.infinity,
       child: Card(
         color:Colors.blueGrey[50],
@@ -169,7 +171,7 @@ class _CompleteRoutineScreenState extends State<CompleteRoutineScreen> {
     );
   }
 
-Widget _buildExerciseList(List<TrainingDay> week) {
+  Widget _buildExerciseList(List<TrainingDay> week) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -186,64 +188,96 @@ Widget _buildExerciseList(List<TrainingDay> week) {
               ),
             ),
             const SizedBox(height: 8),
-          Table(
-            border: TableBorder.all(color: Colors.grey),
-            columnWidths: const {
-              0: FlexColumnWidth(1),
-              1: FlexColumnWidth(1),
-              2: FlexColumnWidth(1),
-            },
-            children: [
-              const TableRow(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'Ejercicio',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'Series',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'Repeticiones',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-              
-              for (var exercise in week[dayIndex].exercises)
-                TableRow(
+            
+            Table(
+              border: TableBorder.all(color: Colors.grey),
+              columnWidths: const {
+                0: FlexColumnWidth(1),
+                1: FlexColumnWidth(1),
+                2: FlexColumnWidth(1),
+              },
+              children: [
+                const TableRow(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Text(
-                        exercise.title!,
+                        'Ejercicio',
+                        style: TextStyle(fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Series',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Repeticiones',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+                
+                for (var exercise in week[dayIndex].exercises)
+                  TableRow(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          exercise.title!,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          exercise.series.toString(),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          exercise.repetitions.toString(),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+
+            const SizedBox(height: 16),
+
+            Table(
+              border: TableBorder.all(color: Colors.grey),
+              columnWidths: const {
+                0: FlexColumnWidth(1),
+                1: FlexColumnWidth(2),
+              },
+              children: [
+                TableRow(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Observación',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.left,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        exercise.series.toString(),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        exercise.repetitions.toString(),
+                        week[dayIndex].observation,
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -251,39 +285,10 @@ Widget _buildExerciseList(List<TrainingDay> week) {
                 ),
               ],
             ),
-          const SizedBox(height: 16),
-          Table(
-            border: TableBorder.all(color: Colors.grey),
-            columnWidths: const {
-              0: FlexColumnWidth(1),
-              1: FlexColumnWidth(2),
-            },
-            children: [
-              TableRow(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'Observación',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      week[dayIndex].observation,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
+            const SizedBox(height: 16),
           ],
         ),
-      ],
-    );
+    ],
+  );
   }
 }

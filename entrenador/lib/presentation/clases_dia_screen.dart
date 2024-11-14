@@ -47,60 +47,63 @@ class _ClasesDiaScreenState extends State<ClasesDiaScreen> {
       appBar: const CustomAppBar(
         title: 'Clases del Día',
       ),
+      backgroundColor: Colors.white,
       bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
       body: clasesDelDia.isEmpty
-        ? const Center(
-            child: Text(
-              'No hay clases programadas para este día.',
-              style: TextStyle(fontSize: 16, color: Colors.grey),
+          ? Center(
+              child: Text(
+                'No hay clases programadas para este día.',
+                style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+              ),
+            )
+          : ListView.builder(
+              itemCount: clasesDelDia.length,
+              itemBuilder: (context, index) {
+                Clase clase = clasesDelDia[index];
+                return ListTile(
+                  leading: const Icon(Icons.access_time),
+                  title: Text(
+                    '${clase.horaInicio.hour}:${clase.horaInicio.minute.toString().padLeft(2, '0')}',
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: clase.alumno == null
+                      ? const Text(
+                          'LIBRE',
+                          style: TextStyle(color: Colors.green, fontSize: 16),
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              clase.alumno!.userName,
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                // Navegar al perfil del alumno usando GoRouter
+                                context.go('/perfil_alumno_screen', extra: clase.alumno);
+                              },
+                              // ignore: sort_child_properties_last
+                              child: const Text('IR A PERFIL'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue,
+                                textStyle: const TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () {
+                      // Implementar funcionalidad para eliminar la clase
+                      _eliminarClase(context, clase);
+                    },
+                  ),
+                );
+              },
             ),
-          )
-      :ListView.builder(
-          itemCount: clasesDelDia.length,
-          itemBuilder: (context, index) {
-            Clase clase = clasesDelDia[index];
-            return ListTile(
-              leading: const Icon(Icons.access_time),
-              title: Text(
-                '${clase.horaInicio.hour}:${clase.horaInicio.minute.toString().padLeft(2, '0')}',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              subtitle: clase.alumno == null
-                  ? const Text(
-                      'LIBRE',
-                      style: TextStyle(color: Colors.green, fontSize: 16),
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          clase.alumno!.userName,
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            context.go('/perfil_alumno_screen', extra: clase.alumno);
-                          },
-                          // ignore: sort_child_properties_last
-                          child: const Text('IR A PERFIL'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            textStyle: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
-              trailing: IconButton(
-                icon: const Icon(Icons.delete, color: Colors.red),
-                onPressed: () {
-                  _eliminarClase(context, clase);
-                },
-              ),
-            );
-          },
-        ),
-      );
-    }
+    );
+  }
 
   void _eliminarClase(BuildContext context, Clase clase) {
     Trainer? trainer = manager.getLoggedUser();
@@ -113,7 +116,7 @@ class _ClasesDiaScreenState extends State<ClasesDiaScreen> {
         ),
       );
       setState(() {
-        clasesDelDia.remove(clase);
+        clasesDelDia.remove(clase); // Actualizar la lista de clases
       });
     }
   }
