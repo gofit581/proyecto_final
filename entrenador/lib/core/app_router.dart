@@ -114,19 +114,6 @@ final appRouter = GoRouter(routes: [
     path: '/agenda',
     builder: ((context, state) => const AgendaScreen()),
     name: AgendaScreen.name,
-    pageBuilder: (context, state) {
-      return CustomTransitionPage(
-        child: EditRoutineScreen(routine: state.extra as Routine,),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const begin = Offset(0.0, 1.0);  
-          const end = Offset.zero;           
-          const curve = Curves.easeInOut;
-          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-          var offsetAnimation = animation.drive(tween);
-          return SlideTransition(position: offsetAnimation, child: child);
-        },
-      );
-    }, 
   ),
 
   GoRoute(
