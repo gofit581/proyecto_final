@@ -64,6 +64,7 @@ class AgendaService {
       current = current.add(const Duration(days: 1));
     }
     await guardarClasesNuevas(agendaNueva);
+    agendaNueva= await obtenerAgendaClases();
     for (var clase in agendaNueva) {
       _loggedUser!.agenda!.add(clase);
     }
@@ -158,6 +159,7 @@ class AgendaService {
     if (_loggedUser == null) {
       throw Exception("No hay un entrenador logueado.");
     }
+    print(clase.id);
     final String url = 'https://66ff0a2d2b9aac9c997e1fdd.mockapi.io/api/clase/${clase.id}';
     try {
       final response = await http.delete( Uri.parse(url),
