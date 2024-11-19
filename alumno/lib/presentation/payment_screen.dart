@@ -124,7 +124,7 @@ class PaymentScreen extends StatefulWidget {
   final String? url;
   final DateTime date;
 
-  const PaymentScreen({super.key, this.url,required this.date});
+  const PaymentScreen({super.key, this.url, required this.date});
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -147,7 +147,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     super.dispose();
   }
 
-  Future <void>  initDeepLinks() async {
+  Future<void> initDeepLinks() async {
     _appLinks = AppLinks();
 
     _sub = _appLinks.uriLinkStream.listen((Uri? uri) {
@@ -158,17 +158,20 @@ class _PaymentScreenState extends State<PaymentScreen> {
           //_verificarEstadoPago(context);
           bool isSuccess = true;
 
-          Map<DateTime, bool> arguments = {
-            widget.date:isSuccess
-          };
+          Map<DateTime, bool> arguments = {widget.date: isSuccess};
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => ClasesScreen(
+                      date: widget.date,
+                    )),
+          );
 
-          Navigator.pushReplacementNamed(context, ClasesScreen.name, arguments: arguments);
-          
+          // Navigator.pushReplacementNamed(context, ClasesScreen.name, arguments: arguments);
         } else {
-          Map<DateTime, bool> arguments = {
-            widget.date:isSuccess
-          };
-          Navigator.pushReplacementNamed(context, ClasesScreen.name, arguments: arguments);
+          Map<DateTime, bool> arguments = {widget.date: isSuccess};
+          Navigator.pushReplacementNamed(context, ClasesScreen.name,
+              arguments: arguments);
         }
       }
     }, onError: (err) {
@@ -178,57 +181,54 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   Future<void> _verificarEstadoPago(BuildContext context) async {
     try {
-      final response = await http.get(Uri.parse('http://10.0.2.2:3000/verificar_estado_pago'));
+      final response = await http
+          .get(Uri.parse('http://10.0.2.2:3000/verificar_estado_pago'));
 
       if (response.statusCode == 201) {
         bool isSuccess = true;
-        Map<DateTime, bool> arguments = {
-            widget.date:isSuccess
-        };
-          Navigator.pushReplacementNamed(context, ClasesScreen.name, arguments: arguments);
+        Map<DateTime, bool> arguments = {widget.date: isSuccess};
+        Navigator.pushReplacementNamed(context, ClasesScreen.name,
+            arguments: arguments);
       } else {
         bool isSuccess = false;
-        Map<DateTime, bool> arguments = {
-            widget.date:isSuccess
-        };
-        Navigator.pushReplacementNamed(context, ClasesScreen.name, arguments: arguments);
+        Map<DateTime, bool> arguments = {widget.date: isSuccess};
+        Navigator.pushReplacementNamed(context, ClasesScreen.name,
+            arguments: arguments);
       }
     } catch (e) {
       debugPrint('Error al verificar el estado del pago: $e');
       bool isSuccess = false;
-      Map<DateTime, bool> arguments = {
-          widget.date:isSuccess
-      };
-      Navigator.pushReplacementNamed(context, ClasesScreen.name, arguments: arguments);
+      Map<DateTime, bool> arguments = {widget.date: isSuccess};
+      Navigator.pushReplacementNamed(context, ClasesScreen.name,
+          arguments: arguments);
     }
   }
 
-Future<void> _launchUrl(BuildContext context, String? url) async {
-  final theme = Theme.of(context);
-  try {
-    await launchUrl(
-      Uri.parse(url!),
-      customTabsOptions: CustomTabsOptions(
-        colorSchemes: CustomTabsColorSchemes.defaults(
-          toolbarColor: theme.colorScheme.surface,
-          navigationBarColor: theme.colorScheme.surface,
+  Future<void> _launchUrl(BuildContext context, String? url) async {
+    final theme = Theme.of(context);
+    try {
+      await launchUrl(
+        Uri.parse(url!),
+        customTabsOptions: CustomTabsOptions(
+          colorSchemes: CustomTabsColorSchemes.defaults(
+            toolbarColor: theme.colorScheme.surface,
+            navigationBarColor: theme.colorScheme.surface,
+          ),
+          shareState: CustomTabsShareState.on,
+          urlBarHidingEnabled: true,
+          showTitle: true,
         ),
-        shareState: CustomTabsShareState.on,
-        urlBarHidingEnabled: true,
-        showTitle: true,
-      ),
-      safariVCOptions: SafariViewControllerOptions(
-        preferredBarTintColor: theme.colorScheme.surface,
-        preferredControlTintColor: theme.colorScheme.onSurface,
-        barCollapsingEnabled: true,
-        entersReaderIfAvailable: false,
-      ),
-    );
-  } catch (e) {
-
-    debugPrint(e.toString());
+        safariVCOptions: SafariViewControllerOptions(
+          preferredBarTintColor: theme.colorScheme.surface,
+          preferredControlTintColor: theme.colorScheme.onSurface,
+          barCollapsingEnabled: true,
+          entersReaderIfAvailable: false,
+        ),
+      );
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
-}
 
 /*   void _launchURL(BuildContext context, String? url) async {
     if (url == null) {
