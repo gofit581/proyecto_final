@@ -1,14 +1,19 @@
+import 'dart:convert';
+
+import 'package:alumno/presentation/payment_screen.dart';
 import 'package:alumno/widget/custom_app_bar.dart';
 import 'package:alumno/widget/custom_botton_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/core/entities/Clase.dart';
 import 'package:alumno/core/entities/Entrenador.dart';
+import 'package:http/http.dart' as http;
 
 class ClasesScreen extends StatelessWidget {
   static const String name = 'ClasesScreen';
   final DateTime date;
   final userManager = UserManager();
+
 
   ClasesScreen({super.key, required this.date});
 
@@ -41,16 +46,51 @@ class ClasesScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   margin: const EdgeInsets.symmetric(
                       vertical: 4.0, horizontal: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(
-                          'Hora de comienzo: ${clase.horaInicio.hour}:${clase.horaInicio.minute.toString().padLeft(2, '0')}',
-                          style: const TextStyle(fontSize: 16)),
-                      Text('Duración: ${clase.duracionHs} horas',
-                          style: const TextStyle(fontSize: 16)),
-                      Text('Precio: \$${clase.precio}',
-                          style: const TextStyle(fontSize: 16)),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                              'Hora de comienzo: ${clase.horaInicio.hour}:${clase.horaInicio.minute.toString().padLeft(2, '0')}',
+                              style: const TextStyle(fontSize: 16)),
+                          Text('Duración: ${clase.duracionHs} horas',
+                              style: const TextStyle(fontSize: 16)),
+                          Text('Precio: \$${clase.precio}',
+                              style: const TextStyle(fontSize: 16)),
+                          
+                        ],
+                      ),
+                      ElevatedButton(
+                              onPressed: () async {
+                                try {
+                                  final response = await http.post(
+                                    Uri.parse('http://10.0.2.2:3000/create_preferences'),
+                                  );
+                      
+                                  if (response.statusCode == 200) {
+                                    final res = json.decode(response.body);
+                                    if (context.mounted) {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) => PaymentScreen(
+                                            url: res["url"],
+                                            date: this.date,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  } else {
+                                    print('Error en la solicitud: ${response.statusCode}');
+                                  }
+                                } catch (e) {
+                                  print('Error: $e');
+                                }
+                              },
+                              child: const Text('RESERVAR'),
+                            ),
                     ],
                   ),
                 );
