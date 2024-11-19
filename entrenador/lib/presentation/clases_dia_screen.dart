@@ -64,7 +64,8 @@ class _ClasesDiaScreenState extends State<ClasesDiaScreen> {
                   leading: const Icon(Icons.access_time),
                   title: Text(
                     '${clase.horaInicio.hour}:${clase.horaInicio.minute.toString().padLeft(2, '0')}',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   subtitle: clase.alumno == null
                       ? const Text(
@@ -81,7 +82,22 @@ class _ClasesDiaScreenState extends State<ClasesDiaScreen> {
                             ElevatedButton(
                               onPressed: () {
                                 // Navegar al perfil del alumno usando GoRouter
-                                context.go('/perfil_alumno_screen', extra: clase.alumno);
+                                // context.go('/perfil_alumno_screen', extra: clase.alumno);
+                                if (clase.alumno != null) {
+                                  context.go(
+                                    '/studentProfileScreen',
+                                    extra: clase
+                                        .alumno, // Pasar el alumno como extra
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                          'El alumno no está asignado a esta clase.'),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                }
                               },
                               // ignore: sort_child_properties_last
                               child: const Text('IR A PERFIL'),
