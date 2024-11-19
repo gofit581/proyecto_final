@@ -111,6 +111,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 } */
 
+import 'package:alumno/core/entities/Clase.dart';
 import 'package:alumno/presentation/clases_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
@@ -123,8 +124,10 @@ class PaymentScreen extends StatefulWidget {
   static const String routename = 'PaymentScreen';
   final String? url;
   final DateTime date;
+  final Clase claseElegida;
+  
 
-  const PaymentScreen({super.key, this.url, required this.date});
+  const PaymentScreen({super.key, this.url, required this.date, required this.claseElegida});
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -158,12 +161,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
           //_verificarEstadoPago(context);
           bool isSuccess = true;
 
-          Map<DateTime, bool> arguments = {widget.date: isSuccess};
+          // Map<DateTime, bool> arguments = {widget.date: isSuccess};
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (BuildContext context) => ClasesScreen(
-                      date: widget.date,
+                      date: widget.date, claseElegida: widget.claseElegida,
                     )),
           );
 

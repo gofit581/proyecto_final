@@ -1,6 +1,5 @@
-// ignore_for_file: file_names
-
 import 'package:alumno/core/entities/User.dart';
+import 'package:alumno/services/agenda_service.dart';
 import '../../services/auth_service.dart';
 import '../../services/update_service.dart';
 import '../../services/register_service.dart';
@@ -9,6 +8,7 @@ class UserManager {
   static RegisterService registerService = RegisterService();
   static UpdateService updateService = UpdateService();
   static AuthService authService = AuthService(UserManager());
+  static AgendaService agendaService = AgendaService();
   // ignore: prefer_final_fields
   static List<Usuario> _usuarios = [];
   static Usuario? _loggedUser;
@@ -17,6 +17,14 @@ class UserManager {
 
   void agregarUsuario(Usuario usuario) {
     _usuarios.add(usuario);
+  }
+
+  void reservarClase(String idClase) {
+    if (_loggedUser != null) {
+      agendaService.asignarAlumnoAClase(idClase, _loggedUser!);
+    } else {
+      throw Exception('No user is currently logged in');
+    }
   }
 
   Future<void> registerUser(Usuario usuario) async {

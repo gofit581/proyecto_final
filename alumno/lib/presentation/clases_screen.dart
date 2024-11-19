@@ -1,5 +1,122 @@
-import 'dart:convert';
+// import 'dart:convert';
+// import 'package:alumno/presentation/payment_screen.dart';
+// import 'package:alumno/widget/custom_app_bar.dart';
+// import 'package:alumno/widget/custom_botton_navigation_bar.dart';
+// import 'package:flutter/material.dart';
+// import 'package:alumno/core/entities/UserManager.dart';
+// import 'package:alumno/core/entities/Clase.dart';
+// import 'package:alumno/core/entities/Entrenador.dart';
+// import 'package:http/http.dart' as http;
 
+// class ClasesScreen extends StatelessWidget {
+//   static const String name = 'ClasesScreen';
+//   final DateTime date;
+//   final userManager = UserManager();
+//   final Clase? claseElegida;
+//   // bool pagoOK;
+
+//   ClasesScreen({
+//     super.key,
+//     required this.date,
+//     this.claseElegida, // Nullable
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final usuario = userManager.getLoggedUser();
+//     final Entrenador? profesor = usuario?.getProfesor();
+//     final List<Clase> clasesDelDia = [];
+
+//     if(claseElegida!=null){
+//       userManager.reservarClase(claseElegida!.id);
+//       profesor?.agenda?.firstWhere((element) => element.id == claseElegida!.id).alumno = usuario;
+//       print(claseElegida);
+//     }
+
+//     if (profesor != null && profesor.agenda != null) {
+//       clasesDelDia.addAll(profesor.agenda!
+//           .where((clase) =>
+//               clase.horaInicio.year == date.year &&
+//               clase.horaInicio.month == date.month &&
+//               clase.horaInicio.day == date.day)
+//           .toList());
+//     }
+//     return Scaffold(
+//       appBar: CustomAppBar(
+//         title: 'Clases del ${date.day}/${date.month}/${date.year}',
+//       ),
+//       bottomNavigationBar: const CustomBottomNavigationBar(currentIndex: 1),
+//       body: clasesDelDia.isNotEmpty
+//           ? ListView.builder(
+//               itemCount: clasesDelDia.length,
+//               itemBuilder: (context, index) {
+//                 final clase = clasesDelDia[index];
+//                 return Container(
+//                   color: clase.alumno == null ? Colors.green : Colors.red,
+//                   padding: const EdgeInsets.all(16.0),
+//                   margin: const EdgeInsets.symmetric(
+//                       vertical: 4.0, horizontal: 8.0),
+//                   child: Row(
+//                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                     children: [
+//                       Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           Text(
+//                               'Hora de comienzo: ${clase.horaInicio.hour}:${clase.horaInicio.minute.toString().padLeft(2, '0')}',
+//                               style: const TextStyle(fontSize: 16)),
+//                           Text('Duración: ${clase.duracionHs} horas',
+//                               style: const TextStyle(fontSize: 16)),
+//                           Text('Precio: \$${clase.precio}',
+//                               style: const TextStyle(fontSize: 16)),
+
+//                         ],
+//                       ),
+//                       ElevatedButton(
+//                               onPressed: () async {
+//                                 try {
+//                                   final response = await http.post(
+//                                     Uri.parse('http://10.0.2.2:3000/create_preferences'),
+//                                   );
+
+//                                   if (response.statusCode == 200) {
+//                                     final res = json.decode(response.body);
+//                                     if (context.mounted) {
+//                                       Navigator.pushReplacement(
+//                                         context,
+//                                         MaterialPageRoute(
+//                                           builder: (BuildContext context) => PaymentScreen(
+//                                             url: res["url"],
+//                                             date: this.date,
+//                                             claseElegida: clase,
+//                                           ),
+//                                         ),
+//                                       );
+//                                     }
+//                                   } else {
+//                                     print('Error en la solicitud: ${response.statusCode}');
+//                                   }
+//                                 } catch (e) {
+//                                   print('Error: $e');
+//                                 }
+//                               },
+//                               child: const Text('RESERVAR'),
+//                             ),
+//                     ],
+//                   ),
+//                 );
+//               },
+//             )
+//           : const Center(
+//               child: Text(
+//                 'No hay clases programadas para esta fecha.',
+//               ),
+//             ),
+//     );
+//   }
+// }
+
+import 'dart:convert';
 import 'package:alumno/presentation/payment_screen.dart';
 import 'package:alumno/widget/custom_app_bar.dart';
 import 'package:alumno/widget/custom_botton_navigation_bar.dart';
@@ -13,24 +130,38 @@ class ClasesScreen extends StatelessWidget {
   static const String name = 'ClasesScreen';
   final DateTime date;
   final userManager = UserManager();
+  final Clase? claseElegida;
 
-
-  ClasesScreen({super.key, required this.date});
+  ClasesScreen({
+    super.key,
+    required this.date,
+    this.claseElegida, // Nullable
+  });
 
   @override
   Widget build(BuildContext context) {
-    final usuario = userManager.getLoggedUser(); 
-    final Entrenador? profesor = usuario?.getProfesor(); 
+    final usuario = userManager.getLoggedUser();
+    final Entrenador? profesor = usuario?.getProfesor();
     final List<Clase> clasesDelDia = [];
-    
+
+    if (claseElegida != null) {
+      userManager.reservarClase(claseElegida!.id);
+      profesor?.agenda
+          ?.firstWhere((element) => element.id == claseElegida!.id)
+          .alumno = usuario;
+      print(claseElegida);
+    }
+
     if (profesor != null && profesor.agenda != null) {
       clasesDelDia.addAll(profesor.agenda!
           .where((clase) =>
               clase.horaInicio.year == date.year &&
               clase.horaInicio.month == date.month &&
-              clase.horaInicio.day == date.day)
+              clase.horaInicio.day == date.day &&
+              clase.alumno == null) // Filtrar clases con alumno == null
           .toList());
     }
+
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Clases del ${date.day}/${date.month}/${date.year}',
@@ -42,7 +173,7 @@ class ClasesScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final clase = clasesDelDia[index];
                 return Container(
-                  color: clase.alumno == null ? Colors.green : Colors.red,
+                  color: Colors.green, // Solo renderiza clases disponibles
                   padding: const EdgeInsets.all(16.0),
                   margin: const EdgeInsets.symmetric(
                       vertical: 4.0, horizontal: 8.0),
@@ -53,44 +184,69 @@ class ClasesScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                              'Hora de comienzo: ${clase.horaInicio.hour}:${clase.horaInicio.minute.toString().padLeft(2, '0')}',
-                              style: const TextStyle(fontSize: 16)),
-                          Text('Duración: ${clase.duracionHs} horas',
-                              style: const TextStyle(fontSize: 16)),
-                          Text('Precio: \$${clase.precio}',
-                              style: const TextStyle(fontSize: 16)),
-                          
+                            'Hora de comienzo: ${clase.horaInicio.hour}:${clase.horaInicio.minute.toString().padLeft(2, '0')}',
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            'Duración: ${clase.duracionHs} horas',
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            'Precio: \$${clase.precio}',
+                            style: const TextStyle(fontSize: 16),
+                          ),
                         ],
                       ),
                       ElevatedButton(
-                              onPressed: () async {
-                                try {
-                                  final response = await http.post(
-                                    Uri.parse('http://10.0.2.2:3000/create_preferences'),
-                                  );
-                      
-                                  if (response.statusCode == 200) {
-                                    final res = json.decode(response.body);
-                                    if (context.mounted) {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) => PaymentScreen(
-                                            url: res["url"],
-                                            date: this.date,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  } else {
-                                    print('Error en la solicitud: ${response.statusCode}');
-                                  }
-                                } catch (e) {
-                                  print('Error: $e');
-                                }
-                              },
-                              child: const Text('RESERVAR'),
-                            ),
+                        onPressed: () async {
+                          try {
+                            // final response = await http.post(
+                            //   Uri.parse('http://10.0.2.2:3000/create_preferences'),
+                            // );
+                            // Crear el cuerpo de la solicitud con los datos de la clase
+                            final body = {
+                              'title': "", // Usa el campo correspondiente de la clase
+                              'quantity':
+                                  1, // Usualmente, la cantidad es 1 para reservas
+                              'unit_price': clase.precio, // Precio de la clase
+                              'currency_id':
+                                  'ARS', // Ajusta según sea necesario
+                            };
+
+                            // Hacer la solicitud al backend
+                            final response = await http.post(
+                              Uri.parse(
+                                  'http://10.0.2.2:3000/create_preferences'),
+                              headers: {'Content-Type': 'application/json'},
+                              body: json
+                                  .encode(body), // Convertir el cuerpo a JSON
+                            );
+
+                            if (response.statusCode == 200) {
+                              final res = json.decode(response.body);
+                              if (context.mounted) {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        PaymentScreen(
+                                      url: res["url"],
+                                      date: this.date,
+                                      claseElegida: clase,
+                                    ),
+                                  ),
+                                );
+                              }
+                            } else {
+                              print(
+                                  'Error en la solicitud: ${response.statusCode}');
+                            }
+                          } catch (e) {
+                            print('Error: $e');
+                          }
+                        },
+                        child: const Text('RESERVAR'),
+                      ),
                     ],
                   ),
                 );

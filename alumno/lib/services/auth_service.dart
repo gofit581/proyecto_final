@@ -132,7 +132,7 @@ class AuthService {
       }
     } catch (e) {
       // ignore: avoid_print
-      print('AuthError: $e');
+      print('AuthError searchIdTrainer: $e');
       return true;
     }
   }
@@ -157,7 +157,7 @@ class AuthService {
       }
     } catch (e) {
       // ignore: avoid_print
-      print('Auth Error: $e');
+      print('Auth Error validateMail: $e');
       return true;
     }
   }
