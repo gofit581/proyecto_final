@@ -21,6 +21,7 @@ class Trainer {
   double? precioPorClase;
   late List<Routine> routines;
   late List<Exercise> exercises =[];
+  String? mpKey;
 
   Trainer.parcial({
       this.id,

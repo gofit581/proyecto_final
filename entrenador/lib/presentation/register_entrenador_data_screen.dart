@@ -45,6 +45,7 @@ class _FormularioState extends State<_Formulario> {
   final TextEditingController _registerPrecioController = TextEditingController();
   final TextEditingController _registerTrabajaDesdeController = TextEditingController();
   final TextEditingController _registerTrabajaHastaController = TextEditingController();
+  final TextEditingController _registerMpKeyController = TextEditingController();
 
   final List<String> dias = [
     'Domingo',
@@ -115,6 +116,16 @@ class _FormularioState extends State<_Formulario> {
             const SizedBox(height: 20),
             SizedBox(
               width: 300,
+              child: TextField(
+                controller: _registerMpKeyController,
+                decoration: const InputDecoration(
+                  hintText: 'Mercado Pago Key'
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: 300,
               child: Column(children: [
                 Column(
                   children: [
@@ -159,7 +170,8 @@ class _FormularioState extends State<_Formulario> {
                 if (_registerPrecioController.text.isEmpty ||
                     _registerDuracionController.text.isEmpty ||
                     _registerTrabajaDesdeController.text.isEmpty ||
-                    _registerTrabajaHastaController.text.isEmpty ||
+                    _registerTrabajaHastaController.text.isEmpty || 
+                    _registerMpKeyController.text.isEmpty ||
                     widget.trainer.diasLaborales == null ||
                     widget.trainer.diasLaborales!.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
