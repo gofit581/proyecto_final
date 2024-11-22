@@ -221,7 +221,7 @@ class ClasesScreen extends StatelessWidget {
                               body: json
                                   .encode(body), // Convertir el cuerpo a JSON
                             );
-
+                            print(response.body);
                             if (response.statusCode == 200) {
                               final res = json.decode(response.body);
                               if (context.mounted) {

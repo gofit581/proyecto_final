@@ -112,7 +112,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
 } */
 
 import 'package:alumno/core/entities/Clase.dart';
+import 'package:alumno/core/entities/CustomNotification.dart';
+import 'package:alumno/core/entities/TypeOfNotification.dart';
+import 'package:alumno/core/entities/User.dart';
+import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/presentation/clases_screen.dart';
+import 'package:alumno/services/auth_service.dart';
+import 'package:alumno/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:http/http.dart' as http;
@@ -160,6 +166,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
         if (path == 'success') {
           //_verificarEstadoPago(context);
           bool isSuccess = true;
+          Usuario? user = UserManager().getLoggedUser();
+          if (user != null)
+          {
+            NotificationService().addNotification(CustomNotification(idAlumno: user.id ?? '', idTrainer: user.idTrainer, typeOfNotification: TypeOfNotification.reservation, visto: false));
+          }
 
           // Map<DateTime, bool> arguments = {widget.date: isSuccess};
           Navigator.pushReplacement(
