@@ -28,7 +28,7 @@ class ClasesScreen extends StatelessWidget {
     final Entrenador? profesor = usuario?.getProfesor();
     final List<Clase> clasesDelDia = [];
 
-    if (claseElegida != null) {
+    if (claseElegida != null && estadoOperacion == true) {
       userManager.reservarClase(claseElegida!.id);
       profesor?.agenda
           ?.firstWhere((element) => element.id == claseElegida!.id)
@@ -50,7 +50,11 @@ class ClasesScreen extends StatelessWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _showClaseDetailsDialog(context, claseElegida!);
       });
-    }
+    } else if (estadoOperacion == false) {
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    _showErrorDialog(context);
+  });
+}
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -90,9 +94,6 @@ class ClasesScreen extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () async {
                           try {
-                            // final response = await http.post(
-                            //   Uri.parse('http://10.0.2.2:3000/create_preferences'),
-                            // );
                             // Crear el cuerpo de la solicitud con los datos de la clase
                             final body = {
                               'title': "", // Usa el campo correspondiente de la clase
@@ -149,6 +150,35 @@ class ClasesScreen extends StatelessWidget {
             ),
     );
   }
+
+  void _showErrorDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Reserva no procesada'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text(
+              'Su clase no ha podido ser abonada a través de MercadoPago. Por favor, inténtelo de nuevo o comuníquese con su entrenador. Gracias!',
+            ),
+          ],
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cerrar'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 
   void _showClaseDetailsDialog(BuildContext context, Clase clase) {
     showDialog(
