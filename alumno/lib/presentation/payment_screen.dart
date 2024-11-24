@@ -177,7 +177,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             context,
             MaterialPageRoute(
                 builder: (BuildContext context) => ClasesScreen(
-                      date: widget.date, claseElegida: widget.claseElegida,
+                      date: widget.date, claseElegida: widget.claseElegida, estadoOperacion: isSuccess,
                     )),
           );
 
