@@ -1,116 +1,3 @@
-/* import 'package:flutter/material.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
-import 'package:mercado_youtube/screen/item_screen.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:uni_links/uni_links.dart';
-import 'dart:async';
-
-class PaymentScreen extends StatefulWidget {
-  static const String routename = 'PaymentScreen';
-  final String? url;
-
-  const PaymentScreen({super.key, this.url});
-
-  @override
-  State<PaymentScreen> createState() => _PaymentScreenState();
-}
-
-class _PaymentScreenState extends State<PaymentScreen> {
-  late StreamSubscription _sub;
-
-  @override
-  void initState() {
-    super.initState();
-    _initDeepLinkListener();
-  }
-
-  @override
-  void dispose() {
-    _sub.cancel();
-    super.dispose();
-  }
-
-  void _initDeepLinkListener() {
-    _sub = uriLinkStream.listen((Uri? uri) {
-      if (uri != null && context.mounted) {
-        String path = uri.host;
-        bool isSuccess = false;
-        if (path == 'success') {
-          _verificarEstadoPago(context);
-        } else {
-          Navigator.pushReplacementNamed(context, ItemScreen.routename, arguments: isSuccess);
-        }
-      }
-    }, onError: (err) {
-      debugPrint('Error al manejar los deep links: $err');
-    });
-  }
-
-  Future<void> _verificarEstadoPago(BuildContext context) async {
-    try {
-      final response = await http.get(Uri.parse('http://10.0.2.2:3000/verificar_estado_pago'));
-
-      if (response.statusCode == 201) {
-        bool isSuccess = true;
-        Navigator.pushReplacementNamed(context, ItemScreen.routename, arguments: isSuccess);
-      } else {
-        bool isSuccess = false;
-        Navigator.pushReplacementNamed(context, ItemScreen.routename, arguments: isSuccess);
-      }
-    } catch (e) {
-      debugPrint('Error al verificar el estado del pago: $e');
-      bool isSuccess = false;
-      Navigator.pushReplacementNamed(context, ItemScreen.routename, arguments: isSuccess);
-    }
-  }
-
-  void _launchURL(BuildContext context, String? url) async {
-    if (url == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('La URL no es válida')),
-      );
-      return;
-    }
-
-    try {
-      await launch(
-        url,
-        customTabsOption: CustomTabsOption(
-          toolbarColor: Theme.of(context).primaryColor,
-          enableDefaultShare: false,
-          enableUrlBarHiding: true,
-          showPageTitle: true,
-          animation: CustomTabsSystemAnimation.slideIn(),
-        ),
-        safariVCOption: SafariViewControllerOption(
-          preferredBarTintColor: Theme.of(context).primaryColor,
-          preferredControlTintColor: Colors.white,
-        ),
-      );
-    } catch (e) {
-      debugPrint('Error al abrir la URL: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No se pudo abrir la URL')),
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: ElevatedButton(
-            onPressed: () => _launchURL(context, widget.url),
-            child: const Text('Pagar con MercadoPago'),
-          ),
-        ),
-      ),
-    );
-  }
-} */
-
 import 'package:alumno/core/entities/Clase.dart';
 import 'package:alumno/core/entities/CustomNotification.dart';
 import 'package:alumno/core/entities/TypeOfNotification.dart';
@@ -164,15 +51,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
         String path = uri.host;
         bool isSuccess = false;
         if (path == 'success') {
-          //_verificarEstadoPago(context);
           bool isSuccess = true;
           Usuario? user = UserManager().getLoggedUser();
           if (user != null)
           {
             NotificationService().addNotification(CustomNotification(idAlumno: user.id ?? '', idTrainer: user.idTrainer, typeOfNotification: TypeOfNotification.reservation, visto: false));
           }
-
-          // Map<DateTime, bool> arguments = {widget.date: isSuccess};
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -181,11 +65,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     )),
           );
 
-          // Navigator.pushReplacementNamed(context, ClasesScreen.name, arguments: arguments);
         } else {
-          Map<DateTime, bool> arguments = {widget.date: isSuccess};
-          Navigator.pushReplacementNamed(context, ClasesScreen.name,
-              arguments: arguments);
+          bool isSuccess = false;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => ClasesScreen(
+                      date: widget.date, claseElegida: widget.claseElegida, estadoOperacion: isSuccess,
+                    )),
+          );
+
         }
       }
     }, onError: (err) {
@@ -243,38 +132,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
       debugPrint(e.toString());
     }
   }
-
-/*   void _launchURL(BuildContext context, String? url) async {
-    if (url == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('La URL no es válida')),
-      );
-      return;
-    }
-
-    try {
-      await launch(
-        url,
-        customTabsOption: CustomTabsOption(
-          toolbarColor: Theme.of(context).primaryColor,
-          enableDefaultShare: false,
-          enableUrlBarHiding: true,
-          showPageTitle: true,
-          animation: CustomTabsSystemAnimation.slideIn(),
-        ),
-        safariVCOption: SafariViewControllerOption(
-          preferredBarTintColor: Theme.of(context).primaryColor,
-          preferredControlTintColor: Colors.white,
-        ),
-      );
-    } catch (e) {
-      debugPrint('Error al abrir la URL: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No se pudo abrir la URL')),
-      );
-    }
-  } */
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
