@@ -23,14 +23,14 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
             'assets/image/ROUTINE.jpg',
             width: 40, height: 40,
           ),
-          label: 'Routine'
+          label: 'Rutinas'
         ),
         BottomNavigationBarItem(
           icon: Image.asset(
             'assets/image/MOBILE_FRIENDLY.jpg',
             width: 40, height: 40,
           ),
-          label: 'Students',
+          label: 'Alumnos',
         ),
         BottomNavigationBarItem(
           icon: Image.asset(
@@ -44,7 +44,7 @@ const CustomBottomNavigationBar({super.key, required this.currentIndex});
             'assets/image/PROFILE.jpg',
             width: 40, height: 40,
           ),
-          label: 'Profile',
+          label: 'Mi Perfil',
         ),
       ],
       onTap: (index) async {

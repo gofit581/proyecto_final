@@ -119,6 +119,7 @@ import 'package:alumno/core/entities/UserManager.dart';
 import 'package:alumno/presentation/clases_screen.dart';
 import 'package:alumno/services/auth_service.dart';
 import 'package:alumno/services/notification_service.dart';
+import 'package:alumno/widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:http/http.dart' as http;
@@ -278,6 +279,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const CustomAppBar(
+        title: '',
+      ),
       body: SafeArea(
         child: Center(
           child: ElevatedButton(
