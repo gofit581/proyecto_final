@@ -131,11 +131,13 @@ class ClasesScreen extends StatelessWidget {
   final DateTime date;
   final userManager = UserManager();
   final Clase? claseElegida;
+  final bool? estadoOperacion;
 
   ClasesScreen({
     super.key,
     required this.date,
-    this.claseElegida, // Nullable
+    this.claseElegida,
+    this.estadoOperacion, 
   });
 
   @override
@@ -160,6 +162,12 @@ class ClasesScreen extends StatelessWidget {
               clase.horaInicio.day == date.day &&
               clase.alumno == null) // Filtrar clases con alumno == null
           .toList());
+    }
+
+    if (estadoOperacion == true && claseElegida != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showClaseDetailsDialog(context, claseElegida!);
+      });
     }
 
     return Scaffold(
@@ -257,6 +265,35 @@ class ClasesScreen extends StatelessWidget {
                 'No hay clases programadas para esta fecha.',
               ),
             ),
+    );
+  }
+
+  void _showClaseDetailsDialog(BuildContext context, Clase clase) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Muchas gracias por tu reserva!'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Tu clase será el ${date.day}/${date.month}/${date.year}'),
+              Text('Hora: ${clase.horaInicio.hour}:${clase.horaInicio.minute.toString().padLeft(2, '0')}'),
+              Text('Duración: ${clase.duracionHs} minutos'),
+              Text('Precio: \$${clase.precio}'),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cerrar'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
